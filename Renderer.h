@@ -22,6 +22,10 @@ public:
     void drawSniperTower(Vec2<float> pos, float size) override;
     void drawFastTower(Vec2<float> pos, float size) override;
 
+    void drawTowerButton(const TowerButton& button, bool isSelected) override;
+    void drawSidebarBackground(float x, float width) override;
+    void drawRangeCircle(Vec2<float> pos, float range) override;
+    void drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent) override;
     //void drawText(Vec2<float> pos, const std::string& text, int fontSize) override;
 };
 

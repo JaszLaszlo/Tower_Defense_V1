@@ -147,6 +147,7 @@
     <ClInclude Include="MyArray.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="tower.h" />
+    <ClInclude Include="types.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

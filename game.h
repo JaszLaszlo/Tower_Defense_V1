@@ -4,6 +4,8 @@
 #include "enemy.h"
 #include "vec2.h"
 #include"tower.h"
+#include "graphics.h"
+#include "types.h"
 
 class Game
 {
@@ -16,9 +18,10 @@ class Game
 	float spawnTimer;
 	Vec2<float> mapToWorld(Vec2<int> gridPos) const;
 	void handleSpawning(float dt);
+	void cleanUpEnemies();
 public:
 	Game(int maxEnemies, std::istream& is);
 	void update(float dt);
 	void draw(Graphics& g) const;
-	void handleTowerBuildRequest(float mx, float my);
+	void handleTowerBuildRequest(float mx, float my, TowerType type);
 };

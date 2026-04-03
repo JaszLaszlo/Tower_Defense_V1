@@ -2,12 +2,16 @@
 #define GRAPHICS_H
 #include <string>
 #include "vec2.h"
+#include "types.h"
 
-enum class TileType
+struct TowerButton
 {
-	PATH,
-	BUILDABLE,
-	NOTBUILDABLE
+	TowerType type;
+	float x, y, w, h;
+	bool isClicked(float mx, float my) const
+	{
+		return (mx >= x && mx <= x + w && my >= y && my <= y + h);
+	}
 };
 class Graphics
 {
@@ -20,6 +24,10 @@ public:
 	virtual void drawNormalTower(Vec2<float> pos, float size) = 0;
 	virtual void drawSniperTower(Vec2<float> pos, float size) = 0;
 	virtual void drawFastTower(Vec2<float> pos, float size) = 0;
+	virtual void drawTowerButton(const TowerButton& button, bool isSelected) = 0;
+	virtual void drawSidebarBackground(float x, float width) = 0;
+	virtual void drawRangeCircle(Vec2<float> pos, float range) = 0;
+	virtual void drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent) = 0;
 	//virtual void drawText(Vec2<float> pos, const std::string& text, int fontSize) = 0;
 };
 

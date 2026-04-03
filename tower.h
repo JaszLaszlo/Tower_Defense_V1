@@ -14,12 +14,18 @@ protected:
 	float fireRate;
 	float fireTimer;
 	float size;
+	Enemy* currentTarget;
 	float getDistance(Vec2<float> v1, Vec2<float> v2) const;
 	Enemy* findtarget(MyArray<Enemy>& enemies) const;
 
 public:
 	Tower(Vec2<float> p, float r, float d, float fr, float ft, float si);
 	virtual ~Tower() {};
+	Enemy* getCurrentTarget() const { return currentTarget; }
+	float getRange() const { return range; }
+	float getSize() const { return size; }
+	Vec2<float> getPosition() const { return position; }
+	void resetTarget() { currentTarget = nullptr; }
 	virtual void attack(Enemy* enemy) const { enemy->takeDamage(damage); }
 	void Update(float dt, MyArray<Enemy>& enemies);
 	virtual void draw(Graphics& g) const = 0;
@@ -50,9 +56,11 @@ public:
 class TowerManager
 {
 	MyArray<Tower> towers;
+	Tower* towerFactory(TowerType type, Vec2<float> pos) const;
 public:
 	TowerManager(int max): towers(max) {}
-	void AddTower(Tower* t);
+	void notifyEnemyRemoved(Enemy* enemy);
+	void AddTower(TowerType type, Vec2<float> pos);
 	void Update(float dt, MyArray<Enemy>& enemies);
 	void Draw(Graphics& g) const;
 };

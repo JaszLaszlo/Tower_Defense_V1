@@ -12,6 +12,11 @@ struct Vec2
 	{
 		return Vec2<U>(static_cast<U>(x), static_cast<U>(y));
 	}
+	float getDistance(const Vec2<T>& other) const {
+		T dx = x - other.x;
+		T dy = y - other.y;
+		return std::sqrt(static_cast<float>(dx * dx + dy * dy));
+	}
 };
 
 #endif

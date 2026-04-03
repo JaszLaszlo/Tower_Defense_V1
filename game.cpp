@@ -29,7 +29,7 @@ void Game::handleSpawning(float dt)
 		spawnTimer -= spawnIntervalSeconds;
 	}
 }
-void Game::handleTowerBuildRequest(float mx, float my)
+void Game::handleTowerBuildRequest(float mx, float my, TowerType type)
 {
 	int ts = map.getTileSize();
 	int gridX = static_cast<int>(mx) / ts;
@@ -39,10 +39,22 @@ void Game::handleTowerBuildRequest(float mx, float my)
 		if (map.canBuild(gridY, gridX))
 		{
 			Vec2<float> towerPos(gridX * ts + ts / 2.0f, gridY * ts + ts / 2.0f);
-			towerManager.AddTower(new NormalTower(towerPos));
+			towerManager.AddTower(type, towerPos);
 			map.getTile(gridY, gridX).setType(TileType::NOTBUILDABLE);
 		}
 		
+	}
+}
+void Game::cleanUpEnemies()
+{
+	MyArray<Enemy>& enemies = enemyManager.getEnemies();
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (!enemies[i]->isAlive() || enemies[i]->hasReachedEnd(map)) {
+			towerManager.notifyEnemyRemoved(enemies[i]);
+			enemies.Remove(i);
+			i--;
+		}
 	}
 }
 void Game::draw(Graphics& g) const
@@ -58,5 +70,6 @@ void Game::update(float dt)
 	enemyManager.Update(map,dt);
 	towerManager.Update(dt, enemyManager.getEnemies());
 	handleSpawning(dt);
+	cleanUpEnemies();
 }
 

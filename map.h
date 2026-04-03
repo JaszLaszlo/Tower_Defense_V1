@@ -3,6 +3,7 @@
 #include <fstream>
 #include "vec2.h"
 #include "graphics.h"
+#include "types.h"
 
 
 class Tile {
@@ -10,7 +11,7 @@ class Tile {
 public:
 	Tile(TileType t = TileType::NOTBUILDABLE): type(t) {}
 	TileType getType() const { return type; }
-	TileType setType(TileType t) { type = t; }
+	void setType(TileType t) { type = t; }
 };
 class Map {
 	int width, height, pathSize, tileSize;

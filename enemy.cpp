@@ -2,7 +2,7 @@
 #include "enemy.h"
 #include "map.h"
 #include "memtrace.h"
-Enemy::Enemy(Vec2<float> p, float h, float sp, float si, const Map& map) : position(p), hp(h),
+Enemy::Enemy(Vec2<float> p, float h, float mH, float sp, float si, const Map& map) : position(p), hp(h), maxHp(mH),
 speed(sp), size(si), currentPathIndex(0)
 {
 	float maxMovementRange = static_cast<float>(map.getTileSize() - size);
@@ -98,32 +98,29 @@ void EnemyManager::AddEnemy(Enemy* enemy)
 }
 void EnemyManager::Update(const Map& map,float dt)
 {
-	for (int i = 0; i < Enemies.size();)
+	for (int i = 0; i < Enemies.size();i++)
 	{
 		if (Enemies[i] != nullptr)
 		{
 			Enemies[i]->Move(map, dt);
-			if (!Enemies[i]->isAlive() || Enemies[i]->hasReachedEnd(map))
-			{
-				Enemies.Remove(i);
-			}
-			else i++;
 		}
-		else i++;
 	}
 }
 
 void NormalEnemy::draw(Graphics& g) const 
 {
 	g.drawNormalEnemy(position, size);
+	g.drawEnemyHpbar(position, size, hp / maxHp);
 }
 void FastEnemy::draw(Graphics& g) const 
 {
 	g.drawFastEnemy(position, size);
+	g.drawEnemyHpbar(position, size, hp / maxHp);
 }
 void TankEnemy::draw(Graphics& g) const 
 {
 	g.drawTankEnemy(position, size);
+	g.drawEnemyHpbar(position, size, hp / maxHp);
 }
 void EnemyManager::Draw(Graphics& g) const
 {
