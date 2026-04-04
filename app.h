@@ -25,7 +25,7 @@ class App {
     void handleClicks(float mx, float my);
 
 public:
-    App(std::istream& mapConfig);
+    App(std::istream& mapConfig, std::istream& waveconfig);
     ~App();
 
     void run();          

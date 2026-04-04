@@ -1,9 +1,9 @@
 #include "app.h"
 
-App::App(std::istream& mapConfig)
+App::App(std::istream& mapConfig, std::istream& waveConfig)
     : window(sf::VideoMode(2410, 1700), "Tower Defense TD"),
     renderer(window),
-    game(new Game(100, mapConfig)),
+    game(new Game(100, mapConfig, waveConfig)),
     accumulator(0.0f),
 	selectedTower(TowerType::NONE)
 {
@@ -38,6 +38,11 @@ void App::handleEvents()
 			window.close();
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			handleClicks((float)event.mouseButton.x, (float)event.mouseButton.y);
+		}
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::Space) {
+				if (game != nullptr) game->startNextWave();
+			}
 		}
 	}
 }

@@ -87,6 +87,10 @@ void Map::loadGrid(std::istream& is)
 		}
 	}
 }
+Vec2<float> Map::gridToWorld(Vec2<int> gridPos) const {
+	float ts = static_cast<float>(this->tileSize);
+	return { gridPos.x * ts + ts / 2.0f, gridPos.y * ts + ts / 2.0f };
+}
 void Map::load(std::istream& is)
 {
 	cleanUp();

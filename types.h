@@ -14,6 +14,12 @@ enum class TowerType
 	SNIPER,
 	NONE
 };
+enum class EnemyType
+{
+	NORMAL,
+	FAST,
+	TANK
+};
 
 
 #endif

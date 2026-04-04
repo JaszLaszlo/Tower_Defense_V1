@@ -32,8 +32,20 @@ class MyArray {
 		}
 		delete[] data;
 	}
+	void resize()
+	{
+		capacity *= 2;
+		T** newData = new T * [capacity];
+		for (int i = 0; i < capacity; i++)
+		{
+			if (i < count) newData[i] = data[i]; 
+			else newData[i] = nullptr;
+		}
+		delete[] data;
+		data = newData;
+	}
 public:
-	MyArray(int cap) : count(0), capacity(cap)
+	MyArray(int cap=10) : count(0), capacity(cap)
 	{
 		data = new T * [capacity];
 		for (int i = 0; i < capacity; i++)
@@ -60,12 +72,9 @@ public:
 	}
 	void Add(T* item)
 	{
-		if (count < capacity)
-			data[count++] = item;
-		else
-		{
-			throw"Megtelt a tomb";
-		}
+		if (count >= capacity) 
+			resize();
+		data[count++] = item;
 	}
 	void Remove(int idx)
 	{

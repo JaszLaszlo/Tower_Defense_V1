@@ -61,9 +61,11 @@ public:
 class EnemyManager
 {
 	MyArray<Enemy> Enemies;
+	Enemy* enemyFactory(EnemyType type, Vec2<float> pos, const Map& map) const;
 public:
 	EnemyManager(int max);
 	void Update(const Map& map,float dt);
+	void spawnEnemy(EnemyType type, const Map& map);
 	void AddEnemy(Enemy* enemy);
 	MyArray<Enemy>& getEnemies() { return Enemies; }
 	void Draw(Graphics& g) const;

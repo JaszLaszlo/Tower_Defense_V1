@@ -135,6 +135,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="Tower_Defense_V1.cpp" />
+    <ClCompile Include="wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="tower.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="vec2.h" />
+    <ClInclude Include="wave.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

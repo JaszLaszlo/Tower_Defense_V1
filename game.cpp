@@ -4,11 +4,14 @@
 #include "graphics.h"
 #include "memtrace.h"
 
-Game::Game(int maxEnemies, std::istream& is) : map(Map()), enemyManager(maxEnemies), towerManager(100),
-														   playerHp(100), running(true),
-														   spawnIntervalSeconds(1.0f), spawnTimer(0.0f)
+Game::Game(int maxEnemies, std::istream& mapIs, std::istream& waveIs) : 
+	map(Map()), enemyManager(maxEnemies), 
+	towerManager(100), waveManager(),
+	playerHp(100), running(true)
+														
 {
-	map.load(is);
+	map.load(mapIs);
+	waveManager.load(waveIs);
 }
 Vec2<float> Game::mapToWorld(Vec2<int> gridPos) const
 {
@@ -18,17 +21,7 @@ Vec2<float> Game::mapToWorld(Vec2<int> gridPos) const
 	pos.y = gridPos.y * tileSize + tileSize / 2.0f;
 	return pos;
 }
-void Game::handleSpawning(float dt)
-{
-	spawnTimer += dt;
-	if (spawnTimer >= spawnIntervalSeconds)
-	{
-		Vec2<float> startPos = mapToWorld(map.getSpawnPoint());
-		Enemy* newEnemy = new FastEnemy(startPos, map);
-		enemyManager.AddEnemy(newEnemy);
-		spawnTimer -= spawnIntervalSeconds;
-	}
-}
+
 void Game::handleTowerBuildRequest(float mx, float my, TowerType type)
 {
 	int ts = map.getTileSize();
@@ -67,9 +60,11 @@ void Game::draw(Graphics& g) const
 
 void Game::update(float dt)
 {
+	if (!running) return;
+	waveManager.update(dt, enemyManager, map);
 	enemyManager.Update(map,dt);
 	towerManager.Update(dt, enemyManager.getEnemies());
-	handleSpawning(dt);
 	cleanUpEnemies();
+	if (playerHp <= 0) running = false;
 }
 

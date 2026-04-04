@@ -92,6 +92,29 @@ Enemy::~Enemy() {}
 
 EnemyManager::EnemyManager(int max) : Enemies(max) {}
 
+Enemy* EnemyManager::enemyFactory(EnemyType type, Vec2<float> pos, const Map& map) const
+{
+	switch (type)
+	{
+	case EnemyType::NORMAL:
+		return new NormalEnemy(pos, map);
+	case EnemyType::FAST:
+		return new FastEnemy(pos, map);
+	case EnemyType::TANK:
+		return new TankEnemy(pos, map);
+	default:
+		return nullptr;
+	}
+}
+void EnemyManager::spawnEnemy(EnemyType type, const Map& map)
+{
+	Vec2<int> gridPos = map.getPathPoint(0);
+	Vec2<float> startWorldPos = map.gridToWorld(gridPos);
+	Enemy* newEnemy = enemyFactory(type, startWorldPos, map);
+	if (newEnemy != nullptr) {
+		AddEnemy(newEnemy);
+	}
+}
 void EnemyManager::AddEnemy(Enemy* enemy)
 {
 	Enemies.Add(enemy);

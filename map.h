@@ -40,5 +40,5 @@ public:
 	Vec2<int> getPathPoint(int index) const { return PathPoints[index]; }
 	bool canBuild(int y, int x) const;
 	void draw(Graphics& g) const;
-	
+	Vec2<float> gridToWorld(Vec2<int> gridPos) const;
 };

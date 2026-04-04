@@ -7,7 +7,8 @@
 int main()
 {
     std::ifstream map("palya.txt");
-    App myApp(map);
+	std::ifstream wave("wave1.txt");
+    App myApp(map, wave);
     myApp.run();
     return 0;
 
