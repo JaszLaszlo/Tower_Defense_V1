@@ -1,8 +1,14 @@
 #include "Renderer.h"
+#include <iostream>
+
+
 
 Renderer::Renderer(sf::RenderWindow& w): window(w)
 {
-	//font.loadFromFile("arial.ttf");
+	font.loadFromFile("Roboto-Regular.ttf");
+	text.setFont(font);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(20);
 }
 void Renderer::drawTile(Vec2<float> pos, TileType t, float size)
 {
@@ -65,7 +71,7 @@ void Renderer::drawFastTower(Vec2<float> pos, float size)
 	shape.setFillColor(sf::Color::Cyan);
 	window.draw(shape);
 }
-void Renderer::drawTowerButton(const TowerButton& button, bool isSelected)
+void Renderer::drawTowerButtonBackground(const TowerButton& button, bool isSelected)
 {
 	sf::RectangleShape rect(sf::Vector2f(button.w, button.h));
 	rect.setPosition(button.x, button.y);
@@ -73,7 +79,10 @@ void Renderer::drawTowerButton(const TowerButton& button, bool isSelected)
 	rect.setOutlineThickness(isSelected ? 3.0f : 1.0f);
 	rect.setOutlineColor(isSelected ? sf::Color::Yellow : sf::Color::White);
 	window.draw(rect);
-
+}
+void Renderer::drawTowerButton(const TowerButton& button, bool isSelected)
+{
+	drawTowerButtonBackground(button, isSelected);
 	Vec2<float> center(button.x + button.w / 2.0f, button.y + button.h / 2.0f);
 	float iconSize = button.h * 0.6f; 
 
@@ -120,17 +129,69 @@ void Renderer::drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent)
 		content.setFillColor(sf::Color::Green);
 		window.draw(content);
 	}
-	
-
-	
 }
-/*void Renderer::drawText(Vec2<float> pos, const std::string& text, int fontSize)
+void Renderer::drawStatBarBackground()
 {
-	sf::Text sfText;
-	sfText.setFont(font);
-	sfText.setString(text);
-	sfText.setCharacterSize(fontSize);
-	sfText.setFillColor(sf::Color::White);
-	sfText.setPosition(pos.x, pos.y);
-	window.draw(sfText);
-}*/
+	sf::RectangleShape header(sf::Vector2f(window.getSize().x, 170.0f));
+	header.setPosition(0, 1530);
+	header.setFillColor(sf::Color(40, 40, 40));
+	header.setOutlineColor(sf::Color(80, 80, 80));
+	header.setOutlineThickness(2);
+	window.draw(header);
+}
+void Renderer::drawStatBar(int hp, int money, int currentwave, float seconds, bool isCounting)
+{
+	drawStatBarBackground();
+	drawHp(hp);
+	drawMoney(money);
+	drawWaveCounter(currentwave);
+	if(isCounting)
+		drawCounter(seconds);
+}
+void Renderer::drawHp(int hp)
+{
+	text.setString("HP: " + std::to_string(hp));
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::Red);
+	text.setPosition(40, 1550);
+	window.draw(text);
+}
+void Renderer::drawMoney(int money)
+{
+	text.setString("Money: " + std::to_string(money));
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::Yellow);
+	text.setPosition(600, 1550);
+	window.draw(text);
+}
+void Renderer::drawWaveCounter(int currentwave)
+{
+	text.setString("Wave: " + std::to_string(currentwave));
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(2000, 1550);
+	window.draw(text);
+}
+void Renderer::drawCounter(float seconds)
+{
+	text.setString("NEXT WAVE: " + std::to_string((int)seconds) + "s");
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::Cyan);
+	text.setPosition(1250, 1550);
+	window.draw(text);
+}
+void Renderer::drawGameOver()
+{
+	sf::RectangleShape background(sf::Vector2f(window.getSize().x, window.getSize().y));
+	background.setPosition(0, 0);
+	background.setFillColor(sf::Color(0, 0, 0, 150));
+	window.draw(background);
+	text.setString("GAME OVER");
+	text.setCharacterSize(150);
+	text.setFillColor(sf::Color::Red);
+	sf::FloatRect textRect = text.getLocalBounds();
+	text.setOrigin(textRect.left + textRect.width / 2.0f,
+		textRect.top + textRect.height / 2.0f);
+	text.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
+	window.draw(text);
+}

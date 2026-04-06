@@ -15,6 +15,7 @@ class Game
 	TowerManager towerManager;
 	WaveManager waveManager;
 	int playerHp;
+	int money;
 	bool running;
 	Vec2<float> mapToWorld(Vec2<int> gridPos) const;
 	void cleanUpEnemies();
@@ -24,4 +25,8 @@ public:
 	void draw(Graphics& g) const;
 	void handleTowerBuildRequest(float mx, float my, TowerType type);
 	void startNextWave() { waveManager.startNextWave(); }
+	int getPlayerHp() const { return playerHp; }
+	int getMoney() const { return money; }
+	bool isRunning() const { return running; }
+	WaveManager& getWaveManager() { return waveManager; }
 };

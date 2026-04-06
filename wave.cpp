@@ -1,4 +1,5 @@
 #include "wave.h"
+#include "memtrace.h"
 
 EnemyType WaveManager::convertStringToEnemyType(const std::string& str) const
 {
@@ -57,25 +58,39 @@ void WaveManager::updateGroup(int idx, float dt, EnemyManager& em, const Map& ma
 }
 void WaveManager::update(float dt, EnemyManager& em, const  Map& map)
 {
-	if (!isWaveRunning) return;
-	waveElapsedTime += dt;
-	bool allFinished = true;
-	for (int i = 0; i < spawnGroups.size(); i++)
+	if (isWaveRunning)
 	{
-		if (spawnGroups[i]->getWaveNumber() == currentWave)
+		waveElapsedTime += dt;
+		bool allFinished = true;
+		for (int i = 0; i < spawnGroups.size(); i++)
 		{
-			updateGroup(i, dt, em, map);
-			if (!activeStatuses[i]->finished) allFinished = false;
+			if (spawnGroups[i]->getWaveNumber() == currentWave)
+			{
+				updateGroup(i, dt, em, map);
+				if (!activeStatuses[i]->finished) allFinished = false;
+			}
+		}
+		if (allFinished && em.getEnemies().size() == 0)
+		{
+			isWaveRunning = false;
+			isCountingDown = true;
+			waveCountdown = TIME_BETWEEN_WAVES;
 		}
 	}
-	if(allFinished && em.getEnemies().size() == 0)
+	else if (isCountingDown)
 	{
-		isWaveRunning = false;
+		waveCountdown -= dt;
+		if (waveCountdown <= 0) {
+			isCountingDown = false;
+			startNextWave(); 
+		}
 	}
+	
 }
 void WaveManager::startNextWave()
 {
-	if (isWaveRunning) return;
+	if (isWaveRunning) return; 
+	isCountingDown = false;
 	currentWave++;
 	waveElapsedTime = 0.0f;
 	isWaveRunning = true;

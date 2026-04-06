@@ -42,15 +42,20 @@ class WaveManager
 	int currentWave;
 	float waveElapsedTime;
 	bool isWaveRunning;
+	float waveCountdown;
+	bool isCountingDown;
+	const float TIME_BETWEEN_WAVES = 15.0f;
 	EnemyType convertStringToEnemyType(const std::string& str) const;
 	void processLine(const std::string& line, int lineNum);
 	void updateGroup(int idx, float dt, EnemyManager& em, const Map& map);
 public:
-	WaveManager() : currentWave(0), waveElapsedTime(0.0f), isWaveRunning(false) {}
+	WaveManager() : currentWave(0), waveElapsedTime(0.0f), isWaveRunning(false),isCountingDown(false) {}
 	void load(std::istream& is);
 	void update(float dt, EnemyManager& em, const  Map& map);
 	int getCurrentWave() const { return currentWave; }
 	bool isRunning() const { return isWaveRunning; }
+	float getCountdown() const { return waveCountdown; }
+	bool getIsCountingDown() const { return isCountingDown; }
 	void startNextWave();
 };
 

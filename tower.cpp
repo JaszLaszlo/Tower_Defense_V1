@@ -8,7 +8,7 @@ Tower::Tower(Vec2<float> p, float r, float d, float fr, float ft, float si) :
 	damage(d), fireRate(fr), fireTimer(ft),
 	size(si), currentTarget(nullptr) {}
 
-float Tower::getDistance(Vec2<float> v1, Vec2<float> v2) const
+float Tower::getDistance(const Vec2<float>& v1, const Vec2<float>& v2) const
 {
 	return std::hypot(v1.x - v2.x, v1.y - v2.y);
 }
@@ -103,4 +103,12 @@ void TowerManager::Draw(Graphics& g) const
 		if (towers[i] != nullptr)
 			towers[i]->draw(g);
 	}
+}
+int TowerManager::GetCostForType(TowerType type) const
+{
+	Tower* t = towerFactory(type, Vec2<float>(0.0f, 0.0f));
+	if (!t) return 0;
+	int cost = t->getCost();
+	delete t;
+	return cost;
 }

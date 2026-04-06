@@ -7,7 +7,7 @@
 Game::Game(int maxEnemies, std::istream& mapIs, std::istream& waveIs) : 
 	map(Map()), enemyManager(maxEnemies), 
 	towerManager(100), waveManager(),
-	playerHp(100), running(true)
+	playerHp(100), money(100), running(true)
 														
 {
 	map.load(mapIs);
@@ -29,12 +29,13 @@ void Game::handleTowerBuildRequest(float mx, float my, TowerType type)
 	int gridY = static_cast<int>(my) / ts;
 	if (gridX >= 0 && gridY >= 0 && gridX < map.getWidth() && gridY < map.getHeight())
 	{
-		if (map.canBuild(gridY, gridX))
-		{
-			Vec2<float> towerPos(gridX * ts + ts / 2.0f, gridY * ts + ts / 2.0f);
-			towerManager.AddTower(type, towerPos);
-			map.getTile(gridY, gridX).setType(TileType::NOTBUILDABLE);
-		}
+		if (!map.canBuild(gridY, gridX)) return;
+		int cost = towerManager.GetCostForType(type);
+		if (money < cost) return;
+		Vec2<float> towerPos(gridX * ts + ts / 2.0f, gridY * ts + ts / 2.0f);
+		towerManager.AddTower(type, towerPos);
+		money -= cost;
+		map.getTile(gridY, gridX).setType(TileType::NOTBUILDABLE);
 		
 	}
 }
@@ -43,7 +44,15 @@ void Game::cleanUpEnemies()
 	MyArray<Enemy>& enemies = enemyManager.getEnemies();
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		if (!enemies[i]->isAlive() || enemies[i]->hasReachedEnd(map)) {
+		if (!enemies[i]->isAlive()) {
+			money += enemies[i]->getReward();
+			towerManager.notifyEnemyRemoved(enemies[i]);
+			enemies.Remove(i);
+			i--;
+		}
+		else if (enemies[i]->hasReachedEnd(map))
+		{
+			playerHp -= 10; 
 			towerManager.notifyEnemyRemoved(enemies[i]);
 			enemies.Remove(i);
 			i--;

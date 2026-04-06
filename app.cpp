@@ -1,14 +1,15 @@
 #include "app.h"
+#include "memtrace.h"
 
-App::App(std::istream& mapConfig, std::istream& waveConfig)
-    : window(sf::VideoMode(2410, 1700), "Tower Defense TD"),
-    renderer(window),
+App::App(std::istream& mapConfig, std::istream& waveConfig) :
+	window(sf::VideoMode(2560, 1700), "Tower Defense"),
+	renderer(window),
     game(new Game(100, mapConfig, waveConfig)),
     accumulator(0.0f),
 	selectedTower(TowerType::NONE)
 {
+	window.setPosition(sf::Vector2i(160, 0));
     lastTime = std::chrono::steady_clock::now();
-	
 	initSidebar();
 }
 App::~App() {
@@ -50,8 +51,8 @@ void App::initSidebar()
 {
 	float buttonWidth = 150.0f;
 	float buttonHeight = 50.0f;
-	float startX = window.getSize().x - buttonWidth - 20.0f; 
-	float startY = 20.0f; 
+	float startX = window.getSize().x - buttonWidth - 90.0f; 
+	float startY = 100.0f; 
 	float gap = 10.0f; 
 	sidebarButtons.push_back({ TowerType::NORMAL, startX, startY, buttonWidth, buttonHeight });
 	sidebarButtons.push_back({ TowerType::FAST,   startX, startY + (buttonHeight + gap), buttonWidth, buttonHeight });
@@ -70,6 +71,14 @@ void App::render()
 		game->draw(renderer);
 		for (const auto& btn : sidebarButtons) {
 			renderer.drawTowerButton(btn, selectedTower == btn.type);
+		}
+		renderer.drawStatBar(
+			game->getPlayerHp(), game->getMoney(), 
+			game->getWaveManager().getCurrentWave(), 
+			game->getWaveManager().getCountdown(), 
+			game->getWaveManager().getIsCountingDown());
+		if (!game->isRunning()) {
+			renderer.drawGameOver();
 		}
 	}
 	window.display();

@@ -76,7 +76,7 @@ void Enemy::applyMovement(const Vec2<float>& target, float moveStep, float dista
 }
 void Enemy::Move(const Map& map, float dt)
 {
-	if (currentPathIndex >= map.getPathSize() - 1) return;
+	if (hasReachedEnd(map)) return;
 	Vec2<float> target = getOffsetTarget(map, currentPathIndex);
 	float distance = std::hypot(target.x - position.x, target.y - position.y);
 	applyMovement(target, speed * dt, distance);

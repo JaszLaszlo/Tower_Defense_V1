@@ -32,6 +32,7 @@ public:
 	bool isAlive() const;
 	void takeDamage(float amount) { hp -= amount; }
 	virtual void draw(Graphics& g) const = 0;
+	virtual int getReward() const = 0;
 	virtual Enemy* clone() const = 0;
 
 };
@@ -41,6 +42,7 @@ class FastEnemy : public Enemy
 public:
 	FastEnemy(Vec2<float> p, const Map& map) : Enemy(p, 10.0, 10.0,85.0,55.0, map) {}
 	void draw(Graphics& g) const;
+	int getReward() const override { return 2; }
 	FastEnemy* clone() const override { return new FastEnemy(*this); }
 };
 class NormalEnemy : public Enemy
@@ -48,6 +50,7 @@ class NormalEnemy : public Enemy
 public:
 	NormalEnemy(Vec2<float> p, const Map& map) : Enemy(p, 20.0, 20.0, 55.0,30.0, map) {}
 	void draw(Graphics& g) const;
+	int getReward() const override { return 1; }
 	NormalEnemy* clone() const override { return new NormalEnemy(*this); }
 };
 class TankEnemy : public Enemy
@@ -55,6 +58,7 @@ class TankEnemy : public Enemy
 public:
 	TankEnemy(Vec2<float> p, const Map& map) : Enemy(p, 35.0, 35.0, 40.0,30.0, map) {}
 	void draw(Graphics& g) const;
+	int getReward() const override { return 3; }
 	TankEnemy* clone() const override { return new TankEnemy(*this); }
 };
 
