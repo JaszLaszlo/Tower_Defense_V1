@@ -17,16 +17,21 @@ class Game
 	int playerHp;
 	int money;
 	bool running;
-	Vec2<float> mapToWorld(Vec2<int> gridPos) const;
+	Tower* selectedTower;
 	void cleanUpEnemies();
 public:
-	Game(int maxEnemies, std::istream& mapIs, std::istream& waveIs);
+	Game(std::istream& mapIs, std::istream& waveIs);
 	void update(float dt);
 	void draw(Graphics& g) const;
 	void handleTowerBuildRequest(float mx, float my, TowerType type);
+	void handleTowerUpgrade();
 	void startNextWave() { waveManager.startNextWave(); }
 	int getPlayerHp() const { return playerHp; }
 	int getMoney() const { return money; }
 	bool isRunning() const { return running; }
 	WaveManager& getWaveManager() { return waveManager; }
+	Tower* getTowerAt(float mx, float my);
+	void sellTower(Tower* t);
+	void setSelectedTower(Tower* t) { selectedTower = t; }
+	Tower* getSelectedTower() const { return selectedTower; }
 };

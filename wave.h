@@ -49,7 +49,10 @@ class WaveManager
 	void processLine(const std::string& line, int lineNum);
 	void updateGroup(int idx, float dt, EnemyManager& em, const Map& map);
 public:
-	WaveManager() : currentWave(0), waveElapsedTime(0.0f), isWaveRunning(false),isCountingDown(false) {}
+	WaveManager() : 
+		currentWave(0), waveElapsedTime(0.0f),
+		isWaveRunning(false),isCountingDown(false),
+		waveCountdown(0.0f) {}
 	void load(std::istream& is);
 	void update(float dt, EnemyManager& em, const  Map& map);
 	int getCurrentWave() const { return currentWave; }

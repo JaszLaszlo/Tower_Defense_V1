@@ -4,38 +4,31 @@
 #include "graphics.h"
 #include "memtrace.h"
 
-Game::Game(int maxEnemies, std::istream& mapIs, std::istream& waveIs) : 
-	map(Map()), enemyManager(maxEnemies), 
-	towerManager(100), waveManager(),
-	playerHp(100), money(100), running(true)
+Game::Game(std::istream& mapIs, std::istream& waveIs) : 
+	map(), enemyManager(),
+	towerManager(), waveManager(),
+	playerHp(100), money(200), 
+	running(true), selectedTower(nullptr)
 														
 {
 	map.load(mapIs);
 	waveManager.load(waveIs);
 }
-Vec2<float> Game::mapToWorld(Vec2<int> gridPos) const
-{
-	Vec2<float> pos;
-	float tileSize = static_cast<float>(map.getTileSize());
-	pos.x = gridPos.x * tileSize + tileSize / 2.0f;
-	pos.y = gridPos.y * tileSize + tileSize / 2.0f;
-	return pos;
-}
+
 
 void Game::handleTowerBuildRequest(float mx, float my, TowerType type)
 {
 	int ts = map.getTileSize();
-	int gridX = static_cast<int>(mx) / ts;
-	int gridY = static_cast<int>(my) / ts;
-	if (gridX >= 0 && gridY >= 0 && gridX < map.getWidth() && gridY < map.getHeight())
+	Vec2<int> gridPos = Vec2<float>::worldToGrid({ mx, my }, ts);
+	if (gridPos.x >= 0 && gridPos.y >= 0 && gridPos.x < map.getWidth() && gridPos.y < map.getHeight())
 	{
-		if (!map.canBuild(gridY, gridX)) return;
+		if (!map.canBuild(gridPos.y, gridPos.x)) return;
 		int cost = towerManager.GetCostForType(type);
 		if (money < cost) return;
-		Vec2<float> towerPos(gridX * ts + ts / 2.0f, gridY * ts + ts / 2.0f);
+		Vec2<float> towerPos = Vec2<int>::gridToWorld(gridPos, ts);
 		towerManager.AddTower(type, towerPos);
 		money -= cost;
-		map.getTile(gridY, gridX).setType(TileType::NOTBUILDABLE);
+		map.getTile(gridPos.y, gridPos.x).setType(TileType::NOTBUILDABLE);
 		
 	}
 }
@@ -75,5 +68,37 @@ void Game::update(float dt)
 	towerManager.Update(dt, enemyManager.getEnemies());
 	cleanUpEnemies();
 	if (playerHp <= 0) running = false;
+}
+Tower* Game::getTowerAt(float mx, float my)
+{
+	Vec2<float> pos(mx, my);
+	int ts = map.getTileSize();
+	return towerManager.GetTowerAt(pos, ts);
+
+}
+void Game::sellTower(Tower* t)
+{
+	if (t==nullptr) return;
+	if (selectedTower == t) selectedTower = nullptr;
+	Vec2<float> pos;
+	int sell = towerManager.sellTower(t, pos);
+	if (sell <= 0) return;
+	money += sell;
+	int ts = map.getTileSize();
+	Vec2<int> gridPos = Vec2<float>::worldToGrid(pos, ts);
+	if (gridPos.x >= 0 && gridPos.y >= 0 && gridPos.x < map.getWidth() && gridPos.y < map.getHeight())
+	{
+		map.getTile(gridPos.y, gridPos.x).setType(TileType::BUILDABLE);
+	}
+}
+void Game::handleTowerUpgrade()
+{
+	if (selectedTower == nullptr || !selectedTower->canUpgrade()) return;
+	int cost = selectedTower->getUpgradeCost();
+	if (money >= cost)
+	{
+		money -= cost;
+		selectedTower->upgrade();
+	}
 }
 

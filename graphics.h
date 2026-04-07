@@ -36,6 +36,7 @@ public:
 	virtual void drawWaveCounter(int currentwave) = 0;
 	virtual void drawCounter(float seconds) = 0;
 	virtual void drawGameOver() = 0;
+	virtual void drawTowerStats(float d, float fr, float r, int l, int uCost) = 0;
 };
 
 #endif

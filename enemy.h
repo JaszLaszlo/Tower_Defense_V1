@@ -21,7 +21,7 @@ protected:
 	void applyMovement(const Vec2<float>& target, float moveStep, float distance);
 	
 public:
-	Enemy(Vec2<float> p, float h, float mH, float sp, float si, const Map& map);
+	Enemy(Vec2<float> p, float h, float sp, float si, const Map& map, float multiplier);
 	virtual ~Enemy();
 	Vec2<float> getPosition() const { return position; }
 	float getSize() const { return size; }
@@ -40,36 +40,39 @@ public:
 class FastEnemy : public Enemy
 {
 public:
-	FastEnemy(Vec2<float> p, const Map& map) : Enemy(p, 10.0, 10.0,85.0,55.0, map) {}
+	FastEnemy(Vec2<float> p, const Map& map, float mult) 
+		: Enemy(p, 15.0f,130.0f,55.0f, map, mult) {}
 	void draw(Graphics& g) const;
-	int getReward() const override { return 2; }
+	int getReward() const override { return 6; }
 	FastEnemy* clone() const override { return new FastEnemy(*this); }
 };
 class NormalEnemy : public Enemy
 {
 public:
-	NormalEnemy(Vec2<float> p, const Map& map) : Enemy(p, 20.0, 20.0, 55.0,30.0, map) {}
+	NormalEnemy(Vec2<float> p, const Map& map, float mult) : 
+		Enemy(p, 30.0f, 60.0f, 30.0f, map, mult) {}
 	void draw(Graphics& g) const;
-	int getReward() const override { return 1; }
+	int getReward() const override { return 3; }
 	NormalEnemy* clone() const override { return new NormalEnemy(*this); }
 };
 class TankEnemy : public Enemy
 {
 public:
-	TankEnemy(Vec2<float> p, const Map& map) : Enemy(p, 35.0, 35.0, 40.0,30.0, map) {}
+	TankEnemy(Vec2<float> p, const Map& map, float mult)
+		: Enemy(p, 120.0f, 35.0f, 30.0f, map, mult) {}
 	void draw(Graphics& g) const;
-	int getReward() const override { return 3; }
+	int getReward() const override { return 9; }
 	TankEnemy* clone() const override { return new TankEnemy(*this); }
 };
 
 class EnemyManager
 {
 	MyArray<Enemy> Enemies;
-	Enemy* enemyFactory(EnemyType type, Vec2<float> pos, const Map& map) const;
+	Enemy* enemyFactory(EnemyType type, Vec2<float> pos, const Map& map, float mult) const;
 public:
-	EnemyManager(int max);
+	EnemyManager() : Enemies() {}
 	void Update(const Map& map,float dt);
-	void spawnEnemy(EnemyType type, const Map& map);
+	void spawnEnemy(EnemyType type, const Map& map, int wave);
 	void AddEnemy(Enemy* enemy);
 	MyArray<Enemy>& getEnemies() { return Enemies; }
 	void Draw(Graphics& g) const;

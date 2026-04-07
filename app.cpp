@@ -1,14 +1,15 @@
 #include "app.h"
 #include "memtrace.h"
 
+
 App::App(std::istream& mapConfig, std::istream& waveConfig) :
-	window(sf::VideoMode(2560, 1700), "Tower Defense"),
+	window(sf::VideoMode(2700, 1700), "Tower Defense"),
 	renderer(window),
-    game(new Game(100, mapConfig, waveConfig)),
+    game(new Game(mapConfig, waveConfig)),
     accumulator(0.0f),
-	selectedTower(TowerType::NONE)
+	selectedTowerType(TowerType::NONE)
 {
-	window.setPosition(sf::Vector2i(160, 0));
+	window.setPosition(sf::Vector2i(75, 0));
     lastTime = std::chrono::steady_clock::now();
 	initSidebar();
 }
@@ -23,13 +24,19 @@ void App::handleClicks(float mx, float my)
 		for (const TowerButton& button : sidebarButtons) 
 		{
 			if (button.isClicked(mx, my)) {
-				selectedTower = button.type;
+				selectedTowerType = button.type;
 				break;
 			}
 		}
 	}
-	else if (game != nullptr && selectedTower!=TowerType::NONE)
-		game->handleTowerBuildRequest(mx, my, selectedTower);
+	else
+	{
+		Tower* clicked = game->getTowerAt(mx, my);
+		game->setSelectedTower(clicked);
+		if (game != nullptr && selectedTowerType!=TowerType::NONE && clicked==nullptr)
+			game->handleTowerBuildRequest(mx, my, selectedTowerType);
+	}
+		
 }
 void App::handleEvents()
 {
@@ -43,6 +50,19 @@ void App::handleEvents()
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::Space) {
 				if (game != nullptr) game->startNextWave();
+			}
+		}
+		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right) {
+			if (game != nullptr) {
+				Tower* t = game->getTowerAt((float)event.mouseButton.x, (float)event.mouseButton.y);
+				if (t != nullptr) {
+					game->sellTower(t); 
+				}
+			}
+		}
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::U) {
+				game->handleTowerUpgrade();
 			}
 		}
 	}
@@ -70,7 +90,13 @@ void App::render()
 	{
 		game->draw(renderer);
 		for (const auto& btn : sidebarButtons) {
-			renderer.drawTowerButton(btn, selectedTower == btn.type);
+			renderer.drawTowerButton(btn, selectedTowerType == btn.type);
+		}
+		Tower* sel = game->getSelectedTower();
+		if (sel != nullptr) {
+			renderer.drawTowerStats(sel->getDamage(), sel->getFireRate(),
+									sel->getRange(), sel->getLevel(), sel->getUpgradeCost());
+			renderer.drawRangeCircle(sel->getPosition(), sel->getRange());
 		}
 		renderer.drawStatBar(
 			game->getPlayerHp(), game->getMoney(), 

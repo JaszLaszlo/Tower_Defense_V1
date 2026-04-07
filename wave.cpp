@@ -48,7 +48,7 @@ void WaveManager::updateGroup(int idx, float dt, EnemyManager& em, const Map& ma
 	status->timer += dt;
 	while (status->timer >= group->getInterval() && status->spawnedSoFar < group->getCount())
 	{
-		em.spawnEnemy(group->getEnemyType(), map);
+		em.spawnEnemy(group->getEnemyType(), map, currentWave);
 		status->spawnedSoFar++;
 		status->timer -= group->getInterval();
 	}

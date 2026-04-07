@@ -20,7 +20,7 @@ class App {
     std::chrono::steady_clock::time_point lastTime;
 
     std::vector<TowerButton> sidebarButtons;
-	TowerType selectedTower;
+	TowerType selectedTowerType;
 	void initSidebar();
     void handleClicks(float mx, float my);
 

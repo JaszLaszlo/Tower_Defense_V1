@@ -9,7 +9,16 @@
 class Renderer : public Graphics {
     sf::RenderWindow& window;
     sf::Font font;
-    sf::Text text;
+    // Reusable text objects with fixed character sizes to avoid changing size each frame
+    sf::Text textSmall;
+    sf::Text textMedium;
+    sf::Text textLarge;
+    // Reusable shapes to avoid allocating shapes each frame
+    sf::RectangleShape rectShape;
+    sf::CircleShape circleShape;
+    sf::CircleShape rangeCircle;
+    sf::RectangleShape hpFrame;
+    sf::RectangleShape hpContent;
 public:
     Renderer(sf::RenderWindow& w);
 
@@ -36,6 +45,7 @@ public:
     void drawWaveCounter(int currentwave) override;
     void drawCounter(float seconds) override;
     void drawGameOver() override;
+	void drawTowerStats(float d, float fr, float r, int l, int uCost) override;
 
 };
 

@@ -14,6 +14,8 @@ protected:
 	float fireRate;
 	float fireTimer;
 	float size;
+	int level;
+	const int maxLevel;
 	Enemy* currentTarget;
 	float getDistance(const Vec2<float>& v1, const Vec2<float>& v2) const;
 	Enemy* findtarget(MyArray<Enemy>& enemies) const;
@@ -24,12 +26,19 @@ public:
 	Enemy* getCurrentTarget() const { return currentTarget; }
 	float getRange() const { return range; }
 	float getSize() const { return size; }
+	float getDamage() const { return damage; }
+	float getFireRate() const { return fireRate; }
+	int getLevel() const { return level; }
+	bool canUpgrade() const { return level < maxLevel; }
 	Vec2<float> getPosition() const { return position; }
 	void resetTarget() { currentTarget = nullptr; }
 	virtual void attack(Enemy* enemy) const { enemy->takeDamage(damage); }
 	void Update(float dt, MyArray<Enemy>& enemies);
 	virtual void draw(Graphics& g) const = 0;
 	virtual int getCost() const = 0;
+	virtual int getSellValue() const;
+	virtual void upgrade() = 0;
+	int getUpgradeCost() const;
 	virtual Tower* clone() const = 0;
 	
 };
@@ -39,6 +48,7 @@ public:
 	NormalTower(Vec2<float> p): Tower(p, 400.0, 10.0, 1.0,0.0,150.0) {}
 	void draw(Graphics& g) const;
 	int getCost() const override { return 50; }
+	void upgrade() override;
 	NormalTower* clone() const override { return new NormalTower(*this); }
 };
 class FastTower : public Tower
@@ -47,6 +57,7 @@ public:
 	FastTower(Vec2<float> p): Tower(p, 300.0, 5.0, 0.5, 0.0, 150.0) {}
 	void draw(Graphics& g) const;
 	int getCost() const override { return 70; }
+	void upgrade() override;
 	FastTower* clone() const override { return new FastTower(*this); }
 };
 class SniperTower : public Tower
@@ -55,6 +66,7 @@ public:
 	SniperTower(Vec2<float> p): Tower(p, 900.0, 20.0, 3.0, 0.0, 150.0) {}
 	void draw(Graphics& g) const;
 	int getCost() const override { return 90; }
+	void upgrade() override;
 	SniperTower* clone() const override { return new SniperTower(*this); }
 };
 class TowerManager
@@ -62,12 +74,14 @@ class TowerManager
 	MyArray<Tower> towers;
 	Tower* towerFactory(TowerType type, Vec2<float> pos) const;
 public:
-	TowerManager(int max): towers(max) {}
+	TowerManager(): towers() {}
 	void notifyEnemyRemoved(Enemy* enemy);
 	void AddTower(TowerType type, Vec2<float> pos);
 	void Update(float dt, MyArray<Enemy>& enemies);
 	void Draw(Graphics& g) const;
 	int GetCostForType(TowerType type) const;
+	Tower* GetTowerAt(const Vec2<float>& pos, int ts);
+	int sellTower(Tower *t, Vec2<float>& pos);
 };
 
 #endif

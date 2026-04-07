@@ -2,9 +2,11 @@
 #include "enemy.h"
 #include "map.h"
 #include "memtrace.h"
-Enemy::Enemy(Vec2<float> p, float h, float mH, float sp, float si, const Map& map) : position(p), hp(h), maxHp(mH),
-speed(sp), size(si), currentPathIndex(0)
+Enemy::Enemy(Vec2<float> p, float h, float sp, float si, const Map& map, float multiplier) : 
+	position(p), speed(sp), size(si), currentPathIndex(0)
 {
+	maxHp = h * multiplier;
+	hp = maxHp;
 	float maxMovementRange = static_cast<float>(map.getTileSize() - size);
 	offset = (static_cast<float>(std::rand() % static_cast<int>(maxMovementRange))
 		- maxMovementRange / 2.0f);
@@ -90,27 +92,26 @@ bool Enemy::hasReachedEnd(const Map& map) const {
 }
 Enemy::~Enemy() {}
 
-EnemyManager::EnemyManager(int max) : Enemies(max) {}
-
-Enemy* EnemyManager::enemyFactory(EnemyType type, Vec2<float> pos, const Map& map) const
+Enemy* EnemyManager::enemyFactory(EnemyType type, Vec2<float> pos, const Map& map, float mult) const
 {
 	switch (type)
 	{
 	case EnemyType::NORMAL:
-		return new NormalEnemy(pos, map);
+		return new NormalEnemy(pos, map, mult);
 	case EnemyType::FAST:
-		return new FastEnemy(pos, map);
+		return new FastEnemy(pos, map, mult);
 	case EnemyType::TANK:
-		return new TankEnemy(pos, map);
+		return new TankEnemy(pos, map, mult);
 	default:
 		return nullptr;
 	}
 }
-void EnemyManager::spawnEnemy(EnemyType type, const Map& map)
+void EnemyManager::spawnEnemy(EnemyType type, const Map& map, int wave)
 {
 	Vec2<int> gridPos = map.getPathPoint(0);
 	Vec2<float> startWorldPos = map.gridToWorld(gridPos);
-	Enemy* newEnemy = enemyFactory(type, startWorldPos, map);
+	float multiplier = 1.0f + (wave * 0.2f);
+	Enemy* newEnemy = enemyFactory(type, startWorldPos, map, multiplier);
 	if (newEnemy != nullptr) {
 		AddEnemy(newEnemy);
 	}
