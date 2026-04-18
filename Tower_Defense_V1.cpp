@@ -10,9 +10,7 @@
 int main()
 {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    std::ifstream map("palya.txt");
-	std::ifstream wave("wave1.txt");
-    App myApp(map, wave);
-    myApp.run();
+    App app;
+    app.run();
      return 0;
 }

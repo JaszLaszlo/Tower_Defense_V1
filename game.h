@@ -29,9 +29,12 @@ public:
 	int getPlayerHp() const { return playerHp; }
 	int getMoney() const { return money; }
 	bool isRunning() const { return running; }
+	bool isFinished() const;
 	WaveManager& getWaveManager() { return waveManager; }
 	Tower* getTowerAt(float mx, float my);
 	void sellTower(Tower* t);
 	void setSelectedTower(Tower* t) { selectedTower = t; }
+	void setHp(int hp) { playerHp = hp; }
+	void setMoney(int m) { money = m; }
 	Tower* getSelectedTower() const { return selectedTower; }
 };

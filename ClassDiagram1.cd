@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="App">
+    <Position X="9.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAEAAABABAAAAAAAgAAAAEAAAQIAgQQAAA0gAA=</HashCode>
+      <FileName>app.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgCAMgGAAIAAARAIQIIBIIAAAAAAAQCAAABAEAEAAAA=</HashCode>
+      <FileName>enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FastEnemy" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAIAAAAABAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NormalEnemy" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAEEAAAAA=</HashCode>
+      <FileName>enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TankEnemy" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAECAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyManager" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAEAAAAAQAgAAAAAAAQAAAAEAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCcAAAAAACAABBAAIAAAABAAgAASEIAAIAgAUEEAA=</HashCode>
+      <FileName>game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graphics" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAABEAAgAQACAAACAAIAEBBAAIQAgAIAEBAgAAIAE=</HashCode>
+      <FileName>graphics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelManager" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACAAAAAAAAAAAAAAAACAEAEAAAABAAAABAAEA=</HashCode>
+      <FileName>level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tile" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAARABAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAJZAAAAYAQAoIAEAEAIAAQgYAAAAoAAEAABA=</HashCode>
+      <FileName>map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="atexit_class" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAIAACAAAAAAAAACAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>memtrace.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyArray&lt;T&gt;" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAAEAAAAAAAABIoABAAAAAEAAAAAAQIwAAAAAAA=</HashCode>
+      <FileName>MyArray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgJAABEAAiAQACAAACAFIAUBBACIQAgIIAGBAgAAIgA=</HashCode>
+      <FileName>Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tower" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQBKAGIEIIQwAAAAIMAIAAAIBEAAAGAAAAAUAAIKQA=</HashCode>
+      <FileName>tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NormalTower" Collapsed="true">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAIAACAAIAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FastTower" Collapsed="true">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAIAAAACIAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SniperTower" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAEAAAAIAAAAAIAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerManager" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQQAAAAAAAAAgAAAAEAAAAAAAAAAAAAAIAAAAQAAgM=</HashCode>
+      <FileName>tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpawnGroup" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAABAhgAAAAAAAAAAAAAAAAQBEAAkBQA=</HashCode>
+      <FileName>wave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WaveManager" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAIAAAIAAAABAACAAAAAAAACEAAQCwAAEkAAEAEg=</HashCode>
+      <FileName>wave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TowerButton" Collapsed="true">
+    <Position X="13.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAABAAAAQAhgAAAAAAA=</HashCode>
+      <FileName>graphics.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="LevelData" Collapsed="true">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAABAAAgAAAAAAAAAAAAAEAAAAAQAAAAAABAAAA=</HashCode>
+      <FileName>level.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Vec2&lt;T&gt;" Collapsed="true">
+    <Position X="15.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAQAABgAAAAQAAAAAAAAAAAABggAAAAAA=</HashCode>
+      <FileName>vec2.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="TileType" Collapsed="true">
+    <Position X="15.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>types.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TowerType" Collapsed="true">
+    <Position X="17.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAARAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>types.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EnemyType" Collapsed="true">
+    <Position X="12" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAIAA=</HashCode>
+      <FileName>types.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="gameState" Collapsed="true">
+    <Position X="13.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAACAAIBAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>types.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

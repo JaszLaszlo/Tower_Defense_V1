@@ -6,28 +6,31 @@
 #include <thread>
 #include <vector>
 #include "renderer.h"
-#include "game.h"
 #include "types.h"
+#include "level.h"
+#include "IApp.h"
+#include "state.h"
 
-
-class App {
+class App : public IApp{
     sf::RenderWindow window;
     Renderer renderer;
-    Game* game;
-
+	State* currentState;
+    bool running;
     const float dt = 0.016667f;
     float accumulator;
     std::chrono::steady_clock::time_point lastTime;
-
-    std::vector<TowerButton> sidebarButtons;
-	TowerType selectedTowerType;
-	void initSidebar();
-    void handleClicks(float mx, float my);
-
+    
+	LevelManager levelManager;
 public:
-    App(std::istream& mapConfig, std::istream& waveconfig);
+    App();
     ~App();
-
+    void changeState(gameState type) override;
+    LevelManager& getLevelManager() override {
+        return levelManager;
+    }
+    Graphics& getGraphics() {
+        return renderer; 
+    }
     void run();          
     void handleEvents();  
     void update(float dt); 

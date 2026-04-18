@@ -27,6 +27,10 @@ void WaveManager::processLine(const std::string& line, int lineNum)
 void WaveManager::load(std::istream& is)
 {
 	std::string line;
+	if (std::getline(is, line)) {
+		 int totalWaves = std::stoi(line); 
+		 maxWave = totalWaves;
+	}
 	int lineNum = 0; 
 	while (std::getline(is, line)) {
 		lineNum++; 
@@ -39,6 +43,7 @@ void WaveManager::load(std::istream& is)
 			throw std::runtime_error("Hiba a(z) " + std::to_string(lineNum) + ". sorban: " + e.what());
 		}
 	}
+	
 }
 void WaveManager::updateGroup(int idx, float dt, EnemyManager& em, const Map& map)
 {
@@ -73,8 +78,10 @@ void WaveManager::update(float dt, EnemyManager& em, const  Map& map)
 		if (allFinished && em.getEnemies().size() == 0)
 		{
 			isWaveRunning = false;
-			isCountingDown = true;
-			waveCountdown = TIME_BETWEEN_WAVES;
+			if (currentWave < maxWave) {
+				isCountingDown = true;
+				waveCountdown = TIME_BETWEEN_WAVES;
+			}
 		}
 	}
 	else if (isCountingDown)
@@ -94,4 +101,7 @@ void WaveManager::startNextWave()
 	currentWave++;
 	waveElapsedTime = 0.0f;
 	isWaveRunning = true;
+}
+bool WaveManager::isFinished() const {
+	return (currentWave >= maxWave && !isWaveRunning);
 }

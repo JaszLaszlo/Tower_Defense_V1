@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "types.h"
 #include <iostream>
 #include <iomanip>  
 #include <sstream>
@@ -108,7 +109,7 @@ void Renderer::drawFastTower(Vec2<float> pos, float size)
     rectShape.setOutlineThickness(0.0f);
     window.draw(rectShape);
 }
-void Renderer::drawTowerButtonBackground(const TowerButton& button, bool isSelected)
+void Renderer::drawTowerButtonBackground(const towerButton& button, bool isSelected)
 {
     rectShape.setSize(sf::Vector2f(button.w, button.h));
     rectShape.setPosition(button.x, button.y);
@@ -118,7 +119,7 @@ void Renderer::drawTowerButtonBackground(const TowerButton& button, bool isSelec
     rectShape.setOutlineColor(isSelected ? sf::Color::Yellow : sf::Color::White);
     window.draw(rectShape);
 }
-void Renderer::drawTowerButton(const TowerButton& button, bool isSelected)
+void Renderer::drawTowerButton(const towerButton& button, bool isSelected)
 {
     drawTowerButtonBackground(button, isSelected);
     Vec2<float> center(button.x + button.w / 2.0f, button.y + button.h / 2.0f);
@@ -236,6 +237,23 @@ void Renderer::drawGameOver()
     textLarge.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
     window.draw(textLarge);
 }
+void Renderer::drawYouWin()
+{
+    rectShape.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    rectShape.setPosition(0, 0);
+    rectShape.setOrigin(0.0f, 0.0f);
+    rectShape.setFillColor(sf::Color(0, 0, 0, 150));
+    rectShape.setOutlineThickness(0.0f);
+    window.draw(rectShape);
+
+    textLarge.setString("YOU WIN");
+    textLarge.setFillColor(sf::Color::Green);
+    sf::FloatRect textRect = textLarge.getLocalBounds();
+    textLarge.setOrigin(textRect.left + textRect.width / 2.0f,
+        textRect.top + textRect.height / 2.0f);
+    textLarge.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
+    window.draw(textLarge);
+}
 void Renderer::drawTowerStats(float d, float fr, float r, int l, int uCost)
 {
     std::stringstream ss;
@@ -247,7 +265,7 @@ void Renderer::drawTowerStats(float d, float fr, float r, int l, int uCost)
 	ss << std::setw(15) << "Level:" << l << "\n";
 	ss << std::setw(15) << "Upgrade Cost:" << uCost << "\n";
     ss << "------------------\n";
-    ss << "Right Click to Sell\n";
+    ss << "Press S to Sell\n";
 	ss << "Press U to Upgrade";
     textMedium.setString(ss.str());
     textMedium.setCharacterSize(35); 
@@ -255,4 +273,21 @@ void Renderer::drawTowerStats(float d, float fr, float r, int l, int uCost)
     textMedium.setPosition(2250.0f, 500.0f);
     window.draw(textMedium);
 	textMedium.setCharacterSize(50);
+}
+void Renderer::drawButton(float x, float y, float w, float h, const std::string& text)
+{
+    rectShape.setPosition(x, y);
+    rectShape.setSize(sf::Vector2f(w, h));
+    rectShape.setFillColor(sf::Color(60, 60, 60)); 
+    rectShape.setOutlineThickness(2.0f);
+    rectShape.setOutlineColor(sf::Color::White);
+    window.draw(rectShape);
+    textMedium.setString(text);
+    textMedium.setFillColor(sf::Color::White);
+    sf::FloatRect textBounds = textMedium.getLocalBounds();
+    textMedium.setPosition(
+        x + (w - textBounds.width) / 2.0f - textBounds.left,
+        y + (h - textBounds.height) / 2.0f - textBounds.top
+    );
+    window.draw(textMedium);
 }

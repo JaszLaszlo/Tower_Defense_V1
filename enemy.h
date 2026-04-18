@@ -76,4 +76,5 @@ public:
 	void AddEnemy(Enemy* enemy);
 	MyArray<Enemy>& getEnemies() { return Enemies; }
 	void Draw(Graphics& g) const;
+	bool isEmpty() const { return Enemies.size() == 0; }
 };

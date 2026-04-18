@@ -5,15 +5,14 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "graphics.h"
+#include "types.h"
 
 class Renderer : public Graphics {
     sf::RenderWindow& window;
     sf::Font font;
-    // Reusable text objects with fixed character sizes to avoid changing size each frame
     sf::Text textSmall;
     sf::Text textMedium;
     sf::Text textLarge;
-    // Reusable shapes to avoid allocating shapes each frame
     sf::RectangleShape rectShape;
     sf::CircleShape circleShape;
     sf::CircleShape rangeCircle;
@@ -32,8 +31,8 @@ public:
     void drawSniperTower(Vec2<float> pos, float size) override;
     void drawFastTower(Vec2<float> pos, float size) override;
 
-    void drawTowerButton(const TowerButton& button, bool isSelected) override;
-    void drawTowerButtonBackground(const TowerButton& button, bool isSelected) override;
+    void drawTowerButton(const towerButton& button, bool isSelected) override;
+    void drawTowerButtonBackground(const towerButton& button, bool isSelected) override;
     void drawSidebarBackground(float x, float width) override;
     void drawRangeCircle(Vec2<float> pos, float range) override;
     void drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent) override;
@@ -45,7 +44,9 @@ public:
     void drawWaveCounter(int currentwave) override;
     void drawCounter(float seconds) override;
     void drawGameOver() override;
+    void drawYouWin() override;
 	void drawTowerStats(float d, float fr, float r, int l, int uCost) override;
+    void drawButton(float x, float y, float w, float h, const std::string& text) override;
 
 };
 

@@ -101,4 +101,8 @@ void Game::handleTowerUpgrade()
 		selectedTower->upgrade();
 	}
 }
+bool Game::isFinished() const
+{
+	return waveManager.isFinished() && enemyManager.isEmpty();
+}
 

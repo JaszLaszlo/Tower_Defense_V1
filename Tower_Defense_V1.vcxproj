@@ -130,9 +130,11 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="memtrace.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="Tower_Defense_V1.cpp" />
     <ClCompile Include="wave.cpp" />
@@ -143,10 +145,13 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="IApp.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memtrace.h" />
     <ClInclude Include="MyArray.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="state.h" />
     <ClInclude Include="tower.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="vec2.h" />

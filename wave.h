@@ -40,6 +40,7 @@ class WaveManager
 	MyArray<SpawnGroup> spawnGroups;
 	MyArray<ActiveWaveStatus> activeStatuses;
 	int currentWave;
+	int maxWave;
 	float waveElapsedTime;
 	bool isWaveRunning;
 	float waveCountdown;
@@ -51,8 +52,8 @@ class WaveManager
 public:
 	WaveManager() : 
 		currentWave(0), waveElapsedTime(0.0f),
-		isWaveRunning(false),isCountingDown(false),
-		waveCountdown(0.0f) {}
+		isWaveRunning(false), isCountingDown(false),
+		waveCountdown(0.0f), maxWave(0) {}
 	void load(std::istream& is);
 	void update(float dt, EnemyManager& em, const  Map& map);
 	int getCurrentWave() const { return currentWave; }
@@ -60,6 +61,7 @@ public:
 	float getCountdown() const { return waveCountdown; }
 	bool getIsCountingDown() const { return isCountingDown; }
 	void startNextWave();
+	bool isFinished() const;
 };
 
 
