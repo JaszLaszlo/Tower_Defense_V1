@@ -22,6 +22,8 @@ public:
     Renderer(sf::RenderWindow& w);
 
     void drawTile(Vec2<float> pos, TileType t, float size) override;
+    void drawGrid(int width, int height, float tileSize) override;
+    void drawPathNumbers(const std::vector<Vec2<int>>& pathPoints, float tileSize) override;
 
     void drawNormalEnemy(Vec2<float> pos, float size) override;
     void drawFastEnemy(Vec2<float> pos, float size) override;
@@ -31,9 +33,9 @@ public:
     void drawSniperTower(Vec2<float> pos, float size) override;
     void drawFastTower(Vec2<float> pos, float size) override;
 
-    void drawTowerButton(const towerButton& button, bool isSelected) override;
+    void drawTowerButton(const towerButton& button, bool isSelected, int currentMoney) override;
     void drawTowerButtonBackground(const towerButton& button, bool isSelected) override;
-    void drawSidebarBackground(float x, float width) override;
+    void drawSidebarBackground() override;
     void drawRangeCircle(Vec2<float> pos, float range) override;
     void drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent) override;
 

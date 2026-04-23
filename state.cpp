@@ -25,8 +25,7 @@ void MainMenuState::draw() const {
     Graphics& g = app.getGraphics();
 
     for (const auto& btn : buttons) {
-        std::string label = (btn.targetState == gameState::LEVELSELECT) ? "Start Game" : "Map Editor";
-        g.drawButton(btn.x, btn.y, btn.w, btn.h, label);
+        g.drawButton(btn.x, btn.y, btn.w, btn.h, btn.label);
     }
 }
 void LevelSelectState::calculateButtonPos(int index, float& x, float& y) const 
@@ -99,14 +98,14 @@ InGameState::InGameState(IApp& a, LevelData* data) :
 }
 void InGameState::initSidebar()
 {
-    float buttonWidth = 150.0f;
-    float buttonHeight = 50.0f;
+    float buttonWidth = 200.0f;
+    float buttonHeight = 160.0f;
     float startX = 2400.0f;
     float startY = 100.0f;
-    float gap = 10.0f;
-    sidebarButtons.push_back({ towerButton(startX, startY, buttonWidth, buttonHeight, "Normal", TowerType::NORMAL) });
-    sidebarButtons.push_back({ towerButton(startX, startY + (buttonHeight + gap), buttonWidth, buttonHeight, "Fast", TowerType::FAST) });
-    sidebarButtons.push_back({ towerButton(startX, startY + 2 * (buttonHeight + gap), buttonWidth, buttonHeight, "Sniper", TowerType::SNIPER) });
+    float gap = 40.0f;
+    sidebarButtons.push_back({ towerButton(startX, startY, buttonWidth, buttonHeight, "Normal", TowerType::NORMAL,50) });
+    sidebarButtons.push_back({ towerButton(startX, startY + (buttonHeight + gap), buttonWidth, buttonHeight, "Fast", TowerType::FAST,70) });
+    sidebarButtons.push_back({ towerButton(startX, startY + 2 * (buttonHeight + gap), buttonWidth, buttonHeight, "Sniper", TowerType::SNIPER,90) });
 }
 void InGameState::handleClick(float mx, float my)
 {
@@ -163,14 +162,17 @@ void InGameState::draw() const
     Graphics& g = app.getGraphics();
 
     game->draw(g);
-    for (const auto& btn : sidebarButtons) {
-        g.drawTowerButton(btn, selectedTowerType == btn.type);
-    }
     Tower* sel = game->getSelectedTower();
+    if (sel != nullptr) {
+        g.drawRangeCircle(sel->getPosition(), sel->getRange());
+    }
+    g.drawSidebarBackground();
+    for (const auto& btn : sidebarButtons) {
+        g.drawTowerButton(btn, selectedTowerType == btn.type, game->getMoney());
+    }
     if (sel != nullptr) {
         g.drawTowerStats(sel->getDamage(), sel->getFireRate(),
             sel->getRange(), sel->getLevel(), sel->getUpgradeCost());
-        g.drawRangeCircle(sel->getPosition(), sel->getRange());
     }
     g.drawStatBar(
         game->getPlayerHp(), game->getMoney(),
@@ -195,3 +197,47 @@ InGameState::~InGameState()
 {
     delete game;
 }
+
+MapEditorState::MapEditorState(IApp& a): 
+    State(a), eMap(13,9,170), selectedType(TileType::PATH)
+{
+    initButtons();
+}
+void MapEditorState::initButtons() {
+    buttons.push_back({ 2300, 100, 330, 50, "PATH", TileType::PATH});
+    buttons.push_back({ 2300, 200, 330, 50, "BUILDABLE", TileType::BUILDABLE});
+    buttons.push_back({ 2300, 300, 330, 50, "NOTBUILDABLE", TileType::NOTBUILDABLE});
+}
+void MapEditorState::handleClick(float x, float y)
+{
+    for (const auto& btn : buttons) {
+        if (btn.isClicked(x, y)) {
+            selectedType = btn.type;
+            return;
+        }
+    }
+    int ts = eMap.getTileSize();
+    int gridX = static_cast<int>(x / ts);
+    int gridY = static_cast<int>(y / ts);
+    if (gridX >= 0 && gridX < eMap.getWidth() &&
+        gridY >= 0 && gridY < eMap.getHeight()) {
+        eMap.setTile(gridY, gridX, selectedType);
+    }
+}
+void MapEditorState::handleKeyInput(int keyCode)
+{
+    if (keyCode == 18)
+        eMap.save("valami.txt");
+    else if (keyCode == 3)
+        eMap.undoLastPath();
+}
+void MapEditorState::draw() const
+{
+    Graphics& g = app.getGraphics();
+    eMap.draw(g);
+    for (const auto& btn : buttons)
+    {
+        g.drawButton(btn.x, btn.y, btn.w, btn.h, btn.label);
+    }
+}
+

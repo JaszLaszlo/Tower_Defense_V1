@@ -3,12 +3,13 @@
 
 
 App::App() :
-	window(sf::VideoMode(2700, 1700), "Tower Defense"),
+	window(sf::VideoMode(2700, 1650), "Tower Defense"),
 	renderer(window),
 	currentState(nullptr),
     accumulator(0.0f)
 {
 	window.setPosition(sf::Vector2i(75, 0));
+	window.setFramerateLimit(60);
     lastTime = std::chrono::steady_clock::now();
 	levelManager.loadLevels("levels.txt");
 	changeState(gameState::MAINMENU);
@@ -66,7 +67,6 @@ void App::run()
 			accumulator -= dt;
 		}
 		render();
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 void App::changeState(gameState type) {
@@ -78,13 +78,15 @@ void App::changeState(gameState type) {
 	case gameState::MAINMENU:
 		currentState = new MainMenuState(*this);
 		break;
-
 	case gameState::INGAME:
 		currentState = new InGameState(*this, levelManager.getCurrentLevel());
 		break;
-
 	case gameState::LEVELSELECT:
 		currentState = new LevelSelectState(*this);
 		break;
+	case gameState::MAPEDITOR:
+		currentState = new MapEditorState(*this);
+		break;
 	}
+	
 }

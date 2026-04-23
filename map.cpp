@@ -3,35 +3,17 @@
 #include <fstream>
 #include "memtrace.h"
 
-Map::Map() : height(0), width(0), pathSize(0), tileSize(0), Tiles(nullptr), PathPoints(nullptr){}
+Map::Map() : height(0), width(0), tileSize(0), pathSize(0), Tiles(nullptr) {}
 
-void Map::copyFrom(const Map& map)
+Map::Map(int width, int height, int tileSize) : width(width), height(height),
+tileSize(tileSize), pathSize(0), Tiles(nullptr)
 {
-	this->width = map.width;
-	this->height = map.height;
-	this->pathSize = map.pathSize;
-	this->tileSize = map.tileSize;
-	if (map.PathPoints != nullptr)
-	{
-		this->PathPoints = new Vec2<int>[pathSize];
-		for (int i = 0; i < pathSize; i++) {
-			this->PathPoints[i] = map.PathPoints[i];
-		}
-	}
-	if (map.Tiles != nullptr) {
-		this->Tiles = new Tile * [height];
-		for (int i = 0; i < height; i++) {
-			this->Tiles[i] = new Tile[width];
-			for (int j = 0; j < width; j++) {
-				this->Tiles[i][j] = map.Tiles[i][j];
-			}
-		}
-	}
+	allocateGrid();
 }
+
 
 void Map::cleanUp()
 {
-	delete[] PathPoints;
 	if (Tiles != nullptr)
 	{
 		for (int i = 0; i < height; i++)
@@ -41,7 +23,6 @@ void Map::cleanUp()
 		delete[] Tiles;
 	}
 	Tiles = nullptr;
-	PathPoints = nullptr;
 }
 
 void Map::loadDimensions(std::istream& is)
@@ -50,11 +31,13 @@ void Map::loadDimensions(std::istream& is)
 }
 void Map::loadPathPoints(std::istream& is)
 {
-	PathPoints = new Vec2<int>[pathSize];
+	PathPoints.clear();
 	for (int i = 0; i < pathSize; i++)
 	{
+		int x, y;
 		char comma;
-		is >> PathPoints[i].x >> comma >> PathPoints[i].y;
+		is >> x >> comma >> y;
+		PathPoints.push_back({ x,y });
 	}
 }
 TileType Map::charToTileType(const char c) const
@@ -65,6 +48,16 @@ TileType Map::charToTileType(const char c) const
 	case 'B': return TileType(TileType::BUILDABLE);
 	case 'N': return TileType(TileType::NOTBUILDABLE);
 	default: return TileType(TileType::NOTBUILDABLE);
+	}
+}
+char Map::tileTypeToChar(TileType type) const
+{
+	switch (type)
+	{
+	case TileType::PATH: return 'P';
+	case TileType::BUILDABLE: return 'B';
+	case TileType::NOTBUILDABLE: return 'N';
+	default: return 'N';
 	}
 }
 void Map::allocateGrid()
@@ -99,7 +92,7 @@ void Map::load(std::istream& is)
 	allocateGrid();
 	loadGrid(is);
 }
-Tile& Map::getTile(int y, int x)
+Tile& Map::getTile(int y, int x) const
 {
 	if (y < 0 || y >= height || x < 0 || x >= width) {
 		throw std::out_of_range("A koordinata a palyan kivulre esik!");
@@ -110,19 +103,7 @@ bool Map::canBuild(int y, int x) const
 { 
 	return Tiles[y][x].getType() == TileType::BUILDABLE;
 }
-Map::Map(const Map& map) : Tiles(nullptr), PathPoints(nullptr)
-{
-	copyFrom(map);
-}
-Map& Map::operator=(const Map& other)
-{
-	if (this != &other) 
-	{
-		cleanUp();           
-		copyFrom(other);     
-	}
-	return *this;            
-}
+
 void Map::draw(Graphics&g) const
 {
 	for (int y = 0; y < height; y++)
@@ -138,4 +119,103 @@ void Map::draw(Graphics&g) const
 Map::~Map()
 {
 	cleanUp();
+}
+void Map::setTile(int y, int x, TileType type) {
+	if (y < 0 || y >= height || x < 0 || x >= width) return;
+	Tiles[y][x].setType(type);
+}
+EditorMap::EditorMap(int width, int height, int tileSize) : Map(width, height, tileSize) {}
+
+void EditorMap::setTile(int y, int x, TileType type)
+{
+	if (y < 0 || y >= height || x < 0 || x >= width) return;
+	if (getTile(y, x).getType() == TileType::PATH) return;
+	if (type == TileType::PATH) {
+		if (!CanPlacePath(y, x)) return; 
+
+		PathPoints.push_back({ x, y });
+		PathPlaced = true;
+	}
+	Map::setTile(y, x, type);
+}
+
+void EditorMap::undoLastPath()
+{
+	if(PathPoints.empty()) return;
+	Vec2<int> last = PathPoints.back();
+	PathPoints.pop_back();
+	Map::setTile(last.y, last.x, TileType::NOTBUILDABLE);
+	if (PathPoints.empty()) {
+		PathPlaced = false;
+	}
+}
+
+void EditorMap::save(const std::string& filename) const
+{
+	if(!canSave())
+	{
+		std::cerr << "Nem lehet elmenteni a pályát: túl kevés útpont van.\n";
+		return;
+	}
+	std::ofstream file(filename);
+	if (file.is_open())
+	{
+		saveDimensions(file);
+		savePathPoints(file);
+		saveGrid(file);
+		file.close();
+	}
+}
+void EditorMap::saveDimensions(std::ostream& os) const
+{
+	os << tileSize << "\n" << PathPoints.size() << "\n" << width << "\n" << height << "\n";
+}
+void EditorMap::savePathPoints(std::ostream& os) const
+{
+	for(size_t i=0;i<PathPoints.size(); i++)
+	{
+		os << PathPoints[i].x << "," << PathPoints[i].y<<" ";
+	}
+	os << "\n";
+}
+void EditorMap::saveGrid(std::ostream& os) const
+{
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			os << tileTypeToChar(Tiles[y][x].getType());
+		}
+		os << "\n";
+	}
+}
+bool EditorMap::CanPlacePath(int y, int x) const
+{
+	if (!PathPlaced) return true;
+	int dy[] = { 0,0,1,-1 };
+	int dx[] = { 1,-1,0,0 };
+	for (int i = 0; i < 4; i++)
+	{
+		int ny = y + dy[i];
+		int nx = x + dx[i];
+		if (ny >= 0 && ny < height && nx >= 0 && nx < width)
+		{
+			if(getTile(ny, nx).getType() == TileType::PATH)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool EditorMap::canSave() const
+{
+	if (PathPoints.size() < 3) return false;
+	return true;
+}
+void EditorMap::draw(Graphics& g) const
+{
+	Map::draw(g);
+	g.drawGrid(width, height, static_cast<float>(tileSize));
+	g.drawPathNumbers(PathPoints, static_cast<float>(tileSize));
 }

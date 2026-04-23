@@ -55,9 +55,17 @@ struct levelButton : public Button
 struct towerButton : public Button
 {
 	TowerType type;
-	towerButton(float x, float y, float w, float h, const std::string& label, TowerType type) :
-		Button(x, y, w, h, label), type(type) {
-	}
+	int cost;
+	towerButton(float x, float y, float w, float h, const std::string& label, TowerType type, int cost) :
+		Button(x, y, w, h, label), type(type), cost(cost) {}
+};
+struct editorTileButton : public Button
+{
+	TileType type;
+public:
+	editorTileButton(float x, float y, float w, float h, const std::string& label, TileType type) :
+		Button(x, y, w, h, label), type(type) {}
+
 };
 
 #endif

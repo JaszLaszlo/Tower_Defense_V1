@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 #include "types.h"
+#include "map.h"
 #include <vector>
 #include <string>
 
@@ -8,6 +9,7 @@
 class IApp;
 struct LevelData;
 class Game;
+class Map;
 
 class State {
 protected:
@@ -53,6 +55,19 @@ public:
 	void handleClick(float x, float y) override;
 	void handleKeyInput(int keyCode) override;
 	void update(float dt) override;
+	void draw() const override;
+};
+class MapEditorState : public State
+{
+	EditorMap eMap;
+	TileType selectedType;
+	std::vector<editorTileButton> buttons;
+	void initButtons();
+public:
+	MapEditorState(IApp& a);
+	void handleClick(float x, float y) override;
+	void handleKeyInput(int keyCode) override;
+	void update(float dt) override {}
 	void draw() const override;
 };
 #endif
