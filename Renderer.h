@@ -48,7 +48,8 @@ public:
     void drawGameOver() override;
     void drawYouWin() override;
 	void drawTowerStats(float d, float fr, float r, int l, int uCost) override;
-    void drawButton(float x, float y, float w, float h, const std::string& text) override;
+    void drawButton(const Button& button) override;
+    void drawButton(const Button& button, bool isSelected) override;
 
 };
 

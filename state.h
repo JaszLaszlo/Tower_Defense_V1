@@ -39,7 +39,7 @@ class LevelSelectState : public State {
 public:
 	LevelSelectState(IApp& a);
 	void handleClick(float x, float y) override;
-	void handleKeyInput(int keyCode) override {}
+	void handleKeyInput(int keyCode) override;
 	void update(float dt) override {}
 	void draw() const override;
 };

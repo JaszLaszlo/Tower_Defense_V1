@@ -150,13 +150,15 @@ void EditorMap::undoLastPath()
 	}
 }
 
-void EditorMap::save(const std::string& filename) const
+void EditorMap::save() const
 {
 	if(!canSave())
 	{
 		std::cerr << "Nem lehet elmenteni a pályát: túl kevés útpont van.\n";
 		return;
 	}
+	int index = getSavableMapIndex();
+	std::string filename = "map" + std::to_string(index) + ".txt";
 	std::ofstream file(filename);
 	if (file.is_open())
 	{
@@ -165,6 +167,7 @@ void EditorMap::save(const std::string& filename) const
 		saveGrid(file);
 		file.close();
 	}
+	saveToLevelsTxt();
 }
 void EditorMap::saveDimensions(std::ostream& os) const
 {
@@ -192,21 +195,10 @@ void EditorMap::saveGrid(std::ostream& os) const
 bool EditorMap::CanPlacePath(int y, int x) const
 {
 	if (!PathPlaced) return true;
-	int dy[] = { 0,0,1,-1 };
-	int dx[] = { 1,-1,0,0 };
-	for (int i = 0; i < 4; i++)
-	{
-		int ny = y + dy[i];
-		int nx = x + dx[i];
-		if (ny >= 0 && ny < height && nx >= 0 && nx < width)
-		{
-			if(getTile(ny, nx).getType() == TileType::PATH)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
+	if (getTile(y, x).getType() == TileType::PATH) return false;
+	Vec2<int> last = PathPoints.back();
+	int dist = std::abs(x - last.x) + std::abs(y - last.y);
+	return (dist == 1);
 }
 bool EditorMap::canSave() const
 {
@@ -218,4 +210,29 @@ void EditorMap::draw(Graphics& g) const
 	Map::draw(g);
 	g.drawGrid(width, height, static_cast<float>(tileSize));
 	g.drawPathNumbers(PathPoints, static_cast<float>(tileSize));
+}
+int EditorMap::getSavableMapIndex() const
+{
+	std::ifstream file("levels.txt");
+	int index = 0;
+	std::string line;
+	while (std::getline(file, line))
+	{
+		if (!line.empty())
+			index++;
+	}
+	return index + 1;
+}
+void EditorMap::saveToLevelsTxt() const
+{
+	std::ofstream file("levels.txt", std::ios::app);
+	if (file.is_open())
+	{
+		int index = getSavableMapIndex();
+		std::string levelName = "Level" + std::to_string(index);
+		std::string mapFileName = "map" + std::to_string(index) + ".txt";
+		std::string waveFileName = "defaultwave.txt";
+		file <<"\n"<< levelName << " " << mapFileName << " " << waveFileName << " " << "100 " << "500";
+		file.close();
+	}
 }

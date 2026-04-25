@@ -32,7 +32,8 @@ public:
 	virtual void drawGameOver() = 0;
 	virtual void drawYouWin() = 0;
 	virtual void drawTowerStats(float d, float fr, float r, int l, int uCost) = 0;
-	virtual void drawButton(float x, float y, float w, float h, const std::string& text) = 0;
+	virtual void drawButton(const Button& button) = 0;
+	virtual void drawButton(const Button& button, bool isSelected) = 0;
 };
 
 #endif

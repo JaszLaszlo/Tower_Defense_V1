@@ -25,7 +25,7 @@ void MainMenuState::draw() const {
     Graphics& g = app.getGraphics();
 
     for (const auto& btn : buttons) {
-        g.drawButton(btn.x, btn.y, btn.w, btn.h, btn.label);
+        g.drawButton(btn);
     }
 }
 void LevelSelectState::calculateButtonPos(int index, float& x, float& y) const 
@@ -68,11 +68,16 @@ void LevelSelectState::handleClick(float mx, float my) {
         }
     }
 }
+void LevelSelectState::handleKeyInput(int keyCode) {
+    if (keyCode == 58) { // Enter
+        app.changeState(gameState::MAINMENU);
+    }
+}
 void LevelSelectState::draw() const {
     Graphics& g = app.getGraphics();
 
     for (const auto& btn : levelButtons) {
-        g.drawButton(btn.x, btn.y, btn.w, btn.h, btn.label);
+        g.drawButton(btn);
     }
 }
 InGameState::InGameState(IApp& a, LevelData* data) :
@@ -226,9 +231,9 @@ void MapEditorState::handleClick(float x, float y)
 }
 void MapEditorState::handleKeyInput(int keyCode)
 {
-    if (keyCode == 18)
-        eMap.save("valami.txt");
-    else if (keyCode == 3)
+    if (keyCode == 18) //S
+        eMap.save();
+    else if (keyCode == 3)  //D
         eMap.undoLastPath();
 }
 void MapEditorState::draw() const
@@ -237,7 +242,8 @@ void MapEditorState::draw() const
     eMap.draw(g);
     for (const auto& btn : buttons)
     {
-        g.drawButton(btn.x, btn.y, btn.w, btn.h, btn.label);
+        bool isSelected = (btn.type == selectedType);
+        g.drawButton(btn, isSelected);
     }
 }
 

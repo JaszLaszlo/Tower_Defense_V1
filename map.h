@@ -58,11 +58,13 @@ class EditorMap : public Map
 	void savePathPoints(std::ostream& os) const;
 	void saveGrid(std::ostream& os) const;
 	bool canSave() const;
+	int getSavableMapIndex() const;
+	void saveToLevelsTxt() const;
 public:
 	EditorMap(int width, int height, int tileSize);
 	bool CanPlacePath(int y, int x) const;
 	void setTile(int y, int x, TileType type) override;
 	void undoLastPath();
-	void save(const std::string& filename) const;
+	void save() const;
 	void draw(Graphics& g) const override;
 };
