@@ -1,4 +1,17 @@
-#pragma once
+/**
+ * @file Game.h
+ * @brief A játék fõ vezérlõ osztálya.
+ *
+ * A Game osztály összefogja a teljes játékmenetet:
+ * - pálya (Map)
+ * - ellenségek (EnemyManager)
+ * - tornyok (TowerManager)
+ * - hullámok (WaveManager)
+ *
+ * Kezeli a játékállapotot, játékos erõforrásokat és a fõ game loop logikát.
+ */
+#ifndef GAME_H
+#define GAME_H
 #include <iostream>
 #include "map.h"
 #include "enemy.h"
@@ -7,34 +20,109 @@
 #include "graphics.h"
 #include "types.h"
 #include "wave.h"
-
+ /**
+  * @class Game
+  * @brief A játék teljes állapotát és logikáját kezelõ osztály.
+  *
+  * Felelõs:
+  * - frissítés (update loop)
+  * - kirajzolás (rendering)
+  * - input események kezelése
+  * - játékos erõforrások (HP, pénz)
+  */
 class Game
 {
-	Map map;
-	EnemyManager enemyManager;
-	TowerManager towerManager;
-	WaveManager waveManager;
-	int playerHp;
-	int money;
-	bool running;
-	Tower* selectedTower;
+	Map map; //A játék pályája
+	EnemyManager enemyManager; //Az ellenségek kezelõje
+	TowerManager towerManager; //A tornyok kezelõje
+	WaveManager waveManager; //A hullámok kezelõje
+	int playerHp; //A játékos életereje
+	int money; //A játékos pénze
+	bool running; //Jelzi, hogy a játék fut-e
+	Tower* selectedTower; //Az aktuálisan kiválasztott torony (fejlesztéshez, eladáshoz)
+	/**
+	 * @brief Eltávolítja a már nem szükséges enemy-ket
+	 * Pl. ha meghaltak vagy elérték a célpontot.
+	 * @return void
+	 */
 	void cleanUpEnemies();
 public:
+	/**
+	 * @brief Konstruktor
+	 * Betölti a pályát és a wave adatokat streambõl.
+	 * @param mapIs Map input stream
+	 * @param waveIs Wave input stream
+	 */
 	Game(std::istream& mapIs, std::istream& waveIs);
+	/**
+	 * @brief Játék logika frissítése
+	 * Minden frame-ben meghívódik:
+	 * - enemy update
+	 * - tower update
+	 * - wave update
+	 * @param dt Delta time
+	 */
 	void update(float dt);
+	/**
+	 * @brief Játék kirajzolása
+	 * Rendereli a teljes játékállapotot:
+	 * map, enemy-k, tornyok
+	 * @param g Grafikai objektum
+	 */
 	void draw(Graphics& g) const;
+	/**
+	 * @brief Torony építési kérés kezelése
+	 * Ellenõrzi:
+	 * - pénz elég-e
+	 * - tile építhetõ-e
+	 * @param mx Egér X pozíció
+	 * @param my Egér Y pozíció
+	 * @param type Torony típusa
+	 */
 	void handleTowerBuildRequest(float mx, float my, TowerType type);
+	/**
+	 * @brief Kijelölt torony fejlesztés
+	 */
 	void handleTowerUpgrade();
+	/**
+	 * @brief Következõ hullám indítása
+	 */
 	void startNextWave() { waveManager.startNextWave(); }
+	//@return Játékos HP-ja
 	int getPlayerHp() const { return playerHp; }
+	//@return Játékos pénze
 	int getMoney() const { return money; }
+	//@return jelzi, hogy a játék fut-e
 	bool isRunning() const { return running; }
+	//@return jelzi, hogy vége a játéknak
 	bool isFinished() const;
+	/**
+	 * @brief WaveManager elérése
+	 * @return Referencia a wave rendszerhez
+	 */
 	WaveManager& getWaveManager() { return waveManager; }
+	/**
+	 * @brief Torony keresése pozíció alapján
+	 * @param mx X koordináta
+	 * @param my Y koordináta
+	 * @return A megtalált torony vagy nullptr
+	 */
 	Tower* getTowerAt(float mx, float my);
+	/**
+	 * @brief Torony eladása
+	 * @param t Torony pointer
+	 */
 	void sellTower(Tower* t);
+	/**
+	 * @brief Kijelölt torony beállítása
+	 */
 	void setSelectedTower(Tower* t) { selectedTower = t; }
+	// @param hp új HP
 	void setHp(int hp) { playerHp = hp; }
+	// @param m új pénz
 	void setMoney(int m) { money = m; }
+	// @return Kijelölt torony
 	Tower* getSelectedTower() const { return selectedTower; }
 };
+
+#endif

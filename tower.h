@@ -1,47 +1,134 @@
+/**
+ * @file Tower.h
+ * @brief Tornyok és kezelésük a tower defense játékban.
+ *
+ * Tartalmazza a Tower alaposztályt, különbözõ torony típusokat,
+ * valamint a TowerManager osztályt.
+ */
 #ifndef TOWER_H
 #define TOWER_H
 #include "enemy.h"
 #include "MyArray.h"
 #include "vec2.h"
 #include "graphics.h"
-
+/**
+* @class Tower
+ * @brief Alaposztály minden torony típushoz.
+ * A Tower osztály felelõs a célzásért, támadásért
+ */
 class Tower
 {
 protected:
-	Vec2<float> position;
-	float range;
-	float damage;
-	float fireRate;
-	float fireTimer;
-	float size;
-	int level;
-	const int maxLevel;
-	Enemy* currentTarget;
+	Vec2<float> position; //Torony pozíciója világ koordinátákban
+	float range; //Támadási hatótáv
+	float damage; //Támadási sebzés
+	float fireRate; //Támadási sebesség (másodpercenkénti támadás)
+	float fireTimer; //Idõzítõ a következõ támadásig
+	float size; //Torony mérete
+	int level; //Torony szintje
+	const int maxLevel; //Maximális szint
+	Enemy* currentTarget; //Aktuális célpont
+	/**
+	 * @brief Két pont közti távolság számítása
+	 *
+	 * @param v1 Elsõ pont
+	 * @param v2 Második pont
+	 * @return A két pont közötti távolság
+	 */
 	float getDistance(const Vec2<float>& v1, const Vec2<float>& v2) const;
+	/**
+	 * @brief Célpont keresése az enemy listában
+	 *
+	 * A torony kiválaszt egy ellenséget a hatótávján belül.
+	 *
+	 * @param enemies Az aktív enemy-k listája
+	 * @return A kiválasztott enemy pointere, vagy nullptr ha nincs cél
+	 */
 	Enemy* findtarget(MyArray<Enemy>& enemies) const;
 
 public:
+	/**
+	 * @brief Konstruktor
+	 *
+	 * @param p Pozíció
+	 * @param r Hatótáv
+	 * @param d Sebzés
+	 * @param fr Támadási sebesség
+	 * @param ft Kezdõ fire timer
+	 * @param si Méret
+	 */
 	Tower(Vec2<float> p, float r, float d, float fr, float ft, float si);
+	//Virtuális destruktor, öröklés miatt
 	virtual ~Tower() {};
+	//@return Az aktuális célpont pointere, vagy nullptr ha nincs cél
 	Enemy* getCurrentTarget() const { return currentTarget; }
+	//@return A torony hatótávja
 	float getRange() const { return range; }
+	//@return A torony mérete
 	float getSize() const { return size; }
+	//@return A torony sebzése
 	float getDamage() const { return damage; }
+	//@return A torony támadási sebessége
 	float getFireRate() const { return fireRate; }
+	//@return A torony szintje
 	int getLevel() const { return level; }
-	bool canUpgrade() const { return level < maxLevel; }
+	//@return A torony pozíciója világ koordinátákban
 	Vec2<float> getPosition() const { return position; }
+	
+	 //@return A fejlesztés költsége a következõ szintre
+	int getUpgradeCost() const;	
+	/**
+	 * @brief Ellenõrzi, hogy fejleszthetõ-e
+	 * @return true ha még nem érte el a max szintet
+	 */
+	bool canUpgrade() const { return level < maxLevel; }
+	/**
+	 * @brief Célpont törlése
+	 */
 	void resetTarget() { currentTarget = nullptr; }
+	/**
+	 * @brief Támadás végrehajtása
+	 * Alap implementáció: közvetlen sebzés.
+	 * @param enemy A célpont
+	 */
 	virtual void attack(Enemy* enemy) const { enemy->takeDamage(damage); }
+	/**
+	 * @brief Torony frissítése
+	 * Kezeli a célkeresést, idõzítést és támadást.
+	 * @param dt Delta time
+	 * @param enemies Aktív enemy-k
+	 */
 	void Update(float dt, MyArray<Enemy>& enemies);
+	/**
+	 * @brief Kirajzolás
+	 * @param g Grafikai objektum
+	 */
 	virtual void draw(Graphics& g) const = 0;
+	/**
+	 * @brief Torony ára
+	 * @return Vásárlási költség
+	 */
 	virtual int getCost() const = 0;
+	/**
+	 * @brief Eladási érték
+	 * @return A torony eladásakor kapott pénz
+	 */
 	virtual int getSellValue() const;
+	/**
+	 * @brief Torony fejlesztése
+	 */
 	virtual void upgrade() = 0;
-	int getUpgradeCost() const;
+	/**
+	 * @brief Klónozás
+	 * @return Új Tower példány pointere
+	 */
 	virtual Tower* clone() const = 0;
 	
 };
+/**
+ * @class NormalTower
+ * @brief Kiegyensúlyozott torony.
+ */
 class NormalTower : public Tower
 {
 public:
@@ -51,6 +138,10 @@ public:
 	void upgrade() override;
 	NormalTower* clone() const override { return new NormalTower(*this); }
 };
+/**
+ * @class FastTower
+ * @brief Gyors, de alacsony sebzésû torony.
+ */
 class FastTower : public Tower
 {
 public:
@@ -60,6 +151,10 @@ public:
 	void upgrade() override;
 	FastTower* clone() const override { return new FastTower(*this); }
 };
+/**
+ * @class SniperTower
+ * @brief Nagy hatótávú, erõs torony, de lassú.
+ */
 class SniperTower : public Tower
 {
 public:
@@ -69,18 +164,66 @@ public:
 	void upgrade() override;
 	SniperTower* clone() const override { return new SniperTower(*this); }
 };
+/**
+ * @class TowerManager
+ * @brief Tornyok kezeléséért felelõs osztály.
+ * Kezeli a tornyok létrehozását, frissítését,
+ * kirajzolását és eltávolítását.
+ */
 class TowerManager
 {
-	MyArray<Tower> towers;
+	MyArray<Tower> towers; //Heterogén tömb a tornyok tárolására
+	/**
+	 * @brief Torony létrehozása típus alapján
+	 * @param type Torony típusa
+	 * @param pos Pozíció
+	 * @return Új Tower pointer
+	 */
 	Tower* towerFactory(TowerType type, Vec2<float> pos) const;
 public:
 	TowerManager(): towers() {}
+	/**
+	 * @brief Értesítés enemy törlésérõl
+	 * Ha egy torony célpontja törlõdik, nullázni kell.
+	 * @param enemy A törölt enemy
+	 */
 	void notifyEnemyRemoved(Enemy* enemy);
+	/**
+	 * @brief Torony hozzáadása
+	 * @param type Torony típusa
+	 * @param pos Pozíció
+	 */
 	void AddTower(TowerType type, Vec2<float> pos);
+	/**
+	 * @brief Tornyok frissítése
+	 * @param dt Delta time
+	 * @param enemies Enemy lista
+	 */
 	void Update(float dt, MyArray<Enemy>& enemies);
+	/**
+	 * @brief Tornyok kirajzolása
+	 * @param g Grafikai objektum
+	 */
 	void Draw(Graphics& g) const;
+	/**
+	 * @brief Ár lekérése típus alapján
+	 * @param type Torony típusa
+	 * @return Ár
+	 */
 	int GetCostForType(TowerType type) const;
+	/**
+	 * @brief Torony lekérése pozíció alapján
+	 * @param pos Keresett pozíció
+	 * @param ts Tile méret (hitbox számításhoz)
+	 * @return A torony pointere vagy nullptr
+	 */
 	Tower* GetTowerAt(const Vec2<float>& pos, int ts);
+	/**
+	 * @brief Torony eladása
+	 * @param t A torony pointere
+	 * @param pos Pozíció (eltávolításhoz)
+	 * @return A visszakapott pénz
+	 */
 	int sellTower(Tower *t, Vec2<float>& pos);
 };
 
