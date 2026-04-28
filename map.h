@@ -121,12 +121,6 @@ public:
 	 */
 	bool canBuild(int y, int x) const;
 	/**
-	 * @brief Rács koordináták -> világ koordináták konverzió
-	 * @param gridPos Rács koordináták
-	 * @return Világ koordináták
-	 */
-	Vec2<float> gridToWorld(Vec2<int> gridPos) const;
-	/**
 	 * @brief Pálya kirajzolása
 	 * @param g Grafikai objektum
 	 */
@@ -185,8 +179,11 @@ public:
 	void setTile(int y, int x, TileType type) override;
 	//Visszavonja az utolsó útvonal pontot
 	void undoLastPath();
-	//Menti a pályát a megfelelõ formátumban egy .txt fájlba
-	void save() const;
+	/**
+	* @brief Menti a pályát a megfelelõ formátumban egy .txt fájlba
+	* @param success Kimeneti paraméter ami jelzi a mentés sikerességét
+	*/
+	void save(bool& success) const;
 	/**
 	 * @brief Pálya kirajzolása
 	 * @param g Grafikai objektum

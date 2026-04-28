@@ -88,11 +88,9 @@ void WaveManager::update(float dt, EnemyManager& em, const  Map& map)
 	{
 		waveCountdown -= dt;
 		if (waveCountdown <= 0) {
-			isCountingDown = false;
 			startNextWave(); 
 		}
 	}
-	
 }
 void WaveManager::startNextWave()
 {

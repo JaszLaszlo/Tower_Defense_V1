@@ -71,8 +71,8 @@ struct Vec2
 	 */
 	static Vec2<float> gridToWorld(const Vec2<int>& gridPos, int tileSize) {
 		return Vec2<float>(
-			(static_cast<float>(gridPos.x) * tileSize) + (tileSize / 2),
-			(static_cast<float>(gridPos.y) * tileSize) + (tileSize / 2)
+			(static_cast<float>(gridPos.x) * tileSize) + (tileSize / 2.0f),
+			(static_cast<float>(gridPos.y) * tileSize) + (tileSize / 2.0f)
 		);
 	}
 	/**

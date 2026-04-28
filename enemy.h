@@ -68,6 +68,26 @@ protected:
 	*/
 	Vec2<float> calculateStraightTarget(const Map& map, int pathIndex, float tileSize) const;
 	/**
+	* @brief Spawnbeli offset kezelés
+	*
+	* Szétoszlatja az egymásra spawnoló enemy-ket úgy,
+	* hogy oldalirányú eltolást alkalmaz az útvonal mentén.
+	*
+	* @param map A pálya, amely tartalmazza az útvonalat
+	*/
+	void handleOffsetAtSpawn(const Map& map);
+	/**
+	* @brief Offsetelt célpont lekérése
+	*
+	* Az alap path pontot módosítja az enemy offset értékével,
+	* hogy ne egy vonalon haladjanak.
+	*
+	* @param map A pálya objektum
+	* @param pathIndex Az aktuális útvonal pont indexe
+	* @return Az offsetelt célpont világ koordinátában
+	*/
+	Vec2<float> getOffsetTarget(const Map& map, int pathIndex) const;
+	/**
 	* @brief Mozgás alkalmazása a célpont felé
 	*
 	* Frissíti az enemy pozícióját a célpont irányába
@@ -102,26 +122,6 @@ public:
 	* @return Az enemy mérete
 	*/
 	float getSize() const { return size; }
-	/**
-	* @brief Spawnbeli offset kezelés
-	*
-	* Szétoszlatja az egymásra spawnoló enemy-ket úgy,
-	* hogy oldalirányú eltolást alkalmaz az útvonal mentén.
-	*
-	* @param map A pálya, amely tartalmazza az útvonalat
-	*/
-	void handleOffsetAtSpawn(const Map& map);
-	/**
-	* @brief Offsetelt célpont lekérése
-	*
-	* Az alap path pontot módosítja az enemy offset értékével,
-	* hogy ne egy vonalon haladjanak.
-	*
-	* @param map A pálya objektum
-	* @param pathIndex Az aktuális útvonal pont indexe
-	* @return Az offsetelt célpont világ koordinátában
-	*/
-	Vec2<float> getOffsetTarget(const Map& map, int pathIndex) const;
 	/**
 	* @brief Mozgatás az útvonal mentén
 	*
@@ -239,12 +239,6 @@ public:
 	* @param wave Aktuális hullám száma (nehézség skálázás)
 	*/
 	void spawnEnemy(EnemyType type, const Map& map, int wave);
-	/**
-	* @brief Enemy hozzáadása a listához
-	* @param enemy Az új enemy pointere
-	* @return void
-	*/
-	void AddEnemy(Enemy* enemy);
 	/**
 	* @brief Enemy lista lekérése
 	* @return Az enemy-ket tartalmazó tömb referenciája

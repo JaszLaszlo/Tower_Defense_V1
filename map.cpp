@@ -80,10 +80,6 @@ void Map::loadGrid(std::istream& is)
 		}
 	}
 }
-Vec2<float> Map::gridToWorld(Vec2<int> gridPos) const {
-	float ts = static_cast<float>(this->tileSize);
-	return { gridPos.x * ts + ts / 2.0f, gridPos.y * ts + ts / 2.0f };
-}
 void Map::load(std::istream& is)
 {
 	cleanUp();
@@ -132,7 +128,6 @@ void EditorMap::setTile(int y, int x, TileType type)
 	if (getTile(y, x).getType() == TileType::PATH) return;
 	if (type == TileType::PATH) {
 		if (!CanPlacePath(y, x)) return; 
-
 		PathPoints.push_back({ x, y });
 		PathPlaced = true;
 	}
@@ -150,11 +145,12 @@ void EditorMap::undoLastPath()
 	}
 }
 
-void EditorMap::save() const
+void EditorMap::save(bool& success) const
 {
 	if(!canSave())
 	{
 		std::cerr << "Nem lehet elmenteni a pályát: túl kevés útpont van.\n";
+		success = false;
 		return;
 	}
 	int index = getSavableMapIndex();
@@ -168,6 +164,7 @@ void EditorMap::save() const
 		file.close();
 	}
 	saveToLevelsTxt();
+	success = true;
 }
 void EditorMap::saveDimensions(std::ostream& os) const
 {

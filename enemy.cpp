@@ -46,7 +46,7 @@ Vec2<float> Enemy::calculateStraightTarget(const Map& map, int pathIndex, float 
 }
 void Enemy::handleOffsetAtSpawn(const Map& map)
 {
-	Vec2<float> direction = calculateNormalizedDir(map.getPathPoint(0), map.getPathPoint(1));
+	Vec2<float> direction = calculateNormalizedDir(map.getSpawnPoint(), map.getPathPoint(1));
 	Vec2<float> perpendicular = getPerpendicular(direction);
 	position.x += perpendicular.x * offset;
 	position.y += perpendicular.y * offset;
@@ -108,17 +108,13 @@ Enemy* EnemyManager::enemyFactory(EnemyType type, Vec2<float> pos, const Map& ma
 }
 void EnemyManager::spawnEnemy(EnemyType type, const Map& map, int wave)
 {
-	Vec2<int> gridPos = map.getPathPoint(0);
-	Vec2<float> startWorldPos = map.gridToWorld(gridPos);
+	Vec2<int> gridPos = map.getSpawnPoint();
+	Vec2<float> startWorldPos = Vec2<int>::gridToWorld(gridPos, map.getTileSize());
 	float multiplier = 1.0f + (wave * 0.2f);
 	Enemy* newEnemy = enemyFactory(type, startWorldPos, map, multiplier);
 	if (newEnemy != nullptr) {
-		AddEnemy(newEnemy);
+		Enemies.Add(newEnemy);
 	}
-}
-void EnemyManager::AddEnemy(Enemy* enemy)
-{
-	Enemies.Add(enemy);
 }
 void EnemyManager::Update(const Map& map,float dt)
 {

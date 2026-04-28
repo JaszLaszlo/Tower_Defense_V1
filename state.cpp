@@ -84,7 +84,7 @@ InGameState::InGameState(IApp& a, LevelData* data) :
     State(a), game(nullptr), selectedTowerType(TowerType::NONE)
 {
     if (data == nullptr) {
-        app.changeState(gameState::LEVELSELECT);
+        valid = false;
         return;
     }
     std::ifstream mapFile(data->mapFile);
@@ -92,14 +92,14 @@ InGameState::InGameState(IApp& a, LevelData* data) :
 
     if (!mapFile.is_open() || !waveFile.is_open()) {
         std::cerr << "Hiba: Nem sikerult megnyitni a fajlokat!" << std::endl;
-        app.changeState(gameState::LEVELSELECT);
+        valid = false;
         return;
     }
     game = new Game(mapFile, waveFile);
     game->setHp(data->startingHp);
     game->setMoney(data->startingMoney);
-
     initSidebar();
+    valid = true;
 }
 void InGameState::initSidebar()
 {
@@ -193,6 +193,10 @@ void InGameState::draw() const
     }
 }
 void InGameState::update(float dt) {
+    if (!valid) {
+        app.changeState(gameState::LEVELSELECT);
+        return;
+    }
     if (game != nullptr) {
         game->update(dt);
     }
@@ -204,7 +208,7 @@ InGameState::~InGameState()
 }
 
 MapEditorState::MapEditorState(IApp& a): 
-    State(a), eMap(13,9,170), selectedType(TileType::PATH)
+	State(a), eMap(13, 9, 170), selectedType(TileType::PATH), isSaved(false)
 {
     initButtons();
 }
@@ -215,26 +219,35 @@ void MapEditorState::initButtons() {
 }
 void MapEditorState::handleClick(float x, float y)
 {
-    for (const auto& btn : buttons) {
-        if (btn.isClicked(x, y)) {
-            selectedType = btn.type;
-            return;
+    if(!isSaved)
+    {
+        for (const auto& btn : buttons) {
+            if (btn.isClicked(x, y)) {
+                selectedType = btn.type;
+                return;
+            }
+        }
+        int ts = eMap.getTileSize();
+        int gridX = static_cast<int>(x / ts);
+        int gridY = static_cast<int>(y / ts);
+        if (gridX >= 0 && gridX < eMap.getWidth() &&
+            gridY >= 0 && gridY < eMap.getHeight()) {
+            eMap.setTile(gridY, gridX, selectedType);
         }
     }
-    int ts = eMap.getTileSize();
-    int gridX = static_cast<int>(x / ts);
-    int gridY = static_cast<int>(y / ts);
-    if (gridX >= 0 && gridX < eMap.getWidth() &&
-        gridY >= 0 && gridY < eMap.getHeight()) {
-        eMap.setTile(gridY, gridX, selectedType);
-    }
+    
 }
 void MapEditorState::handleKeyInput(int keyCode)
 {
-    if (keyCode == 18) //S
-        eMap.save();
-    else if (keyCode == 3)  //D
-        eMap.undoLastPath();
+    if(!isSaved)
+    {
+        if (keyCode == 18) //S
+            eMap.save(isSaved);
+        else if (keyCode == 3)  //D
+            eMap.undoLastPath();
+	}
+    if(isSaved && keyCode == 58) //Enter
+		app.changeState(gameState::MAINMENU);
 }
 void MapEditorState::draw() const
 {
@@ -245,5 +258,7 @@ void MapEditorState::draw() const
         bool isSelected = (btn.type == selectedType);
         g.drawButton(btn, isSelected);
     }
+    if (isSaved)
+        g.drawMapSaved();
 }
 

@@ -138,6 +138,10 @@ public:
 	 */
 	virtual void drawYouWin() = 0;
 	/**
+	 * @brief Mentett pálya képernyõ
+	 */
+	virtual void drawMapSaved() = 0;
+	/**
 	 * @brief Tower stat panel
 	 *
 	 * @param d damage

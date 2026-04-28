@@ -48,7 +48,6 @@ void App::render()
 	if (currentState != nullptr) {
 		currentState->draw();
 	}
-
 	window.display();
 }
 void App::run()

@@ -289,6 +289,16 @@ void Renderer::drawYouWin()
     textLarge.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
     window.draw(textLarge);
 }
+void Renderer::drawMapSaved()
+{
+	textLarge.setString("MAP SAVED");
+	textLarge.setFillColor(sf::Color::Cyan);
+    sf::FloatRect textRect = textLarge.getLocalBounds();
+    textLarge.setOrigin(textRect.left + textRect.width / 2.0f,
+        textRect.top + textRect.height / 2.0f);
+    textLarge.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
+    window.draw(textLarge);
+}
 void Renderer::drawTowerStats(float d, float fr, float r, int l, int uCost)
 {
     std::stringstream ss;
