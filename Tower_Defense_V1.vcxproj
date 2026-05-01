@@ -145,6 +145,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="gtest_lite.h" />
     <ClInclude Include="IApp.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="map.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="MyArray.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="state.h" />
+    <ClInclude Include="testapp.h" />
     <ClInclude Include="tower.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="vec2.h" />

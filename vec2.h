@@ -1,38 +1,38 @@
-/**
+Ôªø/**
  * @file Vec2.h
  * @brief 2D vektor template
  *
- * A Vec2 egy ·ltal·nos 2D vektor implement·ciÛ, amely
- * t·mogatja:
- * - koordin·ta t·rol·st
- * - tÌpuskonverziÛt
- * - t·vols·gsz·mÌt·st
- * - grid <--> world konverziÛt
+ * A Vec2 egy √°ltal√°nos 2D vektor implement√°ci√≥, amely
+ * t√°mogatja:
+ * - koordin√°ta t√°rol√°st
+ * - t√≠puskonverzi√≥t
+ * - t√°vols√°gsz√°m√≠t√°st
+ * - grid <--> world konverzi√≥t
  */
 #ifndef VEC2_H
 #define VEC2_H
 
  /**
   * @struct Vec2
-  * @brief 2D vektor generikus tÌpussal.
-  * @tparam T A koordin·t·k tÌpusa (int, float, stb.)
+  * @brief 2D vektor generikus t√≠pussal.
+  * @tparam T A koordin√°t√°k t√≠pusa (int, float, stb.)
   */
 template<typename T>
 struct Vec2
 {
-	T x; //X koordin·ta
-	T y; //Y koordin·ta
+	T x; //X koordin√°ta
+	T y; //Y koordin√°ta
 	/**
 	 * @brief Konstruktor
-	 * @param x X koordin·ta (alapÈrtelmezett: 0)
-	 * @param y Y koordin·ta (alapÈrtelmezett: 0)
+	 * @param x X koordin√°ta (alap√©rtelmezett: 0)
+	 * @param y Y koordin√°ta (alap√©rtelmezett: 0)
 	 */
 	Vec2(T x=0, T y=0): x(x), y(y) {}
 	/**
-	 * @brief TÌpuskonverziÛs oper·tor
-	 * LehetıvÈ teszi Vec2<T> -> Vec2<U> konverziÛt.
-	 * @tparam U CÈl tÌpus
-	 * @return ¡tkonvert·lt vektor
+	 * @brief T√≠puskonverzi√≥s oper√°tor
+	 * Lehet≈ëv√© teszi Vec2<T> -> Vec2<U> konverzi√≥t.
+	 * @tparam U C√©l t√≠pus
+	 * @return √Åtkonvert√°lt vektor
 	 */
 	template<typename U>
 	operator Vec2<U>() const
@@ -40,9 +40,9 @@ struct Vec2
 		return Vec2<U>(static_cast<U>(x), static_cast<U>(y));
 	}
 	/**
-	 * @brief KÈt vektor kˆzˆtti t·vols·g
-	 * @param other M·sik vektor
-	 * @return T·vols·g float ÈrtÈkben
+	 * @brief K√©t vektor k√∂z√∂tti t√°vols√°g
+	 * @param other M√°sik vektor
+	 * @return T√°vols√°g float √©rt√©kben
 	 */
 	float getDistance(const Vec2<T>& other) const {
 		T dx = x - other.x;
@@ -50,11 +50,11 @@ struct Vec2
 		return std::sqrt(static_cast<float>(dx * dx + dy * dy));
 	}
 	/**
-	 * @brief World koordin·ta -> Grid koordin·ta
-	 * ¡talakÌtja a vil·gpozÌciÛt r·cs alap˙ indexelÈsre.
-	 * @param worldPos Vil·g koordin·ta
-	 * @param tileSize Egy cella mÈrete
-	 * @return Grid koordin·ta (int)
+	 * @brief World koordin√°ta -> Grid koordin√°ta
+	 * √Åtalak√≠tja a vil√°gpoz√≠ci√≥t r√°cs alap√∫ indexel√©sre.
+	 * @param worldPos Vil√°g koordin√°ta
+	 * @param tileSize Egy cella m√©rete
+	 * @return Grid koordin√°ta (int)
 	 */
 	static Vec2<int> worldToGrid(const Vec2<float>& worldPos, int tileSize) {
 		return Vec2<int>(
@@ -63,11 +63,11 @@ struct Vec2
 		);
 	}
 	/**
-	 * @brief Grid koordin·ta -> World koordin·ta
-	 * A grid cella kˆzÈppontj·t sz·mÌtja ki vil·g koordin·t·ban.
-	 * @param gridPos Grid pozÌciÛ
-	 * @param tileSize Cella mÈrete
-	 * @return World koordin·ta (float)
+	 * @brief Grid koordin√°ta -> World koordin√°ta
+	 * A grid cella k√∂z√©ppontj√°t sz√°m√≠tja ki vil√°g koordin√°t√°ban.
+	 * @param gridPos Grid poz√≠ci√≥
+	 * @param tileSize Cella m√©rete
+	 * @return World koordin√°ta (float)
 	 */
 	static Vec2<float> gridToWorld(const Vec2<int>& gridPos, int tileSize) {
 		return Vec2<float>(
@@ -76,9 +76,9 @@ struct Vec2
 		);
 	}
 	/**
-	 * @brief EgyenlısÈg ˆsszehasonlÌt·s
-	 * @param other M·sik vektor
-	 * @return true ha x Ès y megegyezik
+	 * @brief Egyenl≈ës√©g √∂sszehasonl√≠t√°s
+	 * @param other M√°sik vektor
+	 * @return true ha x √©s y megegyezik
 	 */
 	bool operator==(const Vec2<T>& other) const {
 		return (x == other.x && y == other.y);

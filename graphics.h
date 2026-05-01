@@ -1,9 +1,9 @@
-/**
+Ôªø/**
  * @file Graphics.h
- * @brief Absztrakt grafikai interfÈsz.
+ * @brief Absztrakt grafikai interf√©sz.
  *
- * Ez az interfÈsz elv·lasztja a j·tÈk logik·t a konkrÈt renderelÈstıl.
- * A konkrÈt implement·ciÛ (pl. SFML Renderer) ezt valÛsÌtja meg.
+ * Ez az interf√©sz elv√°lasztja a j√°t√©k logik√°t a konkr√©t renderel√©st≈ël.
+ * A konkr√©t implement√°ci√≥ (pl. SFML Renderer) ezt val√≥s√≠tja meg.
  */
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
@@ -14,103 +14,103 @@
 
  /**
   * @class Graphics
-  * @brief Absztrakt renderelÈsi interfÈsz.
+  * @brief Absztrakt renderel√©si interf√©sz.
   *
-  * Minden kirajzol·si m˚velet ezen kereszt¸l tˆrtÈnik.
-  * A j·tÈk nem kˆzvetlen¸l SFML-t haszn·l
+  * Minden kirajzol√°si m≈±velet ezen kereszt√ºl t√∂rt√©nik.
+  * A j√°t√©k nem k√∂zvetlen√ºl SFML-t haszn√°l
   */
 class Graphics
 {
 public:
 	/**
-	 * @brief Virtu·lis destruktor
+	 * @brief Virtu√°lis destruktor
 	 */
 	virtual ~Graphics() {}
 	/**
-	 * @brief Tile kirajzol·sa
-	 * @param pos PozÌciÛ
-	 * @param t Tile tÌpusa
-	 * @param size MÈret
+	 * @brief Tile kirajzol√°sa
+	 * @param pos Poz√≠ci√≥
+	 * @param t Tile t√≠pusa
+	 * @param size M√©ret
 	 */
 	virtual void drawTile(Vec2<float> pos, TileType t, float size) = 0;
 	/**
-	 * @brief R·cs kirajzol·sa
-	 * @param width SzÈlessÈg (tile-okban)
-	 * @param height Magass·g (tile-okban)
-	 * @param tileSize Tile mÈret
+	 * @brief R√°cs kirajzol√°sa
+	 * @param width Sz√©less√©g (tile-okban)
+	 * @param height Magass√°g (tile-okban)
+	 * @param tileSize Tile m√©ret
 	 */
 	virtual void drawGrid(int width, int height, float tileSize) = 0;
 	/**
-	 * @brief ⁄tvonal indexek kirajzol·sa
-	 * @param pathPoints ⁄tvonal pontok
-	 * @param tileSize Tile mÈret
+	 * @brief √ötvonal indexek kirajzol√°sa
+	 * @param pathPoints √ötvonal pontok
+	 * @param tileSize Tile m√©ret
 	 */
 	virtual void drawPathNumbers(const std::vector<Vec2<int>>& pathPoints, float tileSize) = 0;
 	/**
-	 * @brief Normal enemy kirajzol·sa
+	 * @brief Normal enemy kirajzol√°sa
 	 */
 	virtual void drawNormalEnemy(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Fast enemy kirajzol·sa
+	 * @brief Fast enemy kirajzol√°sa
 	 */
 	virtual void drawFastEnemy(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Tank enemy kirajzol·sa
+	 * @brief Tank enemy kirajzol√°sa
 	 */
 	virtual void drawTankEnemy(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Normal tower kirajzol·sa
+	 * @brief Normal tower kirajzol√°sa
 	 */
 	virtual void drawNormalTower(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Sniper tower kirajzol·sa
+	 * @brief Sniper tower kirajzol√°sa
 	 */
 	virtual void drawSniperTower(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Fast tower kirajzol·sa
+	 * @brief Fast tower kirajzol√°sa
 	 */
 	virtual void drawFastTower(Vec2<float> pos, float size) = 0;
 	/**
-	 * @brief Tower gomb kirajzol·sa
+	 * @brief Tower gomb kirajzol√°sa
 	 *
 	 * @param button Gomb
-	 * @param isSelected Kijelˆlt-e
-	 * @param currentMoney J·tÈkos pÈnze
+	 * @param isSelected Kijel√∂lt-e
+	 * @param currentMoney J√°t√©kos p√©nze
 	 */
 	virtual void drawTowerButton(const towerButton& button, bool isSelected, int currentMoney) = 0;
 	/**
-	 * @brief Tower gomb h·ttÈr
+	 * @brief Tower gomb h√°tt√©r
 	 */
 	virtual void drawTowerButtonBackground(const towerButton& button, bool isSelected) = 0;
 	/**
-	 * @brief Sidebar h·ttÈr
+	 * @brief Sidebar h√°tt√©r
 	 */
 	virtual void drawSidebarBackground() = 0;
 	/**
-	 * @brief Tower range kˆr kirajzol·sa
-	 * @param pos PozÌciÛ
-	 * @param range HatÛt·v
+	 * @brief Tower range k√∂r kirajzol√°sa
+	 * @param pos Poz√≠ci√≥
+	 * @param range Hat√≥t√°v
 	 */
 	virtual void drawRangeCircle(Vec2<float> pos, float range) = 0;
 	/**
 	 * @brief Enemy HP bar
-	 * @param pos PozÌciÛ
-	 * @param size MÈret
-	 * @param hpPercent HP sz·zalÈk a maxhoz kÈpest
+	 * @param pos Poz√≠ci√≥
+	 * @param size M√©ret
+	 * @param hpPercent HP sz√°zal√©k a maxhoz k√©pest
 	 */
 	virtual void drawEnemyHpbar(Vec2<float> pos, float size, float hpPercent) = 0;
 	/**
-	 * @brief Stat bar h·ttÈr
+	 * @brief Stat bar h√°tt√©r
 	 */
 	virtual void drawStatBarBackground() = 0;
 	/**
 	 * @brief Stat bar (HUD)
 	 *
 	 * @param hp HP
-	 * @param money PÈnz
-	 * @param currentwave Aktu·lis wave
+	 * @param money P√©nz
+	 * @param currentwave Aktu√°lis wave
 	 * @param seconds Countdown
-	 * @param isCounting Timer aktÌv-e
+	 * @param isCounting Timer akt√≠v-e
 	 */
 	virtual void drawStatBar(int hp, int money, int currentwave, float seconds, bool isCounting) = 0;
 	/**
@@ -118,7 +118,7 @@ public:
 	 */
 	virtual void drawHp(int hp) = 0;
 	/**
-	 * @brief PÈnz UI
+	 * @brief P√©nz UI
 	 */
 	virtual void drawMoney(int money) = 0;
 	/**
@@ -126,19 +126,19 @@ public:
 	 */
 	virtual void drawWaveCounter(int currentwave) = 0;
 	/**
-	 * @brief Visszasz·ml·lÛ UI
+	 * @brief Visszasz√°ml√°l√≥ UI
 	 */
 	virtual void drawCounter(float seconds) = 0;
 	/**
-	 * @brief Game over kÈpernyı
+	 * @brief Game over k√©perny≈ë
 	 */
 	virtual void drawGameOver() = 0;
 	/**
-	 * @brief You win kÈpernyı
+	 * @brief You win k√©perny≈ë
 	 */
 	virtual void drawYouWin() = 0;
 	/**
-	 * @brief Mentett p·lya kÈpernyı
+	 * @brief Mentett p√°lya k√©perny≈ë
 	 */
 	virtual void drawMapSaved() = 0;
 	/**
@@ -152,14 +152,14 @@ public:
 	 */
 	virtual void drawTowerStats(float d, float fr, float r, int l, int uCost) = 0;
 	/**
-	 * @brief Gomb kirajzol·sa
+	 * @brief Gomb kirajzol√°sa
 	 * @param button Gomb
 	 */
 	virtual void drawButton(const Button& button) = 0;
 	/**
-	 * @brief Gomb kirajzol·sa, kijelˆlt ·llapotban
+	 * @brief Gomb kirajzol√°sa, kijel√∂lt √°llapotban
 	 * @param button Gomb
-	 * @param isSelected Kijelˆlt-e
+	 * @param isSelected Kijel√∂lt-e
 	 */
 	virtual void drawButton(const Button& button, bool isSelected) = 0;
 };

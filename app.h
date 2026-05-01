@@ -1,12 +1,12 @@
-/**
+Ôªø/**
  * @file App.h
- * @brief A j·tÈk fı alkalmaz·s oszt·lya.
+ * @brief A j√°t√©k f≈ë alkalmaz√°s oszt√°lya.
  *
- * Az App felelıs:
- * - ablak kezelÈsÈrt (SFML)
- * - game loop futtat·s·Èrt
- * - state managementÈrt
- * - renderelÈs megvalÛsÌt·s·Èrt
+ * Az App felel≈ës:
+ * - ablak kezel√©s√©rt (SFML)
+ * - game loop futtat√°s√°√©rt
+ * - state management√©rt
+ * - renderel√©s megval√≥s√≠t√°s√°√©rt
  */
 #ifndef APP_H
 #define APP_H
@@ -22,53 +22,53 @@
 #include "state.h"
  /**
   * @class App
-  * @brief A j·tÈk fı alkalmaz·s loop implement·ciÛja.
+  * @brief A j√°t√©k f≈ë alkalmaz√°s loop implement√°ci√≥ja.
   *
-  * Ez az oszt·ly:
-  * - inicializ·lja a rendszert
+  * Ez az oszt√°ly:
+  * - inicializ√°lja a rendszert
   * - kezeli a window-t (SFML)
   * - futtatja a game loopot
-  * - kezeli az aktu·lis State-et
+  * - kezeli az aktu√°lis State-et
  
   */
 class App : public IApp{
     sf::RenderWindow window; //SFML ablak
-    Renderer renderer; //Grafikai rÈteg
-	State* currentState; //Aktu·lis state
-    bool running; //J·tÈk fut-e
+    Renderer renderer; //Grafikai r√©teg
+	State* currentState; //Aktu√°lis state
+    bool running; //J√°t√©k fut-e
     const float dt = 0.016667f; //~60FPS
-    float accumulator; //Idı akkumul·tor
-    std::chrono::steady_clock::time_point lastTime; //IdızÌtÈshez
-	LevelManager levelManager; //P·ly·k kezelÈse
+    float accumulator; //Id≈ë akkumul√°tor
+    std::chrono::steady_clock::time_point lastTime; //Id≈ëz√≠t√©shez
+	LevelManager levelManager; //P√°ly√°k kezel√©se
 public:
     /**
      * @brief Konstruktor
-     * Inicializ·lja az ablakot, renderer-t Ès alap state-et.
+     * Inicializ√°lja az ablakot, renderer-t √©s alap state-et.
      */
     App();
     /**
      * @brief Destruktor
-     * FelszabadÌtja az aktÌv state-et
+     * Felszabad√≠tja az akt√≠v state-et
      */
     ~App();
     /**
-    * @brief J·tÈk·llapot v·lt·sa
-    * LecserÈli az aktu·lis State-et
-    * @param type ⁄j ·llapot tÌpusa
+    * @brief J√°t√©k√°llapot v√°lt√°sa
+    * Lecser√©li az aktu√°lis State-et
+    * @param type √öj √°llapot t√≠pusa
     */
     void changeState(gameState type) override;
     LevelManager& getLevelManager() override {
         return levelManager;
     }
     /**
-     * @brief Grafikai rendszer elÈrÈse
+     * @brief Grafikai rendszer el√©r√©se
      * @return Renderer mint Graphics referencia
      */
     Graphics& getGraphics() {
         return renderer; 
     }
     /**
-     * @brief Fı game loop
+     * @brief F≈ë game loop
      * Kezeli:
      * - event
      * - update 
@@ -76,18 +76,18 @@ public:
      */
     void run();   
     /**
-     * @brief Input esemÈnyek kezelÈse
-     * SFML event (billenty˚, egÈr)
+     * @brief Input esem√©nyek kezel√©se
+     * SFML event (billenty≈±, eg√©r)
      */
     void handleEvents();  
     /**
-     * @brief J·tÈk logika frissÌtÈse
+     * @brief J√°t√©k logika friss√≠t√©se
      * @param dt Delta time
      */
     void update(float dt); 
     /**
      * @brief Render 
-     * Kirajzolja az aktu·lis state-et.
+     * Kirajzolja az aktu√°lis state-et.
      */
     void render(); 
 };

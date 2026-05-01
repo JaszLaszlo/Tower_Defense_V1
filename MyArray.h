@@ -1,9 +1,9 @@
-/**
+ï»¿/**
  * @file MyArray.h
- * @brief Dinamikus tömb pointer alapú objektum tároláshoz.
+ * @brief Dinamikus tÃ¶mb pointer alapÃº objektum tÃ¡rolÃ¡shoz.
  *
- * A MyArray egy dinamikus konténer, amely T típusú objektumokra
- * mutató pointereket tárol, és felel azok memóriakezeléséért.
+ * A MyArray egy dinamikus kontÃ©ner, amely T tÃ­pusÃº objektumokra
+ * mutatÃ³ pointereket tÃ¡rol, Ã©s felel azok memÃ³riakezelÃ©sÃ©Ã©rt.
  */
 #ifndef MYARRAY_H
 #define MYARRAY_H
@@ -11,19 +11,19 @@
 
  /**
   * @class MyArray
-  * @brief Dinamikus tömb pointerekhez, automatikus memóriakezeléssel.
-  * Törléskor felszabadítja az objektumokat
-  * @tparam T Tárolt típus
+  * @brief Dinamikus tÃ¶mb pointerekhez, automatikus memÃ³riakezelÃ©ssel.
+  * TÃ¶rlÃ©skor felszabadÃ­tja az objektumokat
+  * @tparam T TÃ¡rolt tÃ­pus
   */
 template<typename T>
 class MyArray {
-	T** data; //Pointer típusú tömb a T típusú objektumok pointereinek tárolására
-	int count; //Aktuális elemek száma
-	int capacity; //A tömb kapacitása
+	T** data; //Pointer tÃ­pusÃº tÃ¶mb a T tÃ­pusÃº objektumok pointereinek tÃ¡rolÃ¡sÃ¡ra
+	int count; //AktuÃ¡lis elemek szÃ¡ma
+	int capacity; //A tÃ¶mb kapacitÃ¡sa
 	/**
-	 * @brief Másoló segédfüggvény
-	 * Mély másolatot készít a másik tömbrõl clone() segítségével.
-	 * @param a A másolandó MyArray
+	 * @brief MÃ¡solÃ³ segÃ©dfÃ¼ggvÃ©ny
+	 * MÃ©ly mÃ¡solatot kÃ©szÃ­t a mÃ¡sik tÃ¶mbrÅ‘l clone() segÃ­tsÃ©gÃ©vel.
+	 * @param a A mÃ¡solandÃ³ MyArray
 	 */
 	void copyfrom(const MyArray& a)
 	{
@@ -43,8 +43,8 @@ class MyArray {
 		}
 	}
 	/**
-	 * @brief Memória felszabadítása
-	 * Törli az összes tárolt objektumot és a tömböt
+	 * @brief MemÃ³ria felszabadÃ­tÃ¡sa
+	 * TÃ¶rli az Ã¶sszes tÃ¡rolt objektumot Ã©s a tÃ¶mbÃ¶t
 	 */
 	void clear()
 	{
@@ -55,8 +55,8 @@ class MyArray {
 		delete[] data;
 	}
 	/**
-	 * @brief Kapacitás növelése
-	 * Duplázza a tömb méretét és átmásolja az elemeket.
+	 * @brief KapacitÃ¡s nÃ¶velÃ©se
+	 * DuplÃ¡zza a tÃ¶mb mÃ©retÃ©t Ã©s Ã¡tmÃ¡solja az elemeket.
 	 */
 	void resize()
 	{
@@ -73,7 +73,7 @@ class MyArray {
 public:
 	/**
 	 * @brief Konstruktor
-	 * @param cap Kezdeti kapacitás (alapértelmezett: 10)
+	 * @param cap Kezdeti kapacitÃ¡s (alapÃ©rtelmezett: 10)
 	 */
 	MyArray(int cap=10) : count(0), capacity(cap)
 	{
@@ -84,20 +84,20 @@ public:
 		}
 	}
 	/**
-	 * @brief Másoló konstruktor
-	 * Mély másolatot készít clone() segítségével.
-	 * @param a A másolandó tömb
+	 * @brief MÃ¡solÃ³ konstruktor
+	 * MÃ©ly mÃ¡solatot kÃ©szÃ­t clone() segÃ­tsÃ©gÃ©vel.
+	 * @param a A mÃ¡solandÃ³ tÃ¶mb
 	 */
 	MyArray(const MyArray& a)
 	{
 		copyfrom(a);
 	}
 	/**
-	 * @brief Értékadó operátor
-	 * Elõször felszabadítja a meglévõ adatokat,
-	 * majd mély másolatot készít.
-	 * @param a A másolandó tömb
-	 * @return Referencia önmagára
+	 * @brief Ã‰rtÃ©kadÃ³ operÃ¡tor
+	 * ElÅ‘szÃ¶r felszabadÃ­tja a meglÃ©vÅ‘ adatokat,
+	 * majd mÃ©ly mÃ¡solatot kÃ©szÃ­t.
+	 * @param a A mÃ¡solandÃ³ tÃ¶mb
+	 * @return Referencia Ã¶nmagÃ¡ra
 	 */
 	MyArray& operator=(const MyArray& a)
 	{
@@ -110,15 +110,15 @@ public:
 	}
 	/**
 	 * @brief Destruktor
-	 * Felszabadítja az összes tárolt objektumot.
+	 * FelszabadÃ­tja az Ã¶sszes tÃ¡rolt objektumot.
 	 */
 	~MyArray()
 	{
 		clear();
 	}
 	/**
-	 * @brief Elem hozzáadása
-	 * @param item A hozzáadandó objektum pointere
+	 * @brief Elem hozzÃ¡adÃ¡sa
+	 * @param item A hozzÃ¡adandÃ³ objektum pointere
 	 */
 	void Add(T* item)
 	{
@@ -127,10 +127,10 @@ public:
 		data[count++] = item;
 	}
 	/**
-	 * @brief Elem eltávolítása index alapján
-	 * Az adott elemet törli, majd az utolsó elemet
-	 * a helyére mozgatja
-	 * @param idx Az eltávolítandó elem indexe
+	 * @brief Elem eltÃ¡volÃ­tÃ¡sa index alapjÃ¡n
+	 * Az adott elemet tÃ¶rli, majd az utolsÃ³ elemet
+	 * a helyÃ©re mozgatja
+	 * @param idx Az eltÃ¡volÃ­tandÃ³ elem indexe
 	 */
 	void Remove(int idx)
 	{
@@ -142,7 +142,7 @@ public:
 		count--;
 	}
 	/**
-	 * @brief Elem elérése index alapján
+	 * @brief Elem elÃ©rÃ©se index alapjÃ¡n
 	 * @param idx Index
 	 * @return Pointer az elemre
 	 */
@@ -151,7 +151,7 @@ public:
 		return data[idx];
 	}
 	/**
-	 * @brief Elem elérése index alapján
+	 * @brief Elem elÃ©rÃ©se index alapjÃ¡n
 	 * @param idx Index
 	 * @return Pointer az elemre (const)
 	 */
@@ -160,8 +160,8 @@ public:
 		return data[idx];
 	}
 	/**
-	 * @brief Aktuális elemszám lekérése
-	 * @return Az elemek száma
+	 * @brief AktuÃ¡lis elemszÃ¡m lekÃ©rÃ©se
+	 * @return Az elemek szÃ¡ma
 	 */
 	int size() const
 	{

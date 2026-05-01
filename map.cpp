@@ -1,4 +1,4 @@
-#include "map.h"
+ï»¿#include "map.h"
 #include <iostream> 
 #include <fstream>
 #include "memtrace.h"
@@ -149,7 +149,7 @@ void EditorMap::save(bool& success) const
 {
 	if(!canSave())
 	{
-		std::cerr << "Nem lehet elmenteni a pályát: túl kevés útpont van.\n";
+		std::cerr << "Nem lehet elmenteni a pÃ¡lyÃ¡t: tÃºl kevÃ©s Ãºtpont van.\n";
 		success = false;
 		return;
 	}

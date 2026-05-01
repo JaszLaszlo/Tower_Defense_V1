@@ -1,13 +1,13 @@
-/**
+ï»¿/**
  * @file Types.h
- * @brief Alapvetõ enumok és UI elemek definíciói.
+ * @brief AlapvetÅ‘ enumok Ã©s UI elemek definÃ­ciÃ³i.
  *
- * Ez a fájl tartalmazza a játékban használt:
- * - tile típusokat
- * - tower típusokat
- * - enemy típusokat
- * - játékállapotokat
- * - UI gomb struktúrákat
+ * Ez a fÃ¡jl tartalmazza a jÃ¡tÃ©kban hasznÃ¡lt:
+ * - tile tÃ­pusokat
+ * - tower tÃ­pusokat
+ * - enemy tÃ­pusokat
+ * - jÃ¡tÃ©kÃ¡llapotokat
+ * - UI gomb struktÃºrÃ¡kat
  */
 #ifndef TYPES_H
 #define TYPES_H
@@ -15,7 +15,7 @@
 
  /**
   * @enum TileType
-  * @brief A pálya mezõinek típusa.
+  * @brief A pÃ¡lya mezÅ‘inek tÃ­pusa.
   */
 enum class TileType
 {
@@ -25,7 +25,7 @@ enum class TileType
 };
 /**
  * @enum TowerType
- * @brief Torony típusok.
+ * @brief Torony tÃ­pusok.
  */
 enum class TowerType
 {
@@ -36,7 +36,7 @@ enum class TowerType
 };
 /**
  * @enum EnemyType
- * @brief Ellenség típusok.
+ * @brief EllensÃ©g tÃ­pusok.
  */
 enum class EnemyType
 {
@@ -46,7 +46,7 @@ enum class EnemyType
 };
 /**
  * @enum gameState
- * @brief Játék fõ állapotai.
+ * @brief JÃ¡tÃ©k fÅ‘ Ã¡llapotai.
  */
 enum class gameState
 {
@@ -58,20 +58,20 @@ enum class gameState
 };
 /**
  * @struct Button
- * @brief Egyszerû UI gomb alapstruktúra.
- * Minden UI gomb ebbõl öröklõdik.
+ * @brief EgyszerÅ± UI gomb alapstruktÃºra.
+ * Minden UI gomb ebbÅ‘l Ã¶rÃ¶klÅ‘dik.
  */
 struct Button {
-	float x, y, w, h; //Pozíció és méret
-	std::string label; //megjelenített szöveg
+	float x, y, w, h; //PozÃ­ciÃ³ Ã©s mÃ©ret
+	std::string label; //megjelenÃ­tett szÃ¶veg
 	Button(float x, float y, float w, float h, const std::string& label) :
 		x(x), y(y), w(w), h(h), label(label) {
 	}
 	/**
-	 * @brief Egér kattintás ellenõrzése
-	 * @param mx Egér X koordináta
-	 * @param my Egér Y koordináta
-	 * @return true ha a kattintás a gombon belül történt
+	 * @brief EgÃ©r kattintÃ¡s ellenÅ‘rzÃ©se
+	 * @param mx EgÃ©r X koordinÃ¡ta
+	 * @param my EgÃ©r Y koordinÃ¡ta
+	 * @return true ha a kattintÃ¡s a gombon belÃ¼l tÃ¶rtÃ©nt
 	 */
 	bool isClicked(float mx, float my) const {
 		return mx >= x && mx <= x + w && my >= y && my <= y + h;
@@ -79,7 +79,7 @@ struct Button {
 };
 /**
  * @struct menuButton
- * @brief Menü gomb, amely játékállapotot vált.
+ * @brief MenÃ¼ gomb, amely jÃ¡tÃ©kÃ¡llapotot vÃ¡lt.
  */
 struct menuButton :public Button
 {
@@ -89,7 +89,7 @@ struct menuButton :public Button
 };
 /**
  * @struct levelButton
- * @brief Pályaválasztó gomb.
+ * @brief PÃ¡lyavÃ¡lasztÃ³ gomb.
  */
 struct levelButton : public Button
 {
@@ -100,7 +100,7 @@ struct levelButton : public Button
 };
 /**
  * @struct towerButton
- * @brief Torony építõ gomb.
+ * @brief Torony Ã©pÃ­tÅ‘ gomb.
  */
 struct towerButton : public Button
 {
@@ -111,7 +111,7 @@ struct towerButton : public Button
 };
 /**
  * @struct editorTileButton
- * @brief Pályaszerkesztõ tile választó gomb.
+ * @brief PÃ¡lyaszerkesztÅ‘ tile vÃ¡lasztÃ³ gomb.
  */
 struct editorTileButton : public Button
 {

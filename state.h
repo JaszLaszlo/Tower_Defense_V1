@@ -1,14 +1,14 @@
-/**
+ï»¿/**
  * @file State.h
- * @brief A játék state machine rendszerének definíciója.
+ * @brief A jÃ¡tÃ©k state machine rendszerÃ©nek definÃ­ciÃ³ja.
  *
- * Ez a fájl tartalmazza a játék különbözõ állapotait:
+ * Ez a fÃ¡jl tartalmazza a jÃ¡tÃ©k kÃ¼lÃ¶nbÃ¶zÅ‘ Ã¡llapotait:
  * - Main Menu
  * - Level Select
  * - InGame
  * - Map Editor
  *
- * Minden state felelõs a saját input, update és render logikájáért.
+ * Minden state felelÅ‘s a sajÃ¡t input, update Ã©s render logikÃ¡jÃ¡Ã©rt.
  */
 #ifndef STATE_H
 #define STATE_H
@@ -25,16 +25,16 @@ class Map;
 
 /**
  * @class State
- * @brief Absztrakt alap osztály minden játékállapothoz.
+ * @brief Absztrakt alap osztÃ¡ly minden jÃ¡tÃ©kÃ¡llapothoz.
  *
- * A State minta alapján minden képernyõ külön logikát kezel:
- * - input kezelés
+ * A State minta alapjÃ¡n minden kÃ©pernyÅ‘ kÃ¼lÃ¶n logikÃ¡t kezel:
+ * - input kezelÃ©s
  * - update
  * - render
  */
 class State {
 protected:
-	IApp& app; //Referencia a fõ alkalmazásra
+	IApp& app; //Referencia a fÅ‘ alkalmazÃ¡sra
 public:
 	/**
 	* @brief Konstruktor
@@ -42,36 +42,36 @@ public:
 	*/
 	State(IApp& a) : app(a) {}
 	/**
-	 * @brief Virtuális destruktor
+	 * @brief VirtuÃ¡lis destruktor
 	 */
 	virtual ~State() {}
 	/**
-	 * @brief Egér kattintás kezelése
-	 * @param x X koordináta
-	 * @param y Y koordináta
+	 * @brief EgÃ©r kattintÃ¡s kezelÃ©se
+	 * @param x X koordinÃ¡ta
+	 * @param y Y koordinÃ¡ta
 	 */
 	virtual void handleClick(float x, float y) = 0;
 	/**
-	 * @brief Billentyû input kezelése
-	 * @param keyCode Billentyû kód
+	 * @brief BillentyÅ± input kezelÃ©se
+	 * @param keyCode BillentyÅ± kÃ³d
 	 */
 	virtual void handleKeyInput(int keyCode) = 0;
 	/**
-	 * @brief Állapot frissítése
+	 * @brief Ãllapot frissÃ­tÃ©se
 	 * @param dt Delta time
 	 */
 	virtual void update(float dt) = 0;
 	/**
-	 * @brief Állapot kirajzolása
+	 * @brief Ãllapot kirajzolÃ¡sa
 	 */
 	virtual void draw() const = 0;
 };
 /**
  * @class MainMenuState
- * @brief Fõmenü állapot.
+ * @brief FÅ‘menÃ¼ Ã¡llapot.
  *
  * Kezeli:
- * - map editor és játék közötti választás
+ * - map editor Ã©s jÃ¡tÃ©k kÃ¶zÃ¶tti vÃ¡lasztÃ¡s
  */
 class MainMenuState : public State {
 	std::vector<menuButton> buttons;
@@ -84,22 +84,22 @@ public:
 };
 /**
  * @class LevelSelectState
- * @brief Pályaválasztó képernyõ.
+ * @brief PÃ¡lyavÃ¡lasztÃ³ kÃ©pernyÅ‘.
  */
 class LevelSelectState : public State {
 
 	std::vector<levelButton> levelButtons;
 	/**
-	 * @brief Gomb pozíció számítása
+	 * @brief Gomb pozÃ­ciÃ³ szÃ¡mÃ­tÃ¡sa
 	 * @param index Level index
-	 * @param x X pozíció (out)
-	 * @param y Y pozíció (out)
+	 * @param x X pozÃ­ciÃ³ (out)
+	 * @param y Y pozÃ­ciÃ³ (out)
 	 */
 	void calculateButtonPos(int index, float& x, float& y) const;
 	/**
-	 * @brief Level gomb létrehozása
+	 * @brief Level gomb lÃ©trehozÃ¡sa
 	 * @param index Level index
-	 * @param name Megjelenített név
+	 * @param name MegjelenÃ­tett nÃ©v
 	 */
 	void createButton(int index, const std::string& name);
 public:
@@ -111,15 +111,15 @@ public:
 };
 /**
  * @class InGameState
- * @brief Aktív játékmenet állapot.
- * Itt fut a teljes tower defense játék logika.
+ * @brief AktÃ­v jÃ¡tÃ©kmenet Ã¡llapot.
+ * Itt fut a teljes tower defense jÃ¡tÃ©k logika.
  */
 class InGameState : public State {
 private:
-	Game* game; //aktív játék
+	Game* game; //aktÃ­v jÃ¡tÃ©k
 	TowerType selectedTowerType;
 	std::vector<towerButton> sidebarButtons;
-	bool valid = true; //Jelzi, hogy sikerült-e a játék inicializálása (fájlok betöltése)
+	bool valid = true; //Jelzi, hogy sikerÃ¼lt-e a jÃ¡tÃ©k inicializÃ¡lÃ¡sa (fÃ¡jlok betÃ¶ltÃ©se)
 	void initSidebar();
 public:
 	InGameState(IApp& a, LevelData* data);
@@ -131,9 +131,9 @@ public:
 };
 /**
  * @class MapEditorState
- * @brief Pályaszerkesztõ mód.
- * Lehetõvé teszi:
- * - map szerkesztést, mentését
+ * @brief PÃ¡lyaszerkesztÅ‘ mÃ³d.
+ * LehetÅ‘vÃ© teszi:
+ * - map szerkesztÃ©st, mentÃ©sÃ©t
  */
 class MapEditorState : public State
 {

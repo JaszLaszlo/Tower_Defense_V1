@@ -1,8 +1,8 @@
-/**
+ï»¿/**
 * @file map.h
-* @brief Pálya kezelését megvalósító osztályok deklarációja.
-* Tartalmazza a Tile, Map és EditorMap osztályokat,
-* amelyek a pálya kezeléséért, betöltéséért és szerkesztéséért felelõsek.
+* @brief PÃ¡lya kezelÃ©sÃ©t megvalÃ³sÃ­tÃ³ osztÃ¡lyok deklarÃ¡ciÃ³ja.
+* Tartalmazza a Tile, Map Ã©s EditorMap osztÃ¡lyokat,
+* amelyek a pÃ¡lya kezelÃ©sÃ©Ã©rt, betÃ¶ltÃ©sÃ©Ã©rt Ã©s szerkesztÃ©sÃ©Ã©rt felelÅ‘sek.
 */
 
 #ifndef MAP_H
@@ -17,175 +17,175 @@
 
 /**
 * @class Tile
-* @brief A térkép egyetlen csempéjét reprezentáló osztály.
+* @brief A tÃ©rkÃ©p egyetlen csempÃ©jÃ©t reprezentÃ¡lÃ³ osztÃ¡ly.
 */
 class Tile {
-	TileType type; //A csempe típusa (Path, buildable, not buildable)
+	TileType type; //A csempe tÃ­pusa (Path, buildable, not buildable)
 public:
 	/**
-	* @brief Konstruktor, amely beállítja a csempe típusát.
-	* @param t A csempe típusa. (Alapértelmezett::not buildable)
+	* @brief Konstruktor, amely beÃ¡llÃ­tja a csempe tÃ­pusÃ¡t.
+	* @param t A csempe tÃ­pusa. (AlapÃ©rtelmezett::not buildable)
 	*/
 	Tile(TileType t = TileType::NOTBUILDABLE): type(t) {}
 	/**
-	* @brief Visszaadja a csempe típusát.
-	* @return A csempe típusa.
+	* @brief Visszaadja a csempe tÃ­pusÃ¡t.
+	* @return A csempe tÃ­pusa.
 	*/
 	TileType getType() const { return type; }
 	/**
-	* @brief Beállítja a csempe típusát.
-	* @param t A csempe típusa.
+	* @brief BeÃ¡llÃ­tja a csempe tÃ­pusÃ¡t.
+	* @param t A csempe tÃ­pusa.
 	*/
 	void setType(TileType t) { type = t; }
 };
 /**
 * @class Map
-* @brief A játék pályáját reprezentáló osztály.
-* Kezeli a négyzetrács alapú pályát, az útvonal pontokat,
-* valamint a pálya betöltését és megjelenítését.
+* @brief A jÃ¡tÃ©k pÃ¡lyÃ¡jÃ¡t reprezentÃ¡lÃ³ osztÃ¡ly.
+* Kezeli a nÃ©gyzetrÃ¡cs alapÃº pÃ¡lyÃ¡t, az Ãºtvonal pontokat,
+* valamint a pÃ¡lya betÃ¶ltÃ©sÃ©t Ã©s megjelenÃ­tÃ©sÃ©t.
 */
 class Map {
 protected:
-	int width, height; //Pálya méretei
-	int tileSize, pathSize; //Csempe és útvonal méretei
-	Tile** Tiles; //Dinamikus 2D tömb a csempék tárolására
-	std::vector<Vec2<int>> PathPoints; //Az útvonal pontjainak listája
-	//Memória felszabadítása
+	int width, height; //PÃ¡lya mÃ©retei
+	int tileSize, pathSize; //Csempe Ã©s Ãºtvonal mÃ©retei
+	Tile** Tiles; //Dinamikus 2D tÃ¶mb a csempÃ©k tÃ¡rolÃ¡sÃ¡ra
+	std::vector<Vec2<int>> PathPoints; //Az Ãºtvonal pontjainak listÃ¡ja
+	//MemÃ³ria felszabadÃ­tÃ¡sa
 	void cleanUp();
-	//Rács lefoglalása
+	//RÃ¡cs lefoglalÃ¡sa
 	void allocateGrid();
-	//Méretek betöltése streambõl
+	//MÃ©retek betÃ¶ltÃ©se streambÅ‘l
 	void loadDimensions(std::istream& is);
-	//Rács betöltése streambõl
+	//RÃ¡cs betÃ¶ltÃ©se streambÅ‘l
 	void loadGrid(std::istream& is);
-	//Útvonal pontok betöltése streambõl
+	//Ãštvonal pontok betÃ¶ltÃ©se streambÅ‘l
 	void loadPathPoints(std::istream& is);
 	/**
-	 * @brief Karakter -> TileType konverzió
+	 * @brief Karakter -> TileType konverziÃ³
 	 * @param c A karakter
-	 * @return A megfelelõ TileType
+	 * @return A megfelelÅ‘ TileType
 	 */
 	TileType charToTileType(const char c) const;
 	/**
-	 * @brief TileType -> karakter konverzió
+	 * @brief TileType -> karakter konverziÃ³
 	 * @param type A TileType
-	 * @return A megfelelõ karakter
+	 * @return A megfelelÅ‘ karakter
 	 */
 	char tileTypeToChar(TileType type) const;
 	
 public:
-	//Alapértelmezett konstruktor
+	//AlapÃ©rtelmezett konstruktor
 	Map();
 	/**
-	 * @brief Konstruktor méretekkel
-	 * @param width Szélesség
-	 * @param height Magasság
-	 * @param tileSize Tile méret pixelben
+	 * @brief Konstruktor mÃ©retekkel
+	 * @param width SzÃ©lessÃ©g
+	 * @param height MagassÃ¡g
+	 * @param tileSize Tile mÃ©ret pixelben
 	 */
 	Map(int width, int height, int tileSize);
 	//Destruktor
 	~Map();
 	/**
-	 * @brief Pálya betöltése streambõl
+	 * @brief PÃ¡lya betÃ¶ltÃ©se streambÅ‘l
 	 * @param is Input stream
 	 */
 	void load(std::istream& is);
 	/**
-	 * @brief Tile lekérése
+	 * @brief Tile lekÃ©rÃ©se
 	 * @param y Sor index
 	 * @param x Oszlop index
 	 * @return Referencia a tile-ra
 	 */
 	Tile& getTile(int y, int x) const;
-	// @return Tile méret
+	// @return Tile mÃ©ret
 	int getTileSize() const { return tileSize; }
-	// @return Útvonal hossza
+	// @return Ãštvonal hossza
 	int getPathSize() const { return PathPoints.size(); }
-	// @return Pálya magasság
+	// @return PÃ¡lya magassÃ¡g
 	int getHeight() const { return height; }
-	// @return Pálya szélesség
+	// @return PÃ¡lya szÃ©lessÃ©g
 	int getWidth() const { return width; }
-	// @return Az útvonal kezdõpontja
+	// @return Az Ãºtvonal kezdÅ‘pontja
 	Vec2<int> getSpawnPoint() const { return PathPoints[0]; }
 	/**
-	 * @brief Útvonal pont lekérése
+	 * @brief Ãštvonal pont lekÃ©rÃ©se
 	 * @param index Index
-	 * @return A pont koordinátája
+	 * @return A pont koordinÃ¡tÃ¡ja
 	 */
 	Vec2<int> getPathPoint(int index) const { return PathPoints[index]; }
 	/**
-	 * @brief Megmondja, hogy lehet-e építeni adott helyre
+	 * @brief Megmondja, hogy lehet-e Ã©pÃ­teni adott helyre
 	 * @param y Sor
 	 * @param x Oszlop
-	 * @return true ha építhetõ
+	 * @return true ha Ã©pÃ­thetÅ‘
 	 */
 	bool canBuild(int y, int x) const;
 	/**
-	 * @brief Pálya kirajzolása
+	 * @brief PÃ¡lya kirajzolÃ¡sa
 	 * @param g Grafikai objektum
 	 */
 	virtual void draw(Graphics& g) const;
 	/**
-	 * @brief Tile módosítása
+	 * @brief Tile mÃ³dosÃ­tÃ¡sa
 	 * @param y Sor
 	 * @param x Oszlop
-	 * @param type Új típus
+	 * @param type Ãšj tÃ­pus
 	 */
 	virtual void setTile(int y, int x, TileType type);
 };
 /**
  * @class EditorMap
- * @brief Pályaszerkesztõhöz használt Map.
+ * @brief PÃ¡lyaszerkesztÅ‘hÃ¶z hasznÃ¡lt Map.
  *
- * Lehetõvé teszi az útvonal szerkesztését,
- * visszavonást és pálya mentést.
+ * LehetÅ‘vÃ© teszi az Ãºtvonal szerkesztÃ©sÃ©t,
+ * visszavonÃ¡st Ã©s pÃ¡lya mentÃ©st.
  */
 class EditorMap : public Map
 {
-	bool PathPlaced=false; //Jelzi, hogy már van-e útvonal
+	bool PathPlaced=false; //Jelzi, hogy mÃ¡r van-e Ãºtvonal
 	void saveDimensions(std::ostream& os) const;
 	void savePathPoints(std::ostream& os) const;
 	void saveGrid(std::ostream& os) const;
-	//Ellenõrzi, hogy menthetõ-e a pálya
+	//EllenÅ‘rzi, hogy menthetÅ‘-e a pÃ¡lya
 	bool canSave() const;
 	/**
-	 * @brief Visszaadja a menthetõ pálya indexét
-	 * @return A menthetõ pálya indexe
+	 * @brief Visszaadja a menthetÅ‘ pÃ¡lya indexÃ©t
+	 * @return A menthetÅ‘ pÃ¡lya indexe
 	 */
 	int getSavableMapIndex() const;
-	//Mentés levels.txt fájlba
+	//MentÃ©s levels.txt fÃ¡jlba
 	void saveToLevelsTxt() const;
 public:
 	/**
-	 * @brief Konstruktor méretekkel
-	 * @param width Szélesség
-	 * @param height Magasság
-	 * @param tileSize Tile méret pixelben
+	 * @brief Konstruktor mÃ©retekkel
+	 * @param width SzÃ©lessÃ©g
+	 * @param height MagassÃ¡g
+	 * @param tileSize Tile mÃ©ret pixelben
 	 */
 	EditorMap(int width, int height, int tileSize);
 	/**
-	 * @brief Ellenõrzi, hogy lerakható-e útvonal
+	 * @brief EllenÅ‘rzi, hogy lerakhatÃ³-e Ãºtvonal
 	 * @param y Sor
 	 * @param x Oszlop
-	 * @return true ha lerakható
+	 * @return true ha lerakhatÃ³
 	 */
 	bool CanPlacePath(int y, int x) const;
 	/**
-	 * @brief Tile módosítása
+	 * @brief Tile mÃ³dosÃ­tÃ¡sa
 	 * @param y Sor
 	 * @param x Oszlop
-	 * @param type Új típus
+	 * @param type Ãšj tÃ­pus
 	 */
 	void setTile(int y, int x, TileType type) override;
-	//Visszavonja az utolsó útvonal pontot
+	//Visszavonja az utolsÃ³ Ãºtvonal pontot
 	void undoLastPath();
 	/**
-	* @brief Menti a pályát a megfelelõ formátumban egy .txt fájlba
-	* @param success Kimeneti paraméter ami jelzi a mentés sikerességét
+	* @brief Menti a pÃ¡lyÃ¡t a megfelelÅ‘ formÃ¡tumban egy .txt fÃ¡jlba
+	* @param success Kimeneti paramÃ©ter ami jelzi a mentÃ©s sikeressÃ©gÃ©t
 	*/
 	void save(bool& success) const;
 	/**
-	 * @brief Pálya kirajzolása
+	 * @brief PÃ¡lya kirajzolÃ¡sa
 	 * @param g Grafikai objektum
 	 */
 	void draw(Graphics& g) const override;

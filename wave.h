@@ -92,7 +92,7 @@ class WaveManager
 	bool isCountingDown; //Jelzi, hogy jelenleg visszaszámlálás van-e a következő wave-ig
 	const float TIME_BETWEEN_WAVES = 15.0f; //Másodperc a wave-ek között
 	/**
-	 * @brief String → EnemyType konverzió
+	 * @brief String  EnemyType konverzió
 	 * @param str Bemeneti szöveg
 	 * @return EnemyType érték
 	 */

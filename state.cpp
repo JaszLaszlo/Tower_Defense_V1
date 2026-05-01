@@ -1,4 +1,4 @@
-#include "state.h"
+﻿#include "state.h"
 #include "memtrace.h"
 #include "IApp.h"
 #include "level.h"

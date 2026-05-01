@@ -1,9 +1,9 @@
-/**
+ï»¿/**
  * @file Tower.h
- * @brief Tornyok és kezelésük a tower defense játékban.
+ * @brief Tornyok Ã©s kezelÃ©sÃ¼k a tower defense jÃ¡tÃ©kban.
  *
- * Tartalmazza a Tower alaposztályt, különbözõ torony típusokat,
- * valamint a TowerManager osztályt.
+ * Tartalmazza a Tower alaposztÃ¡lyt, kÃ¼lÃ¶nbÃ¶zÅ‘ torony tÃ­pusokat,
+ * valamint a TowerManager osztÃ¡lyt.
  */
 #ifndef TOWER_H
 #define TOWER_H
@@ -13,36 +13,36 @@
 #include "graphics.h"
 /**
 * @class Tower
- * @brief Alaposztály minden torony típushoz.
- * A Tower osztály felelõs a célzásért, támadásért
+ * @brief AlaposztÃ¡ly minden torony tÃ­pushoz.
+ * A Tower osztÃ¡ly felelÅ‘s a cÃ©lzÃ¡sÃ©rt, tÃ¡madÃ¡sÃ©rt
  */
 class Tower
 {
 protected:
-	Vec2<float> position; //Torony pozíciója világ koordinátákban
-	float range; //Támadási hatótáv
-	float damage; //Támadási sebzés
-	float fireRate; //Támadási sebesség (másodpercenkénti támadás)
-	float fireTimer; //Idõzítõ a következõ támadásig
-	float size; //Torony mérete
+	Vec2<float> position; //Torony pozÃ­ciÃ³ja vilÃ¡g koordinÃ¡tÃ¡kban
+	float range; //TÃ¡madÃ¡si hatÃ³tÃ¡v
+	float damage; //TÃ¡madÃ¡si sebzÃ©s
+	float fireRate; //TÃ¡madÃ¡si sebessÃ©g (mÃ¡sodpercenkÃ©nti tÃ¡madÃ¡s)
+	float fireTimer; //IdÅ‘zÃ­tÅ‘ a kÃ¶vetkezÅ‘ tÃ¡madÃ¡sig
+	float size; //Torony mÃ©rete
 	int level; //Torony szintje
-	const int maxLevel; //Maximális szint
-	Enemy* currentTarget; //Aktuális célpont
+	const int maxLevel; //MaximÃ¡lis szint
+	Enemy* currentTarget; //AktuÃ¡lis cÃ©lpont
 	/**
-	 * @brief Két pont közti távolság számítása
+	 * @brief KÃ©t pont kÃ¶zti tÃ¡volsÃ¡g szÃ¡mÃ­tÃ¡sa
 	 *
-	 * @param v1 Elsõ pont
-	 * @param v2 Második pont
-	 * @return A két pont közötti távolság
+	 * @param v1 ElsÅ‘ pont
+	 * @param v2 MÃ¡sodik pont
+	 * @return A kÃ©t pont kÃ¶zÃ¶tti tÃ¡volsÃ¡g
 	 */
 	float getDistance(const Vec2<float>& v1, const Vec2<float>& v2) const;
 	/**
-	 * @brief Célpont keresése az enemy listában
+	 * @brief CÃ©lpont keresÃ©se az enemy listÃ¡ban
 	 *
-	 * A torony kiválaszt egy ellenséget a hatótávján belül.
+	 * A torony kivÃ¡laszt egy ellensÃ©get a hatÃ³tÃ¡vjÃ¡n belÃ¼l.
 	 *
-	 * @param enemies Az aktív enemy-k listája
-	 * @return A kiválasztott enemy pointere, vagy nullptr ha nincs cél
+	 * @param enemies Az aktÃ­v enemy-k listÃ¡ja
+	 * @return A kivÃ¡lasztott enemy pointere, vagy nullptr ha nincs cÃ©l
 	 */
 	Enemy* findtarget(MyArray<Enemy>& enemies) const;
 
@@ -50,84 +50,84 @@ public:
 	/**
 	 * @brief Konstruktor
 	 *
-	 * @param p Pozíció
-	 * @param r Hatótáv
-	 * @param d Sebzés
-	 * @param fr Támadási sebesség
-	 * @param ft Kezdõ fire timer
-	 * @param si Méret
+	 * @param p PozÃ­ciÃ³
+	 * @param r HatÃ³tÃ¡v
+	 * @param d SebzÃ©s
+	 * @param fr TÃ¡madÃ¡si sebessÃ©g
+	 * @param ft KezdÅ‘ fire timer
+	 * @param si MÃ©ret
 	 */
 	Tower(Vec2<float> p, float r, float d, float fr, float ft, float si);
-	//Virtuális destruktor, öröklés miatt
+	//VirtuÃ¡lis destruktor, Ã¶rÃ¶klÃ©s miatt
 	virtual ~Tower() {};
-	//@return Az aktuális célpont pointere, vagy nullptr ha nincs cél
+	//@return Az aktuÃ¡lis cÃ©lpont pointere, vagy nullptr ha nincs cÃ©l
 	Enemy* getCurrentTarget() const { return currentTarget; }
-	//@return A torony hatótávja
+	//@return A torony hatÃ³tÃ¡vja
 	float getRange() const { return range; }
-	//@return A torony mérete
+	//@return A torony mÃ©rete
 	float getSize() const { return size; }
-	//@return A torony sebzése
+	//@return A torony sebzÃ©se
 	float getDamage() const { return damage; }
-	//@return A torony támadási sebessége
+	//@return A torony tÃ¡madÃ¡si sebessÃ©ge
 	float getFireRate() const { return fireRate; }
 	//@return A torony szintje
 	int getLevel() const { return level; }
-	//@return A torony pozíciója világ koordinátákban
+	//@return A torony pozÃ­ciÃ³ja vilÃ¡g koordinÃ¡tÃ¡kban
 	Vec2<float> getPosition() const { return position; }
 	
-	 //@return A fejlesztés költsége a következõ szintre
+	 //@return A fejlesztÃ©s kÃ¶ltsÃ©ge a kÃ¶vetkezÅ‘ szintre
 	int getUpgradeCost() const;	
 	/**
-	 * @brief Ellenõrzi, hogy fejleszthetõ-e
-	 * @return true ha még nem érte el a max szintet
+	 * @brief EllenÅ‘rzi, hogy fejleszthetÅ‘-e
+	 * @return true ha mÃ©g nem Ã©rte el a max szintet
 	 */
 	bool canUpgrade() const { return level < maxLevel; }
 	/**
-	 * @brief Célpont törlése
+	 * @brief CÃ©lpont tÃ¶rlÃ©se
 	 */
 	void resetTarget() { currentTarget = nullptr; }
 	/**
-	 * @brief Támadás végrehajtása
-	 * Alap implementáció: közvetlen sebzés.
-	 * @param enemy A célpont
+	 * @brief TÃ¡madÃ¡s vÃ©grehajtÃ¡sa
+	 * Alap implementÃ¡ciÃ³: kÃ¶zvetlen sebzÃ©s.
+	 * @param enemy A cÃ©lpont
 	 */
 	virtual void attack(Enemy* enemy) const { enemy->takeDamage(damage); }
 	/**
-	 * @brief Torony frissítése
-	 * Kezeli a célkeresést, idõzítést és támadást.
+	 * @brief Torony frissÃ­tÃ©se
+	 * Kezeli a cÃ©lkeresÃ©st, idÅ‘zÃ­tÃ©st Ã©s tÃ¡madÃ¡st.
 	 * @param dt Delta time
-	 * @param enemies Aktív enemy-k
+	 * @param enemies AktÃ­v enemy-k
 	 */
 	void Update(float dt, MyArray<Enemy>& enemies);
 	/**
-	 * @brief Kirajzolás
+	 * @brief KirajzolÃ¡s
 	 * @param g Grafikai objektum
 	 */
 	virtual void draw(Graphics& g) const = 0;
 	/**
-	 * @brief Torony ára
-	 * @return Vásárlási költség
+	 * @brief Torony Ã¡ra
+	 * @return VÃ¡sÃ¡rlÃ¡si kÃ¶ltsÃ©g
 	 */
 	virtual int getCost() const = 0;
 	/**
-	 * @brief Eladási érték
-	 * @return A torony eladásakor kapott pénz
+	 * @brief EladÃ¡si Ã©rtÃ©k
+	 * @return A torony eladÃ¡sakor kapott pÃ©nz
 	 */
 	virtual int getSellValue() const;
 	/**
-	 * @brief Torony fejlesztése
+	 * @brief Torony fejlesztÃ©se
 	 */
 	virtual void upgrade() = 0;
 	/**
-	 * @brief Klónozás
-	 * @return Új Tower példány pointere
+	 * @brief KlÃ³nozÃ¡s
+	 * @return Ãšj Tower pÃ©ldÃ¡ny pointere
 	 */
 	virtual Tower* clone() const = 0;
 	
 };
 /**
  * @class NormalTower
- * @brief Kiegyensúlyozott torony.
+ * @brief KiegyensÃºlyozott torony.
  */
 class NormalTower : public Tower
 {
@@ -140,7 +140,7 @@ public:
 };
 /**
  * @class FastTower
- * @brief Gyors, de alacsony sebzésû torony.
+ * @brief Gyors, de alacsony sebzÃ©sÅ± torony.
  */
 class FastTower : public Tower
 {
@@ -153,7 +153,7 @@ public:
 };
 /**
  * @class SniperTower
- * @brief Nagy hatótávú, erõs torony, de lassú.
+ * @brief Nagy hatÃ³tÃ¡vÃº, erÅ‘s torony, de lassÃº.
  */
 class SniperTower : public Tower
 {
@@ -166,63 +166,63 @@ public:
 };
 /**
  * @class TowerManager
- * @brief Tornyok kezeléséért felelõs osztály.
- * Kezeli a tornyok létrehozását, frissítését,
- * kirajzolását és eltávolítását.
+ * @brief Tornyok kezelÃ©sÃ©Ã©rt felelÅ‘s osztÃ¡ly.
+ * Kezeli a tornyok lÃ©trehozÃ¡sÃ¡t, frissÃ­tÃ©sÃ©t,
+ * kirajzolÃ¡sÃ¡t Ã©s eltÃ¡volÃ­tÃ¡sÃ¡t.
  */
 class TowerManager
 {
-	MyArray<Tower> towers; //Heterogén tömb a tornyok tárolására
+	MyArray<Tower> towers; //HeterogÃ©n tÃ¶mb a tornyok tÃ¡rolÃ¡sÃ¡ra
 	/**
-	 * @brief Torony létrehozása típus alapján
-	 * @param type Torony típusa
-	 * @param pos Pozíció
-	 * @return Új Tower pointer
+	 * @brief Torony lÃ©trehozÃ¡sa tÃ­pus alapjÃ¡n
+	 * @param type Torony tÃ­pusa
+	 * @param pos PozÃ­ciÃ³
+	 * @return Ãšj Tower pointer
 	 */
 	Tower* towerFactory(TowerType type, Vec2<float> pos) const;
 public:
 	TowerManager(): towers() {}
 	/**
-	 * @brief Értesítés enemy törlésérõl
-	 * Ha egy torony célpontja törlõdik, nullázni kell.
-	 * @param enemy A törölt enemy
+	 * @brief Ã‰rtesÃ­tÃ©s enemy tÃ¶rlÃ©sÃ©rÅ‘l
+	 * Ha egy torony cÃ©lpontja tÃ¶rlÅ‘dik, nullÃ¡zni kell.
+	 * @param enemy A tÃ¶rÃ¶lt enemy
 	 */
 	void notifyEnemyRemoved(Enemy* enemy);
 	/**
-	 * @brief Torony hozzáadása
-	 * @param type Torony típusa
-	 * @param pos Pozíció
+	 * @brief Torony hozzÃ¡adÃ¡sa
+	 * @param type Torony tÃ­pusa
+	 * @param pos PozÃ­ciÃ³
 	 */
 	void AddTower(TowerType type, Vec2<float> pos);
 	/**
-	 * @brief Tornyok frissítése
+	 * @brief Tornyok frissÃ­tÃ©se
 	 * @param dt Delta time
 	 * @param enemies Enemy lista
 	 */
 	void Update(float dt, MyArray<Enemy>& enemies);
 	/**
-	 * @brief Tornyok kirajzolása
+	 * @brief Tornyok kirajzolÃ¡sa
 	 * @param g Grafikai objektum
 	 */
 	void Draw(Graphics& g) const;
 	/**
-	 * @brief Ár lekérése típus alapján
-	 * @param type Torony típusa
-	 * @return Ár
+	 * @brief Ãr lekÃ©rÃ©se tÃ­pus alapjÃ¡n
+	 * @param type Torony tÃ­pusa
+	 * @return Ãr
 	 */
 	int GetCostForType(TowerType type) const;
 	/**
-	 * @brief Torony lekérése pozíció alapján
-	 * @param pos Keresett pozíció
-	 * @param ts Tile méret (hitbox számításhoz)
+	 * @brief Torony lekÃ©rÃ©se pozÃ­ciÃ³ alapjÃ¡n
+	 * @param pos Keresett pozÃ­ciÃ³
+	 * @param ts Tile mÃ©ret (hitbox szÃ¡mÃ­tÃ¡shoz)
 	 * @return A torony pointere vagy nullptr
 	 */
 	Tower* GetTowerAt(const Vec2<float>& pos, int ts);
 	/**
-	 * @brief Torony eladása
+	 * @brief Torony eladÃ¡sa
 	 * @param t A torony pointere
-	 * @param pos Pozíció (eltávolításhoz)
-	 * @return A visszakapott pénz
+	 * @param pos PozÃ­ciÃ³ (eltÃ¡volÃ­tÃ¡shoz)
+	 * @return A visszakapott pÃ©nz
 	 */
 	int sellTower(Tower *t, Vec2<float>& pos);
 };

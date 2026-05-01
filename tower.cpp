@@ -1,4 +1,4 @@
-#include "tower.h"
+ï»¿#include "tower.h"
 #include <iostream>
 #include "memtrace.h"
 
@@ -201,7 +201,7 @@ void SniperTower::upgrade() {
 	case 2: 
 		damage *= 2.5f;     // 50 -> 125
 		range += 200.0f;    // 1000 -> 1200
-		fireRate *= 1.1f;   // Lassul a töltés: ~3.3s
+		fireRate *= 1.1f;   // Lassul a tÃ¶ltÃ©s: ~3.3s
 		break;
 	case 3:
 		damage *= 2.0f;     // 125 -> 250 

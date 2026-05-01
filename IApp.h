@@ -1,11 +1,11 @@
-/**
+ï»¿/**
  * @file IApp.h
- * @brief Az alkalmazás fõ interfésze.
+ * @brief Az alkalmazÃ¡s fÅ‘ interfÃ©sze.
  *
- * Az IApp egy absztrakt interfész, amelyet a fõ alkalmazás implementál.
+ * Az IApp egy absztrakt interfÃ©sz, amelyet a fÅ‘ alkalmazÃ¡s implementÃ¡l.
  *
- * Célja:
- * - állapotváltás biztosítása (state machine kezelés)
+ * CÃ©lja:
+ * - Ã¡llapotvÃ¡ltÃ¡s biztosÃ­tÃ¡sa (state machine kezelÃ©s)
  */
 #ifndef IAPP_H
 #define IAPP_H
@@ -17,33 +17,33 @@ class Graphics;
 
 /**
  * @class IApp
- * @brief Alkalmazás interfész a játék state rendszere számára.
+ * @brief AlkalmazÃ¡s interfÃ©sz a jÃ¡tÃ©k state rendszere szÃ¡mÃ¡ra.
  *
- * Az IApp lehetõvé teszi, hogy a State osztályok:
- * - ne legyenek közvetlenül kötve az App implementációhoz
- * - csak absztrakt interfészen keresztül kommunikáljanak
+ * Az IApp lehetÅ‘vÃ© teszi, hogy a State osztÃ¡lyok:
+ * - ne legyenek kÃ¶zvetlenÃ¼l kÃ¶tve az App implementÃ¡ciÃ³hoz
+ * - csak absztrakt interfÃ©szen keresztÃ¼l kommunikÃ¡ljanak
  */
 class IApp {
 public:
 	/**
-	 * @brief Virtuális destruktor
+	 * @brief VirtuÃ¡lis destruktor
 	 */
 	virtual ~IApp() {}
 	/**
-	 * @brief Játékállapot váltása
-	 * Átvált a megadott game state-re 
-	 * @param sType Új állapot típusa
+	 * @brief JÃ¡tÃ©kÃ¡llapot vÃ¡ltÃ¡sa
+	 * ÃtvÃ¡lt a megadott game state-re 
+	 * @param sType Ãšj Ã¡llapot tÃ­pusa
 	 */
 	virtual void changeState(gameState sType) = 0;
 	/**
-	 * @brief LevelManager elérése
-	 * A játék pályarendszerének kezelése.
+	 * @brief LevelManager elÃ©rÃ©se
+	 * A jÃ¡tÃ©k pÃ¡lyarendszerÃ©nek kezelÃ©se.
 	 * @return LevelManager referencia
 	 */
 	virtual LevelManager& getLevelManager() = 0;
 	/**
-	 * @brief Graphics rendszer elérése
-	 * Rajzolási mûveletekhez szükséges grafikai objektum.
+	 * @brief Graphics rendszer elÃ©rÃ©se
+	 * RajzolÃ¡si mÅ±veletekhez szÃ¼ksÃ©ges grafikai objektum.
 	 * @return Graphics referencia
 	 */
 	virtual Graphics& getGraphics() = 0;

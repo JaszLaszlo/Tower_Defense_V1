@@ -1,4 +1,4 @@
-#include "wave.h"
+﻿#include "wave.h"
 #include "memtrace.h"
 
 EnemyType WaveManager::convertStringToEnemyType(const std::string& str) const

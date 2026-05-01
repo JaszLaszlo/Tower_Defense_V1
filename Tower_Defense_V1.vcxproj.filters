@@ -101,5 +101,11 @@
     <ClInclude Include="state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="testapp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gtest_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

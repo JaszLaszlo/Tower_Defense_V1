@@ -1,9 +1,9 @@
-/**
+ï»¿/**
  * @file Level.h
- * @brief Játékszintek kezelése.
+ * @brief JÃ¡tÃ©kszintek kezelÃ©se.
  *
- * A LevelManager felelõs a pályák betöltéséért,
- * kiválasztásáért és az aktuális level adatok kezeléséért.
+ * A LevelManager felelÅ‘s a pÃ¡lyÃ¡k betÃ¶ltÃ©sÃ©Ã©rt,
+ * kivÃ¡lasztÃ¡sÃ¡Ã©rt Ã©s az aktuÃ¡lis level adatok kezelÃ©sÃ©Ã©rt.
  */
 #ifndef LEVEL_H
 #define LEVEL_H
@@ -15,21 +15,21 @@
 
  /**
   * @struct LevelData
-  * @brief Egyetlen pálya (level) adatai.
+  * @brief Egyetlen pÃ¡lya (level) adatai.
   *
-  * Tartalmazza a pályához tartozó:
-  * - map fájl elérési útját
-  * - wave fájl elérési útját
-  * - kezdõ életerõt
-  * - kezdõ pénzt
+  * Tartalmazza a pÃ¡lyÃ¡hoz tartozÃ³:
+  * - map fÃ¡jl elÃ©rÃ©si ÃºtjÃ¡t
+  * - wave fÃ¡jl elÃ©rÃ©si ÃºtjÃ¡t
+  * - kezdÅ‘ Ã©leterÅ‘t
+  * - kezdÅ‘ pÃ©nzt
   */
 struct LevelData
 {
-	std::string levelName; //A pálya neve
-	std::string mapFile; //A pálya térképét leíró fájl elérési útja
-	std::string waveFile; //A pálya hullámjait leíró fájl elérési útja
-	int startingHp; //Kezdõ életerõ
-	int startingMoney; //Kezdõ pénzösszeg
+	std::string levelName; //A pÃ¡lya neve
+	std::string mapFile; //A pÃ¡lya tÃ©rkÃ©pÃ©t leÃ­rÃ³ fÃ¡jl elÃ©rÃ©si Ãºtja
+	std::string waveFile; //A pÃ¡lya hullÃ¡mjait leÃ­rÃ³ fÃ¡jl elÃ©rÃ©si Ãºtja
+	int startingHp; //KezdÅ‘ Ã©leterÅ‘
+	int startingMoney; //KezdÅ‘ pÃ©nzÃ¶sszeg
 	/**
 	 * @brief Konstruktor
 	 */
@@ -39,47 +39,47 @@ struct LevelData
 };
 /**
  * @class LevelManager
- * @brief Játék szintjeinek kezelése.
+ * @brief JÃ¡tÃ©k szintjeinek kezelÃ©se.
  *
  * Feladata:
- * - level lista betöltése konfigurációból
- * - aktuális level kiválasztása
- * - level adatok elérése gameplay-hez
+ * - level lista betÃ¶ltÃ©se konfigurÃ¡ciÃ³bÃ³l
+ * - aktuÃ¡lis level kivÃ¡lasztÃ¡sa
+ * - level adatok elÃ©rÃ©se gameplay-hez
  */
 class LevelManager
 {
-	MyArray<LevelData> levels; //A betöltött pályák listája
-	int currentLevelIndex; //Az aktuálisan kiválasztott pálya indexe a levels tömbben
+	MyArray<LevelData> levels; //A betÃ¶ltÃ¶tt pÃ¡lyÃ¡k listÃ¡ja
+	int currentLevelIndex; //Az aktuÃ¡lisan kivÃ¡lasztott pÃ¡lya indexe a levels tÃ¶mbben
 public: 
 	/**
 	 * @brief Konstruktor
-	 * Alapértelmezetten nincs kiválasztott level.
+	 * AlapÃ©rtelmezetten nincs kivÃ¡lasztott level.
 	 */
 	LevelManager(): currentLevelIndex(-1) {}
 	/**
-	 * @brief Level lista betöltése konfigurációs fájlból
-	 * A fájl tartalmazza a pályák adatait
-	 * @param configFile Konfigurációs fájl neve
+	 * @brief Level lista betÃ¶ltÃ©se konfigurÃ¡ciÃ³s fÃ¡jlbÃ³l
+	 * A fÃ¡jl tartalmazza a pÃ¡lyÃ¡k adatait
+	 * @param configFile KonfigurÃ¡ciÃ³s fÃ¡jl neve
 	 * @return void
 	 */
 	void loadLevels(const std::string& configFile);
 	/**
-	 * @brief Aktuális level lekérése
-	 * @return Pointer az aktuális LevelData-ra, vagy nullptr ha nincs kiválasztva
+	 * @brief AktuÃ¡lis level lekÃ©rÃ©se
+	 * @return Pointer az aktuÃ¡lis LevelData-ra, vagy nullptr ha nincs kivÃ¡lasztva
 	 */
 	LevelData* getCurrentLevel();
-	//@return A betöltött pályák száma
+	//@return A betÃ¶ltÃ¶tt pÃ¡lyÃ¡k szÃ¡ma
 	int getLevelCount() const { return levels.size(); }
 	/**
-	 * @brief Level kiválasztása index alapján
+	 * @brief Level kivÃ¡lasztÃ¡sa index alapjÃ¡n
 	 * @param index Level index
-	 * @return true ha sikerült kiválasztani
+	 * @return true ha sikerÃ¼lt kivÃ¡lasztani
 	 */
 	bool selectLevel(int index);
 	/**
-	 * @brief Level nevének lekérése
+	 * @brief Level nevÃ©nek lekÃ©rÃ©se
 	 * @param index Level index
-	 * @return Level neve stringként
+	 * @return Level neve stringkÃ©nt
 	 */
 	std::string getlevelName(int index) const;
 

@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include "enemy.h"
 #include "map.h"
 #include "memtrace.h"
