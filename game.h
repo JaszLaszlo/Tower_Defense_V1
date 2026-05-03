@@ -32,14 +32,14 @@
   */
 class Game
 {
-	Map map; //A játék pályája
-	EnemyManager enemyManager; //Az ellenségek kezelője
-	TowerManager towerManager; //A tornyok kezelője
-	WaveManager waveManager; //A hullámok kezelője
-	int playerHp; //A játékos életereje
-	int money; //A játékos pénze
-	bool running; //Jelzi, hogy a játék fut-e
-	Tower* selectedTower; //Az aktuálisan kiválasztott torony (fejlesztéshez, eladáshoz)
+	Map map; ///A játék pályája
+	EnemyManager enemyManager; ///Az ellenségek kezelője
+	TowerManager towerManager; ///A tornyok kezelője
+	WaveManager waveManager; ///A hullámok kezelője
+	int playerHp; ///A játékos életereje
+	int money; ///A játékos pénze
+	bool running; ///Jelzi, hogy a játék fut-e
+	Tower* selectedTower; ///Az aktuálisan kiválasztott torony (fejlesztéshez, eladáshoz)
 	/**
 	 * @brief Eltávolítja a már nem szükséges enemy-ket
 	 * Pl. ha meghaltak vagy elérték a célpontot.
@@ -88,13 +88,13 @@ public:
 	 * @brief Következő hullám indítása
 	 */
 	void startNextWave() { waveManager.startNextWave(); }
-	//@return Játékos HP-ja
+	///@return Játékos HP-ja
 	int getPlayerHp() const { return playerHp; }
-	//@return Játékos pénze
+	///@return Játékos pénze
 	int getMoney() const { return money; }
-	//@return jelzi, hogy a játék fut-e
+	///@return jelzi, hogy a játék fut-e
 	bool isRunning() const { return running; }
-	//@return jelzi, hogy vége a játéknak
+	///@return jelzi, hogy vége a játéknak
 	bool isFinished() const;
 	/**
 	 * @brief WaveManager elérése
@@ -117,11 +117,11 @@ public:
 	 * @brief Kijelölt torony beállítása
 	 */
 	void setSelectedTower(Tower* t) { selectedTower = t; }
-	// @param hp új HP
+	/// @param hp új HP
 	void setHp(int hp) { playerHp = hp; }
-	// @param m új pénz
+	/// @param m új pénz
 	void setMoney(int m) { money = m; }
-	// @return Kijelölt torony
+	/// @return Kijelölt torony
 	Tower* getSelectedTower() const { return selectedTower; }
 };
 

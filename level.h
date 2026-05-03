@@ -25,11 +25,11 @@
   */
 struct LevelData
 {
-	std::string levelName; //A pálya neve
-	std::string mapFile; //A pálya térképét leíró fájl elérési útja
-	std::string waveFile; //A pálya hullámjait leíró fájl elérési útja
-	int startingHp; //Kezdő életerő
-	int startingMoney; //Kezdő pénzösszeg
+	std::string levelName; ///A pálya neve
+	std::string mapFile; ///A pálya térképét leíró fájl elérési útja
+	std::string waveFile; ///A pálya hullámjait leíró fájl elérési útja
+	int startingHp; ///Kezdő életerő
+	int startingMoney; ///Kezdő pénzösszeg
 	/**
 	 * @brief Konstruktor
 	 */
@@ -48,8 +48,8 @@ struct LevelData
  */
 class LevelManager
 {
-	MyArray<LevelData> levels; //A betöltött pályák listája
-	int currentLevelIndex; //Az aktuálisan kiválasztott pálya indexe a levels tömbben
+	MyArray<LevelData> levels; ///A betöltött pályák listája
+	int currentLevelIndex; ///Az aktuálisan kiválasztott pálya indexe a levels tömbben
 public: 
 	/**
 	 * @brief Konstruktor

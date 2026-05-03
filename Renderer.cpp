@@ -319,24 +319,6 @@ void Renderer::drawTowerStats(float d, float fr, float r, int l, int uCost)
     window.draw(textMedium);
 	textMedium.setCharacterSize(50);
 }
-void Renderer::drawButton(const Button& btn)
-{
-    rectShape.setPosition(btn.x, btn.y);
-    rectShape.setSize(sf::Vector2f(btn.w, btn.h));
-    rectShape.setFillColor(sf::Color(60, 60, 60)); 
-    rectShape.setOutlineThickness(2.0f);
-    rectShape.setOutlineColor(sf::Color::White);
-    window.draw(rectShape);
-    textMedium.setOrigin(0.0f, 0.0f);
-    textMedium.setString(btn.label);
-    textMedium.setFillColor(sf::Color::White);
-    sf::FloatRect textBounds = textMedium.getLocalBounds();
-    textMedium.setPosition(
-        btn.x + (btn.w - textBounds.width) / 2.0f - textBounds.left,
-        btn.y + (btn.h - textBounds.height) / 2.0f - textBounds.top
-    );
-    window.draw(textMedium);
-}
 void Renderer::drawButton(const Button& btn, bool isSelected)
 {
     rectShape.setPosition(btn.x, btn.y);

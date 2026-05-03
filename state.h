@@ -34,7 +34,7 @@ class Map;
  */
 class State {
 protected:
-	IApp& app; //Referencia a fő alkalmazásra
+	IApp& app; ///Referencia a fő alkalmazásra
 public:
 	/**
 	* @brief Konstruktor
@@ -116,10 +116,10 @@ public:
  */
 class InGameState : public State {
 private:
-	Game* game; //aktív játék
+	Game* game; ///aktív játék
 	TowerType selectedTowerType;
 	std::vector<towerButton> sidebarButtons;
-	bool valid = true; //Jelzi, hogy sikerült-e a játék inicializálása (fájlok betöltése)
+	bool valid = true; ///Jelzi, hogy sikerült-e a játék inicializálása (fájlok betöltése)
 	void initSidebar();
 public:
 	InGameState(IApp& a, LevelData* data);

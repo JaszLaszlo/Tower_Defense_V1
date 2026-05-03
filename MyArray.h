@@ -17,9 +17,9 @@
   */
 template<typename T>
 class MyArray {
-	T** data; //Pointer típusú tömb a T típusú objektumok pointereinek tárolására
-	int count; //Aktuális elemek száma
-	int capacity; //A tömb kapacitása
+	T** data; ///Pointer típusú tömb a T típusú objektumok pointereinek tárolására
+	int count; ///Aktuális elemek száma
+	int capacity; ///A tömb kapacitása
 	/**
 	 * @brief Másoló segédfüggvény
 	 * Mély másolatot készít a másik tömbről clone() segítségével.

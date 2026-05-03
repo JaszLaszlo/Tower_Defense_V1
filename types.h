@@ -53,8 +53,7 @@ enum class gameState
 	MAINMENU,
 	LEVELSELECT,
 	INGAME,
-	MAPEDITOR,
-	EXIT
+	MAPEDITOR
 };
 /**
  * @struct Button
@@ -62,8 +61,8 @@ enum class gameState
  * Minden UI gomb ebből öröklődik.
  */
 struct Button {
-	float x, y, w, h; //Pozíció és méret
-	std::string label; //megjelenített szöveg
+	float x, y, w, h; ///Pozíció és méret
+	std::string label; ///megjelenített szöveg
 	Button(float x, float y, float w, float h, const std::string& label) :
 		x(x), y(y), w(w), h(h), label(label) {
 	}

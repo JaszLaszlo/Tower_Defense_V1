@@ -27,11 +27,11 @@
   */
 class SpawnGroup
 {
-	int waveNumber; //Melyik wave-ben jelenik meg
-	EnemyType enemyType; //Milyen típusú enemy
-	int count; //Hány darab enemy spawnol
-	float spawnInterval; //Milyen időközönként spawnolnak (másodpercben)
-	float startDelay; //Késleltetés a spawn előtt (másodpercben)
+	int waveNumber; ///Melyik wave-ben jelenik meg
+	EnemyType enemyType; ///Milyen típusú enemy
+	int count; ///Hány darab enemy spawnol
+	float spawnInterval; ///Milyen időközönként spawnolnak (másodpercben)
+	float startDelay; ///Késleltetés a spawn előtt (másodpercben)
 public:
 	/**
 	 * @brief Konstruktor
@@ -46,15 +46,15 @@ public:
 	SpawnGroup* clone() const {
 		return new SpawnGroup(*this);
 	}
-	//@return hullám száma
+	///@return hullám száma
 	int getWaveNumber() const { return waveNumber; }
-	//@return enemy típus
+	///@return enemy típus
 	EnemyType getEnemyType() const { return enemyType; }
-	//@return spawnolni kívánt enemy-k száma
+	///@return spawnolni kívánt enemy-k száma
 	int getCount() const { return count; }
-	//@return spawnolási időköz
+	///@return spawnolási időköz
 	float getInterval() const { return spawnInterval; }
-	//@return kezdési késleltetés
+	///@return kezdési késleltetés
 	float getDelay() const { return startDelay; }
 };
 /**
@@ -74,23 +74,23 @@ class WaveManager
 	 */
 	struct ActiveWaveStatus
 	{
-		int spawnedSoFar; //Eddig hány enemy spawnolt a csoportból
-		float timer; //Időzítő a spawnoláshoz
-		bool finished; //Jelzi, hogy a csoport spawnolása befejeződött-e
-		//@brief Konstruktor
+		int spawnedSoFar; ///Eddig hány enemy spawnolt a csoportból
+		float timer; ///Időzítő a spawnoláshoz
+		bool finished; ///Jelzi, hogy a csoport spawnolása befejeződött-e
+		///@brief Konstruktor
 		ActiveWaveStatus() : spawnedSoFar(0), timer(0.0f), finished(false) {}
-		// @return Klónozott állapot
+		/// @return Klónozott állapot
 		ActiveWaveStatus* clone() const { return new ActiveWaveStatus(*this); }
 	};
-	MyArray<SpawnGroup> spawnGroups; //Az összes spawn csoport
-	MyArray<ActiveWaveStatus> activeStatuses; //Aktív állapotok
-	int currentWave; //Aktuális wave száma
-	int maxWave; //Maximális wave szám
-	float waveElapsedTime; //Mennyi idő telt el az aktuális wave kezdete óta
-	bool isWaveRunning; //Jelzi, hogy jelenleg fut-e egy wave
-	float waveCountdown; //Visszaszámláló a következő wave kezdetéig
-	bool isCountingDown; //Jelzi, hogy jelenleg visszaszámlálás van-e a következő wave-ig
-	const float TIME_BETWEEN_WAVES = 15.0f; //Másodperc a wave-ek között
+	MyArray<SpawnGroup> spawnGroups; ///Az összes spawn csoport
+	MyArray<ActiveWaveStatus> activeStatuses; ///Aktív állapotok
+	int currentWave; ///Aktuális wave száma
+	int maxWave; ///Maximális wave szám
+	float waveElapsedTime; ///Mennyi idő telt el az aktuális wave kezdete óta
+	bool isWaveRunning; ///Jelzi, hogy jelenleg fut-e egy wave
+	float waveCountdown; ///Visszaszámláló a következő wave kezdetéig
+	bool isCountingDown; ///Jelzi, hogy jelenleg visszaszámlálás van-e a következő wave-ig
+	const float TIME_BETWEEN_WAVES = 15.0f; ///Másodperc a wave-ek között
 	/**
 	 * @brief String  EnemyType konverzió
 	 * @param str Bemeneti szöveg
@@ -136,13 +136,13 @@ public:
 	 * @param map A pálya
 	 */
 	void update(float dt, EnemyManager& em, const  Map& map);
-	// @return aktuális wave száma
+	/// @return aktuális wave száma
 	int getCurrentWave() const { return currentWave; }
-	// @return jelzi, hogy jelenleg fut-e a wave
+	/// @return jelzi, hogy jelenleg fut-e a wave
 	bool isRunning() const { return isWaveRunning; }
-	// @return visszaszámláló értéke a következő wave kezdetéig
+	/// @return visszaszámláló értéke a következő wave kezdetéig
 	float getCountdown() const { return waveCountdown; }
-	// @return jelzi, hogy visszaszámlálás van-e a következő wave-ig
+	/// @return jelzi, hogy visszaszámlálás van-e a következő wave-ig
 	bool getIsCountingDown() const { return isCountingDown; }
 	/**
 	 * @brief Következő hullám indítása

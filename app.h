@@ -32,14 +32,14 @@
  
   */
 class App : public IApp{
-    sf::RenderWindow window; //SFML ablak
-    Renderer renderer; //Grafikai réteg
-	State* currentState; //Aktuális state
-    bool running; //Játék fut-e
-    const float dt = 0.016667f; //~60FPS
-    float accumulator; //Idő akkumulátor
-    std::chrono::steady_clock::time_point lastTime; //Időzítéshez
-	LevelManager levelManager; //Pályák kezelése
+    sf::RenderWindow window; ///SFML ablak
+    Renderer renderer; ///Grafikai réteg
+	State* currentState; ///Aktuális state
+    bool running; ///Játék fut-e
+    const float dt = 0.016667f; ///~60FPS
+    float accumulator; ///Idő akkumulátor
+    std::chrono::steady_clock::time_point lastTime; ///Időzítéshez
+	LevelManager levelManager; ///Pályák kezelése
 public:
     /**
      * @brief Konstruktor

@@ -31,8 +31,7 @@ class NullGraphics : public Graphics {
     void drawYouWin() override {}
     void drawMapSaved() override {}
     void drawTowerStats(float d, float fr, float r, int l, int uCost) override {}
-    void drawButton(const Button& button) override {}
-    void drawButton(const Button& button, bool isSelected) override {}
+    void drawButton(const Button& button, bool isSelected=false) override {}
 };
 class TestApp : public IApp {
     LevelManager levelManager;

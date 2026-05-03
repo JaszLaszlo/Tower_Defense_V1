@@ -20,7 +20,7 @@
 * @brief A térkép egyetlen csempéjét reprezentáló osztály.
 */
 class Tile {
-	TileType type; //A csempe típusa (Path, buildable, not buildable)
+	TileType type; ///A csempe típusa (Path, buildable, not buildable)
 public:
 	/**
 	* @brief Konstruktor, amely beállítja a csempe típusát.
@@ -46,19 +46,19 @@ public:
 */
 class Map {
 protected:
-	int width, height; //Pálya méretei
-	int tileSize, pathSize; //Csempe és útvonal méretei
-	Tile** Tiles; //Dinamikus 2D tömb a csempék tárolására
-	std::vector<Vec2<int>> PathPoints; //Az útvonal pontjainak listája
-	//Memória felszabadítása
+	int width, height; ///Pálya méretei
+	int tileSize, pathSize; ///Csempe és útvonal méretei
+	Tile** Tiles; ///Dinamikus 2D tömb a csempék tárolására
+	std::vector<Vec2<int>> PathPoints; ///Az útvonal pontjainak listája
+	///Memória felszabadítása
 	void cleanUp();
-	//Rács lefoglalása
+	///Rács lefoglalása
 	void allocateGrid();
-	//Méretek betöltése streamből
+	///Méretek betöltése streamből
 	void loadDimensions(std::istream& is);
-	//Rács betöltése streamből
+	///Rács betöltése streamből
 	void loadGrid(std::istream& is);
-	//Útvonal pontok betöltése streamből
+	///Útvonal pontok betöltése streamből
 	void loadPathPoints(std::istream& is);
 	/**
 	 * @brief Karakter -> TileType konverzió
@@ -74,7 +74,7 @@ protected:
 	char tileTypeToChar(TileType type) const;
 	
 public:
-	//Alapértelmezett konstruktor
+	///Alapértelmezett konstruktor
 	Map();
 	/**
 	 * @brief Konstruktor méretekkel
@@ -83,7 +83,7 @@ public:
 	 * @param tileSize Tile méret pixelben
 	 */
 	Map(int width, int height, int tileSize);
-	//Destruktor
+	///Destruktor
 	~Map();
 	/**
 	 * @brief Pálya betöltése streamből
@@ -97,15 +97,15 @@ public:
 	 * @return Referencia a tile-ra
 	 */
 	Tile& getTile(int y, int x) const;
-	// @return Tile méret
+	/// @return Tile méret
 	int getTileSize() const { return tileSize; }
-	// @return Útvonal hossza
+	/// @return Útvonal hossza
 	int getPathSize() const { return PathPoints.size(); }
-	// @return Pálya magasság
+	/// @return Pálya magasság
 	int getHeight() const { return height; }
-	// @return Pálya szélesség
+	/// @return Pálya szélesség
 	int getWidth() const { return width; }
-	// @return Az útvonal kezdőpontja
+	/// @return Az útvonal kezdőpontja
 	Vec2<int> getSpawnPoint() const { return PathPoints[0]; }
 	/**
 	 * @brief Útvonal pont lekérése
@@ -142,18 +142,18 @@ public:
  */
 class EditorMap : public Map
 {
-	bool PathPlaced=false; //Jelzi, hogy már van-e útvonal
+	bool PathPlaced=false; ///Jelzi, hogy már van-e útvonal
 	void saveDimensions(std::ostream& os) const;
 	void savePathPoints(std::ostream& os) const;
 	void saveGrid(std::ostream& os) const;
-	//Ellenőrzi, hogy menthető-e a pálya
+	///Ellenőrzi, hogy menthető-e a pálya
 	bool canSave() const;
 	/**
 	 * @brief Visszaadja a menthető pálya indexét
 	 * @return A menthető pálya indexe
 	 */
 	int getSavableMapIndex() const;
-	//Mentés levels.txt fájlba
+	///Mentés levels.txt fájlba
 	void saveToLevelsTxt() const;
 public:
 	/**

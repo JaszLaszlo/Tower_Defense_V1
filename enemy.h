@@ -24,19 +24,19 @@
 class Enemy
 {
 protected:
-	Vec2<float> position; //Aktuális pozíció világkoordinátákban
-	float offset; //Oldalirányú eltolás a mozgás során, hogy ne egy vonalban haladjanak
-	float hp; //Aktuális életerő
-	float maxHp; //Maximális életerő
-	float speed; //Mozgási sebesség
-	float size; //Méret
-	int currentPathIndex; //Jelenlegi célpont index a path-ban
+	Vec2<float> position; ///Aktuális pozíció világkoordinátákban
+	float offset; ///Oldalirányú eltolás a mozgás során, hogy ne egy vonalban haladjanak
+	float hp; ///Aktuális életerő
+	float maxHp; ///Maximális életerő
+	float speed; ///Mozgási sebesség
+	float size; ///Méret
+	int currentPathIndex; ///Jelenlegi célpont index a path-ban
 	/**
 	* @brief Normalizált irányvektor számítása két pont között
 	*
 	* @param from Kiindulási pont (rács koordináta)
 	* @param to Célpont (rács koordináta)
-	* @return Irányvektor a from → to irányba
+	* @return Irányvektor a from -> to irányba
 	*/
 	Vec2<float> calculateNormalizedDir(const Vec2<int>& from, const Vec2<int>& to) const;
 	/**
@@ -110,7 +110,7 @@ public:
 	 * @param multiplier Nehézségi szorzó
 	 */
 	Enemy(Vec2<float> p, float h, float sp, float si, const Map& map, float multiplier);
-	//virtuális destruktor, öröklés miatt
+	///virtuális destruktor, öröklés miatt
 	virtual ~Enemy();
 	/**
 	* @brief Lekéri az enemy aktuális pozícióját
@@ -213,7 +213,7 @@ public:
  */
 class EnemyManager
 {
-	MyArray<Enemy> Enemies; //Heterogén tömb az ellenségek tárolására
+	MyArray<Enemy> Enemies; ///Heterogén tömb az ellenségek tárolására
 	/**
 	* @brief Enemy példány létrehozása típus alapján
 	* @param type Az enemy típusa

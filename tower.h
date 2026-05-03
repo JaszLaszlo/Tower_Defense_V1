@@ -19,15 +19,15 @@
 class Tower
 {
 protected:
-	Vec2<float> position; //Torony pozíciója világ koordinátákban
-	float range; //Támadási hatótáv
-	float damage; //Támadási sebzés
-	float fireRate; //Támadási sebesség (másodpercenkénti támadás)
-	float fireTimer; //Időzítő a következő támadásig
-	float size; //Torony mérete
-	int level; //Torony szintje
-	const int maxLevel; //Maximális szint
-	Enemy* currentTarget; //Aktuális célpont
+	Vec2<float> position; ///Torony pozíciója világ koordinátákban
+	float range; ///Támadási hatótáv
+	float damage; ///Támadási sebzés
+	float fireRate; ///Támadási sebesség (másodpercenkénti támadás)
+	float fireTimer; ///Időzítő a következő támadásig
+	float size; ///Torony mérete
+	int level; ///Torony szintje
+	const int maxLevel; ///Maximális szint
+	Enemy* currentTarget; ///Aktuális célpont
 	/**
 	 * @brief Két pont közti távolság számítása
 	 *
@@ -58,21 +58,21 @@ public:
 	 * @param si Méret
 	 */
 	Tower(Vec2<float> p, float r, float d, float fr, float ft, float si);
-	//Virtuális destruktor, öröklés miatt
+	///Virtuális destruktor, öröklés miatt
 	virtual ~Tower() {};
-	//@return Az aktuális célpont pointere, vagy nullptr ha nincs cél
+	///@return Az aktuális célpont pointere, vagy nullptr ha nincs cél
 	Enemy* getCurrentTarget() const { return currentTarget; }
-	//@return A torony hatótávja
+	///@return A torony hatótávja
 	float getRange() const { return range; }
-	//@return A torony mérete
+	///@return A torony mérete
 	float getSize() const { return size; }
-	//@return A torony sebzése
+	///@return A torony sebzése
 	float getDamage() const { return damage; }
-	//@return A torony támadási sebessége
+	///@return A torony támadási sebessége
 	float getFireRate() const { return fireRate; }
-	//@return A torony szintje
+	///@return A torony szintje
 	int getLevel() const { return level; }
-	//@return A torony pozíciója világ koordinátákban
+	///@return A torony pozíciója világ koordinátákban
 	Vec2<float> getPosition() const { return position; }
 	
 	 //@return A fejlesztés költsége a következő szintre
@@ -172,7 +172,7 @@ public:
  */
 class TowerManager
 {
-	MyArray<Tower> towers; //Heterogén tömb a tornyok tárolására
+	MyArray<Tower> towers; ///Heterogén tömb a tornyok tárolására
 	/**
 	 * @brief Torony létrehozása típus alapján
 	 * @param type Torony típusa

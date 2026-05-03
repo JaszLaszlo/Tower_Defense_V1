@@ -20,8 +20,8 @@
 template<typename T>
 struct Vec2
 {
-	T x; //X koordináta
-	T y; //Y koordináta
+	T x; ///X koordináta
+	T y; ///Y koordináta
 	/**
 	 * @brief Konstruktor
 	 * @param x X koordináta (alapértelmezett: 0)

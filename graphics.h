@@ -152,16 +152,11 @@ public:
 	 */
 	virtual void drawTowerStats(float d, float fr, float r, int l, int uCost) = 0;
 	/**
-	 * @brief Gomb kirajzolása
-	 * @param button Gomb
-	 */
-	virtual void drawButton(const Button& button) = 0;
-	/**
 	 * @brief Gomb kirajzolása, kijelölt állapotban
 	 * @param button Gomb
 	 * @param isSelected Kijelölt-e
 	 */
-	virtual void drawButton(const Button& button, bool isSelected) = 0;
+	virtual void drawButton(const Button& button, bool isSelected=false) = 0;
 };
 
 #endif
